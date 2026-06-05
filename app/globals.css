@@ -250,26 +250,9 @@
   animation: comet-rotate 4s linear infinite;
 }
 
-/* The glowing comet head - using offset-path for constant speed */
+/* The glowing comet head - DISABLED to remove moving point */
 .comet-border::after {
-  content: '';
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: #FFF;
-  border-radius: 50%;
-  box-shadow: 
-    0 0 6px 3px #FEC700,
-    0 0 15px 6px rgba(254, 199, 0, 0.6);
-  inset: 0;
-  offset-path: content-box;
-  offset-anchor: center;
-  animation: comet-path 4s linear infinite;
-}
-
-@keyframes comet-path {
-  0% { offset-distance: 0%; }
-  100% { offset-distance: 100%; }
+  display: none;
 }
 
 .comet-border > * {
