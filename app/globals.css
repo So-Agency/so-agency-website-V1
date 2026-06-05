@@ -262,38 +262,42 @@
   position: relative;
   display: inline-block;
   border-radius: 0.5rem;
-  padding: 2px;
-  background: #FEC700;
 }
 
-/* Gradient border line around button */
-.comet-border::after {
+/* Gradient border wrapper */
+.comet-border::before {
   content: '';
   position: absolute;
-  inset: -2px;
+  inset: 0;
   border-radius: inherit;
   padding: 2px;
   background: conic-gradient(
     from 0deg,
-    #3B9EFF,
-    #FEC700,
-    #3B9EFF
+    #3B9EFF 0deg,
+    #FEC700 180deg,
+    #3B9EFF 360deg
   );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   animation: rotate-border 4s linear infinite;
+  z-index: 0;
   pointer-events: none;
 }
 
 .comet-border > * {
   position: relative;
   z-index: 2;
+  border-radius: 0.375rem;
 }
 
 /* Comet glow traveling around the border */
-.comet-border::before {
+.comet-border::after {
   content: '';
   position: absolute;
   width: 6px;
@@ -304,12 +308,6 @@
   animation: comet-travel 4s linear infinite, comet-blink 1.5s ease-in-out infinite;
   z-index: 3;
   pointer-events: none;
-}
-
-.comet-border > * {
-  position: relative;
-  z-index: 1;
-  border-radius: 0.375rem;
 }
 
 /* Blink/pulse animation for icons */
