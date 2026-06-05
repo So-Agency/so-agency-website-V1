@@ -79,53 +79,130 @@ export function Services() {
           </p>
         </div>
 
-        {/* Bento grid */}
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {services.map((service, index) => (
-            <TiltCard
-              key={service.title}
-              className={`${
-                index === 0 || index === 1 
-                  ? "md:col-span-1" 
-                  : index === 2 || index === 3 || index === 4
-                  ? "md:col-span-1"
-                  : index === 5
-                  ? "md:col-span-1 md:col-start-2"
-                  : ""
-              } relative group rounded-2xl border border-border bg-card/30 p-6 transition-colors duration-300 card-shine overflow-hidden ${
-                service.disabled 
-                  ? "opacity-60" 
-                  : `hover:border-[#FEC700]/50 ${service.borderGlow}`
-              }`}
-              max={service.disabled ? 0 : 6}
-              scale={service.disabled ? 1 : 1.02}
-            >
-              {/* Badge */}
-              {service.badge && (
-                <span className="absolute top-6 right-6 text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground">
-                  {service.badge}
-                </span>
-              )}
+        {/* Bento grid - Row 1: 2 cols | Row 2: 3 cols | Row 3: 3 cols, card left-aligned */}
+        <div className="space-y-4">
+          {/* Row 1: First 2 cards - 2 columns */}
+          <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {services.slice(0, 2).map((service, index) => (
+              <TiltCard
+                key={service.title}
+                className={`relative group rounded-2xl border border-border bg-card/30 p-6 transition-colors duration-300 card-shine overflow-hidden ${
+                  service.disabled 
+                    ? "opacity-60" 
+                    : `hover:border-[#FEC700]/50 ${service.borderGlow}`
+                }`}
+                max={service.disabled ? 0 : 6}
+                scale={service.disabled ? 1 : 1.02}
+              >
+                {/* Badge */}
+                {service.badge && (
+                  <span className="absolute top-6 right-6 text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground">
+                    {service.badge}
+                  </span>
+                )}
 
-              {/* Icon with animation on hover */}
-              <div className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
-                <service.icon className={`size-6 ${service.color} transition-transform duration-300 group-hover:scale-110`} />
-              </div>
+                {/* Icon with animation on hover */}
+                <div className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
+                  <service.icon className={`size-6 ${service.color} transition-transform duration-300 group-hover:scale-110`} />
+                </div>
 
-              {/* Content */}
-              <h3 className={`text-xl font-semibold mb-3 ${service.disabled ? "text-muted-foreground" : "text-foreground"}`}>
-                {service.title}
-              </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {service.description}
-              </p>
-              
-              {/* Hover accent line - gradient border bottom */}
-              {!service.disabled && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-[#FEC700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-              )}
-            </TiltCard>
-          ))}
+                {/* Content */}
+                <h3 className={`text-xl font-semibold mb-3 ${service.disabled ? "text-muted-foreground" : "text-foreground"}`}>
+                  {service.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {service.description}
+                </p>
+                
+                {/* Hover accent line - gradient border bottom */}
+                {!service.disabled && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-[#FEC700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                )}
+              </TiltCard>
+            ))}
+          </div>
+
+          {/* Row 2: Next 3 cards - 3 columns */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {services.slice(2, 5).map((service) => (
+              <TiltCard
+                key={service.title}
+                className={`relative group rounded-2xl border border-border bg-card/30 p-6 transition-colors duration-300 card-shine overflow-hidden ${
+                  service.disabled 
+                    ? "opacity-60" 
+                    : `hover:border-[#FEC700]/50 ${service.borderGlow}`
+                }`}
+                max={service.disabled ? 0 : 6}
+                scale={service.disabled ? 1 : 1.02}
+              >
+                {/* Badge */}
+                {service.badge && (
+                  <span className="absolute top-6 right-6 text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground">
+                    {service.badge}
+                  </span>
+                )}
+
+                {/* Icon with animation on hover */}
+                <div className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
+                  <service.icon className={`size-6 ${service.color} transition-transform duration-300 group-hover:scale-110`} />
+                </div>
+
+                {/* Content */}
+                <h3 className={`text-xl font-semibold mb-3 ${service.disabled ? "text-muted-foreground" : "text-foreground"}`}>
+                  {service.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {service.description}
+                </p>
+                
+                {/* Hover accent line - gradient border bottom */}
+                {!service.disabled && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-[#FEC700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                )}
+              </TiltCard>
+            ))}
+          </div>
+
+          {/* Row 3: Last card - 3 columns, card aligned left */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {services.slice(5).map((service) => (
+              <TiltCard
+                key={service.title}
+                className={`relative group rounded-2xl border border-border bg-card/30 p-6 transition-colors duration-300 card-shine overflow-hidden ${
+                  service.disabled 
+                    ? "opacity-60" 
+                    : `hover:border-[#FEC700]/50 ${service.borderGlow}`
+                }`}
+                max={service.disabled ? 0 : 6}
+                scale={service.disabled ? 1 : 1.02}
+              >
+                {/* Badge */}
+                {service.badge && (
+                  <span className="absolute top-6 right-6 text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground">
+                    {service.badge}
+                  </span>
+                )}
+
+                {/* Icon with animation on hover */}
+                <div className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
+                  <service.icon className={`size-6 ${service.color} transition-transform duration-300 group-hover:scale-110`} />
+                </div>
+
+                {/* Content */}
+                <h3 className={`text-xl font-semibold mb-3 ${service.disabled ? "text-muted-foreground" : "text-foreground"}`}>
+                  {service.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {service.description}
+                </p>
+                
+                {/* Hover accent line - gradient border bottom */}
+                {!service.disabled && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-[#FEC700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                )}
+              </TiltCard>
+            ))}
+          </div>
         </div>
       </div>
     </section>
