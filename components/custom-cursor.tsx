@@ -228,31 +228,34 @@ export function CustomCursor() {
               <path d="M13.5 28 C13 31 12.5 34 14.5 37 C15.2 38.5 16 40 16 40 C16 40 16.8 38.5 17.5 37 C19.5 34 19 31 18.5 28 Z" fill="url(#flameGradCore)" opacity="0.8" />
             </g>
 
-            {/* Left fin - perfectly symmetrical */}
-            <path d="M9 16 L7 22 C7 24 8 25.5 9.5 26 L12 24 C11 22 10 19 9 16 Z" fill="#E6B800" />
-            {/* Right fin - perfectly symmetrical mirror */}
-            <path d="M23 16 L25 22 C25 24 24 25.5 22.5 26 L20 24 C21 22 22 19 23 16 Z" fill="#E6B800" />
+            {/* Fins - curved and symmetrical */}
+            <path d="M11 15 Q8 18 8 22 Q8 25 10 26 L13 23 Q12 20 11 15 Z" fill="#E6B800" />
+            <path d="M21 15 Q24 18 24 22 Q24 25 22 26 L19 23 Q20 20 21 15 Z" fill="#E6B800" />
 
-            {/* Clean pointed rocket body - symmetrical cone */}
+            {/* Rocket body - tapered cone shape, perfectly symmetrical */}
             <path 
-              d="M16 2 L24 18 L24 26 L8 26 L8 18 Z" 
-              fill="#FEC700" 
+              d="M16 2 C16 2 22 10 22 18 Q22 23 19.5 26 L16 28 L12.5 26 Q10 23 10 18 C10 10 16 2 16 2 Z"
+              fill="#FEC700"
             />
 
-            {/* Body highlight - clean vertical stripe */}
-            <path d="M16 3 L21 17 L21 25 L16 25 Z" fill="#FFE880" opacity="0.4" />
+            {/* Body top highlight - creates depth */}
+            <path 
+              d="M16 2.5 C16 2.5 19 8 19 15 Q19 20 17 24 L16 26 L16 2.5 Z"
+              fill="#FFE880" 
+              opacity="0.5" 
+            />
 
-            {/* Exhaust nozzle - clean horizontal band */}
-            <rect x="14" y="25.5" width="4" height="1" rx="0.5" fill="#C89A00" />
+            {/* Nozzle collar */}
+            <ellipse cx="16" cy="27.5" rx="4" ry="1" fill="#C89A00" />
 
-            {/* Thruster ports on sides */}
-            <circle cx="10" cy="24" r="0.8" fill="#D4AF37" opacity="0.7" />
-            <circle cx="22" cy="24" r="0.8" fill="#D4AF37" opacity="0.7" />
+            {/* Exhaust ports - dual thrusters */}
+            <circle cx="12" cy="27" r="1" fill="#D4AF37" opacity="0.8" />
+            <circle cx="20" cy="27" r="1" fill="#D4AF37" opacity="0.8" />
 
-            {/* Window - clean circle */}
-            <circle cx="16" cy="11" r="2.5" fill="#0d0d1a" />
-            <circle cx="16" cy="11" r="1.8" fill="#111827" />
-            <circle cx="15.5" cy="10.5" r="0.7" fill="#3B9EFF" opacity="0.95" />
+            {/* Window - centered and prominent */}
+            <circle cx="16" cy="11" r="3" fill="#0d0d1a" />
+            <circle cx="16" cy="11" r="2.2" fill="#111827" />
+            <circle cx="15" cy="10" r="0.9" fill="#3B9EFF" opacity="0.95" />
           </svg>
         </div>
       </div>
