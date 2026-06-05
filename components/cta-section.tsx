@@ -44,7 +44,7 @@ export function CTASection() {
                   </a>
                 </Button>
               </div>
-              <Button asChild variant="outline" size="lg" className="text-base px-8">
+              <Button asChild variant="outline" size="lg" className="text-base px-8 border-foreground/30 hover:border-accent hover:shadow-lg hover:shadow-accent/40">
                 <a href="mailto:hello@soagency.dev">
                   Send a Message
                 </a>
