@@ -210,8 +210,8 @@
 
 /* Rotating gradient border - uniform velocity around perimeter */
 @keyframes rotate-border {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% { transform: rotate(0deg); background-position: 0% 0%; }
+  100% { transform: rotate(360deg); background-position: 100% 0%; }
 }
 
 @keyframes comet-travel {
@@ -264,12 +264,14 @@
   position: absolute;
   inset: -2px;
   border-radius: inherit;
-  background: conic-gradient(
-    from 0deg,
-    #3B9EFF 0deg,
-    #FEC700 180deg,
-    #3B9EFF 360deg
+  background: linear-gradient(
+    90deg,
+    #3B9EFF 0%,
+    #FEC700 50%,
+    #3B9EFF 100%
   );
+  background-size: 200% 200%;
+  background-position: 0% 0%;
   animation: rotate-border 4s linear infinite;
   z-index: 0;
   pointer-events: none;
