@@ -252,43 +252,10 @@
   }
 }
 
-/* Border gradient line traveling around button */
-@keyframes border-travel {
-  0% {
-    top: -2px;
-    left: -2px;
-    width: 4px;
-    height: 4px;
-    background: linear-gradient(135deg, #3B9EFF, #FEC700);
-  }
-  33% {
-    top: -2px;
-    left: calc(100% - 2px);
-    width: 4px;
-    height: 4px;
-    background: linear-gradient(135deg, #FEC700, #3B9EFF);
-  }
-  50% {
-    top: calc(100% - 2px);
-    left: calc(100% - 2px);
-    width: 4px;
-    height: 4px;
-    background: linear-gradient(135deg, #FEC700, #3B9EFF);
-  }
-  83% {
-    top: calc(100% - 2px);
-    left: -2px;
-    width: 4px;
-    height: 4px;
-    background: linear-gradient(135deg, #3B9EFF, #FEC700);
-  }
-  100% {
-    top: -2px;
-    left: -2px;
-    width: 4px;
-    height: 4px;
-    background: linear-gradient(135deg, #3B9EFF, #FEC700);
-  }
+/* Diagonal gradient stripes sweeping across button */
+@keyframes sweep-stripes {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
 }
 
 .comet-border {
@@ -297,12 +264,23 @@
   border-radius: 0.5rem;
 }
 
-/* Gradient line border wrapper */
+/* Animated diagonal gradient stripes overlay */
 .comet-border::before {
   content: '';
   position: absolute;
+  inset: 0;
   border-radius: inherit;
-  animation: border-travel 4s linear infinite;
+  background: repeating-linear-gradient(
+    135deg,
+    transparent,
+    transparent 20px,
+    rgba(59, 158, 255, 0.3) 20px,
+    rgba(254, 199, 0, 0.3) 40px,
+    transparent 40px,
+    transparent 60px
+  );
+  background-size: 200% 200%;
+  animation: sweep-stripes 4s linear infinite;
   z-index: 1;
   pointer-events: none;
 }
