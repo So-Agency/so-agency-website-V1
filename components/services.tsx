@@ -39,7 +39,7 @@ const services = [
     color: "text-teal-400",
     bgColor: "bg-teal-400/10",
     borderGlow: "hover:shadow-[0_0_30px_-5px] hover:shadow-teal-400/30",
-    size: "md:col-span-2",
+    size: "col-span-1",
   },
   {
     icon: Megaphone,
@@ -57,7 +57,7 @@ const services = [
     color: "text-muted-foreground",
     bgColor: "bg-muted/50",
     borderGlow: "",
-    size: "col-span-1",
+    size: "md:col-span-1",
     badge: "Standby",
     disabled: true,
   },
