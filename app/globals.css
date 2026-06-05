@@ -218,34 +218,25 @@
   position: relative;
   isolation: isolate;
   border-radius: 0.5rem;
-  overflow: hidden;
 }
 
-/* Rotating gradient layer */
+/* Rotating gradient layer - sits behind button */
 .comet-border::before {
   content: '';
   position: absolute;
-  inset: -50%;
+  z-index: -1;
+  inset: -2px;
+  border-radius: inherit;
   background: conic-gradient(
     from 0deg,
     transparent 0deg,
-    transparent 280deg,
-    rgba(254, 199, 0, 0.3) 300deg,
-    rgba(254, 199, 0, 0.6) 330deg,
-    #FEC700 350deg,
-    #FFE066 360deg
+    transparent 260deg,
+    rgba(255, 255, 255, 0.2) 280deg,
+    rgba(255, 255, 255, 0.5) 320deg,
+    rgba(255, 255, 255, 0.8) 350deg,
+    #FFFFFF 360deg
   );
-  animation: spin-border 6s linear infinite;
-  pointer-events: none;
-}
-
-/* Inner mask to create border effect */
-.comet-border::after {
-  content: '';
-  position: absolute;
-  inset: 2px;
-  background: #FEC700;
-  border-radius: calc(0.5rem - 2px);
+  animation: spin-border 4s linear infinite;
   pointer-events: none;
 }
 
