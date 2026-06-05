@@ -238,8 +238,18 @@
 }
 
 @keyframes comet-blink {
-  0%, 100% { opacity: 1; box-shadow: 0 0 8px 4px #3B9EFF, 0 0 16px 8px rgba(59, 158, 255, 0.5); }
-  50% { opacity: 0.3; box-shadow: 0 0 4px 2px #3B9EFF, 0 0 8px 4px rgba(59, 158, 255, 0.2); }
+  0% { 
+    opacity: 1; 
+    box-shadow: 0 0 10px 5px #3B9EFF, 0 0 20px 10px rgba(59, 158, 255, 0.8); 
+  }
+  50% { 
+    opacity: 1; 
+    box-shadow: 0 0 10px 5px #FEC700, 0 0 20px 10px rgba(254, 199, 0, 0.8); 
+  }
+  100% { 
+    opacity: 1; 
+    box-shadow: 0 0 10px 5px #3B9EFF, 0 0 20px 10px rgba(59, 158, 255, 0.8); 
+  }
 }
 
 .comet-border {
@@ -256,11 +266,11 @@
 .comet-border::before {
   content: '';
   position: absolute;
-  width: 10px;
-  height: 10px;
-  background: radial-gradient(circle, #3B9EFF, rgba(59, 158, 255, 0.4));
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, #3B9EFF, rgba(59, 158, 255, 0.6));
   border-radius: 50%;
-  box-shadow: 0 0 8px 4px #3B9EFF, 0 0 16px 8px rgba(59, 158, 255, 0.5);
+  box-shadow: 0 0 10px 5px #3B9EFF, 0 0 20px 10px rgba(59, 158, 255, 0.8);
   animation: comet-travel 4s linear infinite, comet-blink 1.5s ease-in-out infinite;
   z-index: 3;
   pointer-events: none;
