@@ -252,10 +252,43 @@
   }
 }
 
-/* Rotating border gradient */
-@keyframes rotate-border {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+/* Border gradient line traveling around button */
+@keyframes border-travel {
+  0% {
+    top: -2px;
+    left: -2px;
+    width: 4px;
+    height: 4px;
+    background: linear-gradient(135deg, #3B9EFF, #FEC700);
+  }
+  33% {
+    top: -2px;
+    left: calc(100% - 2px);
+    width: 4px;
+    height: 4px;
+    background: linear-gradient(135deg, #FEC700, #3B9EFF);
+  }
+  50% {
+    top: calc(100% - 2px);
+    left: calc(100% - 2px);
+    width: 4px;
+    height: 4px;
+    background: linear-gradient(135deg, #FEC700, #3B9EFF);
+  }
+  83% {
+    top: calc(100% - 2px);
+    left: -2px;
+    width: 4px;
+    height: 4px;
+    background: linear-gradient(135deg, #3B9EFF, #FEC700);
+  }
+  100% {
+    top: -2px;
+    left: -2px;
+    width: 4px;
+    height: 4px;
+    background: linear-gradient(135deg, #3B9EFF, #FEC700);
+  }
 }
 
 .comet-border {
@@ -264,29 +297,13 @@
   border-radius: 0.5rem;
 }
 
-/* Gradient border wrapper */
+/* Gradient line border wrapper */
 .comet-border::before {
   content: '';
   position: absolute;
-  inset: 0;
   border-radius: inherit;
-  padding: 2px;
-  background: conic-gradient(
-    from 0deg,
-    #3B9EFF 0deg,
-    #FEC700 180deg,
-    #3B9EFF 360deg
-  );
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
-  mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  animation: rotate-border 4s linear infinite;
-  z-index: 0;
+  animation: border-travel 4s linear infinite;
+  z-index: 1;
   pointer-events: none;
 }
 
