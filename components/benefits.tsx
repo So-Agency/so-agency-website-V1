@@ -2,6 +2,7 @@
 
 import { Zap, DollarSign, Users, Layers } from "lucide-react"
 import { useStaggerChildren } from "@/hooks/use-gsap-animations"
+import { SectionHeader, ScrollReveal } from "@/components/scroll-reveal"
 
 const benefits = [
   {
@@ -37,22 +38,18 @@ export function Benefits() {
     <section id="benefits" className="py-24 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
-        <div className="text-center mb-16 section-header">
-          <h2 className="scroll-reveal-title font-[family-name:var(--font-display)] text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Why Clients Choose Us
-          </h2>
-          <p className="scroll-reveal text-lg text-muted-foreground max-w-2xl mx-auto">
-            We are not just another agency. We are your launch partners, invested in your success.
-          </p>
-        </div>
+        <SectionHeader 
+          title="Why Clients Choose Us"
+          description="We are not just another agency. We are your launch partners, invested in your success."
+        />
 
         {/* Benefits grid */}
-        <div ref={gridRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 scroll-stagger">
-          {benefits.map((benefit) => (
-            <div 
-              key={benefit.title} 
-              className="scroll-reveal group text-center p-6 rounded-xl bg-card/30 border border-border/30 transition-all duration-500 card-hover-3d card-shine hover:border-primary/30"
-            >
+        <div ref={gridRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {benefits.map((benefit, index) => (
+            <ScrollReveal key={benefit.title} delay={index * 100}>
+              <div 
+                className="group text-center p-6 rounded-xl bg-card/30 border border-border/30 transition-all duration-500 card-hover-3d card-shine hover:border-primary/30 h-full"
+              >
               {/* Icon with gradient background on hover */}
               <div className={`size-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-gradient-to-br group-hover:${benefit.gradient} group-hover:shadow-lg`}>
                 <benefit.icon className="size-7 text-primary transition-colors duration-300 group-hover:text-white" />
@@ -61,6 +58,7 @@ export function Benefits() {
               <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-[#FEC700] transition-colors">{benefit.title}</h3>
               <p className="text-sm text-muted-foreground">{benefit.description}</p>
             </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

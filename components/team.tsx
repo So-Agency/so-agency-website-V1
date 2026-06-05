@@ -2,6 +2,7 @@
 
 import { useStaggerChildren } from "@/hooks/use-gsap-animations"
 import { TiltCard } from "@/components/tilt-card"
+import { SectionHeader, ScrollReveal } from "@/components/scroll-reveal"
 
 const team = [
   {
@@ -23,20 +24,17 @@ export function Team() {
     <section id="team" className="py-24 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Section header */}
-        <div className="text-center mb-16 section-header">
-          <h2 className="scroll-reveal-title font-[family-name:var(--font-display)] text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Our Leadership
-          </h2>
-          <p className="scroll-reveal text-lg text-muted-foreground max-w-2xl mx-auto">
-            The crew behind your mission to success.
-          </p>
-        </div>
+        <SectionHeader 
+          title="Our Leadership"
+          description="The crew behind your mission to success."
+        />
 
         {/* Team grid */}
-        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto scroll-stagger">
+        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
           {/* Team members */}
-          {team.map((member) => (
-            <div key={member.name} className="group scroll-reveal">
+          {team.map((member, index) => (
+            <ScrollReveal key={member.name} delay={index * 150}>
+              <div className="group">
               <TiltCard
                 className="relative aspect-[3/4] rounded-xl overflow-hidden border border-border/50 bg-card/30 mb-4 transition-colors duration-300 group-hover:border-[#FEC700]/50 group-hover:shadow-[0_0_40px_-10px] group-hover:shadow-[#FEC700]/30"
                 max={8}
@@ -56,6 +54,7 @@ export function Team() {
               <h3 className="text-lg font-semibold text-foreground group-hover:text-[#FEC700] transition-colors">{member.name}</h3>
               <p className="text-sm text-[#3B9EFF]">{member.role}</p>
             </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

@@ -3,6 +3,7 @@
 import { Code, Palette, ShoppingCart, Fingerprint, Megaphone, Bot } from "lucide-react"
 import { useStaggerChildren } from "@/hooks/use-gsap-animations"
 import { TiltCard } from "@/components/tilt-card"
+import { SectionHeader, ScrollReveal } from "@/components/scroll-reveal"
 
 const services = [
   {
@@ -70,30 +71,26 @@ export function Services() {
     <section id="services" className="py-24 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
-        <div className="text-center mb-16 section-header">
-          <h2 className="scroll-reveal-title font-[family-name:var(--font-display)] text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Core Systems
-          </h2>
-          <p className="scroll-reveal text-lg text-muted-foreground max-w-2xl mx-auto">
-            Specialized services designed to ensure total business success across all digital channels.
-          </p>
-        </div>
+        <SectionHeader 
+          title="Core Systems"
+          description="Specialized services designed to ensure total business success across all digital channels."
+        />
 
         {/* Bento grid - Row 1: 2 cols | Row 2: 3 cols | Row 3: 3 cols, card left-aligned */}
         <div className="space-y-4">
           {/* Row 1: First 2 cards - 2 columns */}
-          <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-4 scroll-stagger">
+          <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {services.slice(0, 2).map((service, index) => (
-              <TiltCard
-                key={service.title}
-                className={`scroll-reveal relative group rounded-2xl border border-border bg-card/30 p-6 transition-colors duration-300 card-shine overflow-hidden ${
-                  service.disabled 
-                    ? "opacity-60" 
-                    : `hover:border-[#FEC700]/50 ${service.borderGlow}`
-                }`}
-                max={service.disabled ? 0 : 6}
-                scale={service.disabled ? 1 : 1.02}
-              >
+              <ScrollReveal key={service.title} delay={index * 100}>
+                <TiltCard
+                  className={`relative group rounded-2xl border border-border bg-card/30 p-6 transition-colors duration-300 card-shine overflow-hidden ${
+                    service.disabled 
+                      ? "opacity-60" 
+                      : `hover:border-[#FEC700]/50 ${service.borderGlow}`
+                  }`}
+                  max={service.disabled ? 0 : 6}
+                  scale={service.disabled ? 1 : 1.02}
+                >
                 {/* Badge */}
                 {service.badge && (
                   <span className="absolute top-6 right-6 text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground">
@@ -119,22 +116,23 @@ export function Services() {
                   <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-[#FEC700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
                 )}
               </TiltCard>
+              </ScrollReveal>
             ))}
           </div>
 
           {/* Row 2: Next 3 cards - 3 columns */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 scroll-stagger">
-            {services.slice(2, 5).map((service) => (
-              <TiltCard
-                key={service.title}
-                className={`scroll-reveal relative group rounded-2xl border border-border bg-card/30 p-6 transition-colors duration-300 card-shine overflow-hidden ${
-                  service.disabled 
-                    ? "opacity-60" 
-                    : `hover:border-[#FEC700]/50 ${service.borderGlow}`
-                }`}
-                max={service.disabled ? 0 : 6}
-                scale={service.disabled ? 1 : 1.02}
-              >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {services.slice(2, 5).map((service, index) => (
+              <ScrollReveal key={service.title} delay={index * 100}>
+                <TiltCard
+                  className={`relative group rounded-2xl border border-border bg-card/30 p-6 transition-colors duration-300 card-shine overflow-hidden h-full ${
+                    service.disabled 
+                      ? "opacity-60" 
+                      : `hover:border-[#FEC700]/50 ${service.borderGlow}`
+                  }`}
+                  max={service.disabled ? 0 : 6}
+                  scale={service.disabled ? 1 : 1.02}
+                >
                 {/* Badge */}
                 {service.badge && (
                   <span className="absolute top-6 right-6 text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground">
@@ -160,22 +158,23 @@ export function Services() {
                   <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-[#FEC700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
                 )}
               </TiltCard>
+              </ScrollReveal>
             ))}
           </div>
 
           {/* Row 3: Last card - 3 columns, card aligned left */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {services.slice(5).map((service) => (
-              <TiltCard
-                key={service.title}
-                className={`scroll-reveal relative group rounded-2xl border border-border bg-card/30 p-6 transition-colors duration-300 card-shine overflow-hidden ${
-                  service.disabled 
-                    ? "opacity-60" 
-                    : `hover:border-[#FEC700]/50 ${service.borderGlow}`
-                }`}
-                max={service.disabled ? 0 : 6}
-                scale={service.disabled ? 1 : 1.02}
-              >
+              <ScrollReveal key={service.title}>
+                <TiltCard
+                  className={`relative group rounded-2xl border border-border bg-card/30 p-6 transition-colors duration-300 card-shine overflow-hidden ${
+                    service.disabled 
+                      ? "opacity-60" 
+                      : `hover:border-[#FEC700]/50 ${service.borderGlow}`
+                  }`}
+                  max={service.disabled ? 0 : 6}
+                  scale={service.disabled ? 1 : 1.02}
+                >
                 {/* Badge */}
                 {service.badge && (
                   <span className="absolute top-6 right-6 text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground">
@@ -201,6 +200,7 @@ export function Services() {
                   <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-[#FEC700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
                 )}
               </TiltCard>
+              </ScrollReveal>
             ))}
           </div>
         </div>
