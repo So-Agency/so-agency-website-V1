@@ -2,6 +2,7 @@
 
 import { Search, Target, Rocket, TrendingUp } from "lucide-react"
 import { useTimelineProgress } from "@/hooks/use-gsap-animations"
+import { SectionHeader, ScrollReveal } from "@/components/scroll-reveal"
 
 const steps = [
   {
@@ -41,19 +42,16 @@ export function Process() {
     <section id="process" className="py-24 px-4 sm:px-6 bg-secondary/30">
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
-        <div className="text-center mb-16">
-          <h2 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            How We Work
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            A proven process that takes you from idea to impact. Clear, collaborative, and built for speed.
-          </p>
-        </div>
+        <SectionHeader 
+          title="How We Work"
+          description="A proven process that takes you from idea to impact. Clear, collaborative, and built for speed."
+        />
 
         {/* Process steps */}
         <div ref={stepsRef} className="grid md:grid-cols-4 gap-8">
           {steps.map((step, index) => (
-            <div key={step.number} className="timeline-item relative group">
+            <ScrollReveal key={step.number} delay={index * 150}>
+              <div className="timeline-item relative group">
               {/* Connector line */}
               {index < steps.length - 1 && (
                 <div className="timeline-line hidden md:block absolute top-8 left-1/2 w-full h-px bg-gradient-to-r from-primary/50 to-primary/10 origin-left" />
@@ -78,6 +76,7 @@ export function Process() {
                 <p className="text-sm text-muted-foreground">{step.description}</p>
               </div>
             </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

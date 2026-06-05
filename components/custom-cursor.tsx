@@ -70,7 +70,7 @@ export function CustomCursor() {
             scaleY: speed > 2 ? Math.min(1 + speed * 0.04, 1.8) : 1,
             opacity: speed > 2 ? Math.min(0.75 + speed * 0.02, 1) : 0.75,
             duration: 0.15,
-            transformOrigin: "16px 26px"
+            transformOrigin: "16px 27px"
           })
         }
       }
@@ -101,12 +101,11 @@ export function CustomCursor() {
           ease: "power2.out"
         })
         
-        // Hide flame when scrolling down (rocket points down), show intensified when scrolling up
+        // Hide flame completely during active scrolling to prevent artifacts
         gsap.to(flame, {
-          scaleY: dir === "down" ? 0 : 2.2,
-          opacity: dir === "down" ? 0 : 1,
-          duration: 0.15,
-          transformOrigin: "16px 26px"
+          opacity: 0,
+          duration: 0.1,
+          transformOrigin: "16px 27px"
         })
       }
 
@@ -124,12 +123,12 @@ export function CustomCursor() {
             duration: 0.4,
             ease: "elastic.out(1, 0.5)"
           })
-          // Keep flame hidden if pointing down, show if pointing up
+          // Show flame only when pointing up (after scroll stops), hide when pointing down
           gsap.to(flame, {
             scaleY: lastScrollDir.current === "down" ? 0 : 1,
-            opacity: lastScrollDir.current === "down" ? 0 : 0.85,
-            duration: 0.3,
-            transformOrigin: "16px 26px"
+            opacity: lastScrollDir.current === "down" ? 0 : 0.8,
+            duration: 0.4,
+            transformOrigin: "16px 27px"
           })
         }
       }, 150)
@@ -208,41 +207,54 @@ export function CustomCursor() {
             xmlns="http://www.w3.org/2000/svg"
           >
             <defs>
-              <linearGradient id="flameGrad" x1="16" y1="27" x2="16" y2="44" gradientUnits="userSpaceOnUse">
+              <linearGradient id="flameGrad" x1="16" y1="28" x2="16" y2="44" gradientUnits="userSpaceOnUse">
                 <stop offset="0%" stopColor="#FEC700" stopOpacity="1" />
                 <stop offset="40%" stopColor="#FF6B35" stopOpacity="0.9" />
                 <stop offset="100%" stopColor="#FF4433" stopOpacity="0" />
               </linearGradient>
-              <linearGradient id="flameGradCore" x1="16" y1="27" x2="16" y2="38" gradientUnits="userSpaceOnUse">
+              <linearGradient id="flameGradCore" x1="16" y1="28" x2="16" y2="38" gradientUnits="userSpaceOnUse">
                 <stop offset="0%" stopColor="#FFE066" stopOpacity="1" />
                 <stop offset="100%" stopColor="#FEC700" stopOpacity="0" />
               </linearGradient>
+              <clipPath id="flameClip">
+                <rect x="0" y="27" width="32" height="20" />
+              </clipPath>
             </defs>
 
-            {/* Flame — anchored at exhaust nozzle y=26.5, no white stops */}
-            <g ref={flameRef} style={{ transformOrigin: "16px 26px" }}>
-              <path d="M12.5 26.5 C11 31 10 35 12.5 39 C14 42 16 44 16 44 C16 44 18 42 19.5 39 C22 35 21 31 19.5 26.5 Z" fill="url(#flameGrad)" />
-              <path d="M14 26.5 C13.5 30 13 33 14.5 36 C15.2 37.5 16 39 16 39 C16 39 16.8 37.5 17.5 36 C19 33 18.5 30 18 26.5 Z" fill="url(#flameGradCore)" opacity="0.8" />
+            {/* Flame — clipped to only render below y=27 */}
+            <g ref={flameRef} clipPath="url(#flameClip)" style={{ transformOrigin: "16px 27px" }}>
+              <path d="M12 28 C10.5 32 10 36 12.5 40 C14 42.5 16 44 16 44 C16 44 18 42.5 19.5 40 C22 36 21.5 32 20 28 Z" fill="url(#flameGrad)" />
+              <path d="M13.5 28 C13 31 12.5 34 14.5 37 C15.2 38.5 16 40 16 40 C16 40 16.8 38.5 17.5 37 C19.5 34 19 31 18.5 28 Z" fill="url(#flameGradCore)" opacity="0.8" />
             </g>
 
-            {/* Left fin */}
-            <path d="M10 17 C7 20 6 24 7 26 L10 25 Z" fill="#E6B800" />
-            {/* Right fin */}
-            <path d="M22 17 C25 20 26 24 25 26 L22 25 Z" fill="#E6B800" />
+            {/* Fins - curved and symmetrical */}
+            <path d="M11 15 Q8 18 8 22 Q8 25 10 26 L13 23 Q12 20 11 15 Z" fill="#E6B800" />
+            <path d="M21 15 Q24 18 24 22 Q24 25 22 26 L19 23 Q20 20 21 15 Z" fill="#E6B800" />
 
-            {/* Rocket body */}
-            <path d="M16 1 C16 1 9 8 9 17 C9 21.5 11 24.5 13.5 26 L18.5 26 C21 24.5 23 21.5 23 17 C23 8 16 1 16 1 Z" fill="#FEC700" />
+            {/* Rocket body - tapered cone shape, perfectly symmetrical */}
+            <path 
+              d="M16 2 C16 2 22 10 22 18 Q22 23 19.5 26 L16 28 L12.5 26 Q10 23 10 18 C10 10 16 2 16 2 Z"
+              fill="#FEC700"
+            />
 
-            {/* Body highlight */}
-            <path d="M16 2.5 C16 2.5 11.5 9 11.5 16.5 C11.5 19.5 12.5 22 14 24 L16 24 C13.5 22 12.5 19 12.5 16.5 C12.5 10 16 4 16 4 Z" fill="#FFE880" opacity="0.5" />
+            {/* Body top highlight - creates depth */}
+            <path 
+              d="M16 2.5 C16 2.5 19 8 19 15 Q19 20 17 24 L16 26 L16 2.5 Z"
+              fill="#FFE880" 
+              opacity="0.5" 
+            />
 
-            {/* Exhaust nozzle */}
-            <rect x="13" y="24" width="6" height="2.5" rx="1" fill="#C89A00" />
+            {/* Nozzle collar */}
+            <ellipse cx="16" cy="27.5" rx="4" ry="1" fill="#C89A00" />
 
-            {/* Window */}
-            <circle cx="16" cy="13" r="3.5" fill="#0d0d1a" />
-            <circle cx="16" cy="13" r="2.5" fill="#111827" />
-            <circle cx="15" cy="12" r="1" fill="#3B9EFF" opacity="0.9" />
+            {/* Exhaust ports - dual thrusters */}
+            <circle cx="12" cy="27" r="1" fill="#D4AF37" opacity="0.8" />
+            <circle cx="20" cy="27" r="1" fill="#D4AF37" opacity="0.8" />
+
+            {/* Window - centered and prominent */}
+            <circle cx="16" cy="11" r="3" fill="#0d0d1a" />
+            <circle cx="16" cy="11" r="2.2" fill="#111827" />
+            <circle cx="15" cy="10" r="0.9" fill="#3B9EFF" opacity="0.95" />
           </svg>
         </div>
       </div>

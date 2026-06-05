@@ -3,6 +3,7 @@
 import { Code, Palette, ShoppingCart, Fingerprint, Megaphone, Bot } from "lucide-react"
 import { useStaggerChildren } from "@/hooks/use-gsap-animations"
 import { TiltCard } from "@/components/tilt-card"
+import { SectionHeader, ScrollReveal } from "@/components/scroll-reveal"
 
 const services = [
   {
@@ -39,7 +40,7 @@ const services = [
     color: "text-teal-400",
     bgColor: "bg-teal-400/10",
     borderGlow: "hover:shadow-[0_0_30px_-5px] hover:shadow-teal-400/30",
-    size: "md:col-span-2",
+    size: "col-span-1",
   },
   {
     icon: Megaphone,
@@ -57,7 +58,7 @@ const services = [
     color: "text-muted-foreground",
     bgColor: "bg-muted/50",
     borderGlow: "",
-    size: "col-span-1",
+    size: "md:col-span-1",
     badge: "Standby",
     disabled: true,
   },
@@ -70,54 +71,138 @@ export function Services() {
     <section id="services" className="py-24 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
-        <div className="text-center mb-16">
-          <h2 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Core Systems
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Specialized services designed to ensure total business success across all digital channels.
-          </p>
-        </div>
+        <SectionHeader 
+          title="Core Systems"
+          description="Specialized services designed to ensure total business success across all digital channels."
+        />
 
-        {/* Bento grid */}
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {services.map((service) => (
-            <TiltCard
-              key={service.title}
-              className={`${service.size} relative group rounded-2xl border border-border bg-card/30 p-6 transition-colors duration-300 card-shine overflow-hidden ${
-                service.disabled 
-                  ? "opacity-60" 
-                  : `hover:border-[#FEC700]/50 ${service.borderGlow}`
-              }`}
-              max={service.disabled ? 0 : 6}
-              scale={service.disabled ? 1 : 1.02}
-            >
-              {/* Badge */}
-              {service.badge && (
-                <span className="absolute top-6 right-6 text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground">
-                  {service.badge}
-                </span>
-              )}
+        {/* Bento grid - Row 1: 2 cols | Row 2: 3 cols | Row 3: 3 cols, card left-aligned */}
+        <div className="space-y-4">
+          {/* Row 1: First 2 cards - 2 columns */}
+          <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {services.slice(0, 2).map((service, index) => (
+              <ScrollReveal key={service.title} delay={index * 100}>
+                <TiltCard
+                  className={`relative group rounded-2xl border border-white/[0.08] bg-white/[0.01] backdrop-blur-[2px] p-6 transition-colors duration-300 card-shine overflow-hidden ${
+                    service.disabled 
+                      ? "opacity-60" 
+                      : `hover:border-[#FEC700]/50 hover:bg-white/[0.03] ${service.borderGlow}`
+                  }`}
+                  max={service.disabled ? 0 : 6}
+                  scale={service.disabled ? 1 : 1.02}
+                >
+                {/* Badge */}
+                {service.badge && (
+                  <span className="absolute top-6 right-6 text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground">
+                    {service.badge}
+                  </span>
+                )}
 
-              {/* Icon with animation on hover */}
-              <div className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
-                <service.icon className={`size-6 ${service.color} transition-transform duration-300 group-hover:scale-110`} />
-              </div>
+                {/* Icon with animation on hover */}
+                <div className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
+                  <service.icon className={`size-6 ${service.color} transition-transform duration-300 group-hover:scale-110`} />
+                </div>
 
-              {/* Content */}
-              <h3 className={`text-xl font-semibold mb-3 ${service.disabled ? "text-muted-foreground" : "text-foreground"}`}>
-                {service.title}
-              </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {service.description}
-              </p>
-              
-              {/* Hover accent line - gradient border bottom */}
-              {!service.disabled && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-[#FEC700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-              )}
-            </TiltCard>
-          ))}
+                {/* Content */}
+                <h3 className={`text-xl font-semibold mb-3 ${service.disabled ? "text-muted-foreground" : "text-foreground"}`}>
+                  {service.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {service.description}
+                </p>
+                
+                {/* Hover accent line - gradient border bottom */}
+                {!service.disabled && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-[#FEC700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                )}
+              </TiltCard>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          {/* Row 2: Next 3 cards - 3 columns */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {services.slice(2, 5).map((service, index) => (
+              <ScrollReveal key={service.title} delay={index * 100}>
+                <TiltCard
+                  className={`relative group rounded-2xl border border-white/[0.08] bg-white/[0.01] backdrop-blur-[2px] p-6 transition-colors duration-300 card-shine overflow-hidden h-full ${
+                    service.disabled 
+                      ? "opacity-60" 
+                      : `hover:border-[#FEC700]/50 hover:bg-white/[0.03] ${service.borderGlow}`
+                  }`}
+                  max={service.disabled ? 0 : 6}
+                  scale={service.disabled ? 1 : 1.02}
+                >
+                {/* Badge */}
+                {service.badge && (
+                  <span className="absolute top-6 right-6 text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground">
+                    {service.badge}
+                  </span>
+                )}
+
+                {/* Icon with animation on hover */}
+                <div className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
+                  <service.icon className={`size-6 ${service.color} transition-transform duration-300 group-hover:scale-110`} />
+                </div>
+
+                {/* Content */}
+                <h3 className={`text-xl font-semibold mb-3 ${service.disabled ? "text-muted-foreground" : "text-foreground"}`}>
+                  {service.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {service.description}
+                </p>
+                
+                {/* Hover accent line - gradient border bottom */}
+                {!service.disabled && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-[#FEC700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                )}
+              </TiltCard>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          {/* Row 3: Last card - 3 columns, card aligned left */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {services.slice(5).map((service) => (
+              <ScrollReveal key={service.title}>
+                <TiltCard
+                  className={`relative group rounded-2xl border border-white/[0.08] bg-white/[0.01] backdrop-blur-[2px] p-6 transition-colors duration-300 card-shine overflow-hidden ${
+                    service.disabled 
+                      ? "opacity-60" 
+                      : `hover:border-[#FEC700]/50 hover:bg-white/[0.03] ${service.borderGlow}`
+                  }`}
+                  max={service.disabled ? 0 : 6}
+                  scale={service.disabled ? 1 : 1.02}
+                >
+                {/* Badge */}
+                {service.badge && (
+                  <span className="absolute top-6 right-6 text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground">
+                    {service.badge}
+                  </span>
+                )}
+
+                {/* Icon with animation on hover */}
+                <div className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
+                  <service.icon className={`size-6 ${service.color} transition-transform duration-300 group-hover:scale-110`} />
+                </div>
+
+                {/* Content */}
+                <h3 className={`text-xl font-semibold mb-3 ${service.disabled ? "text-muted-foreground" : "text-foreground"}`}>
+                  {service.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {service.description}
+                </p>
+                
+                {/* Hover accent line - gradient border bottom */}
+                {!service.disabled && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-[#FEC700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                )}
+              </TiltCard>
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
       </div>
     </section>
