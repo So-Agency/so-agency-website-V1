@@ -215,8 +215,26 @@
 }
 
 @keyframes comet-travel {
-  0% { offset-distance: 0%; }
-  100% { offset-distance: 100%; }
+  0% {
+    top: -5px;
+    left: 0;
+  }
+  25% {
+    top: 0;
+    left: calc(100% + 5px);
+  }
+  50% {
+    top: calc(100% + 5px);
+    left: calc(100% + 5px);
+  }
+  75% {
+    top: calc(100% + 5px);
+    left: 0;
+  }
+  100% {
+    top: -5px;
+    left: 0;
+  }
 }
 
 @keyframes comet-blink {
@@ -243,8 +261,6 @@
   background: radial-gradient(circle, #3B9EFF, rgba(59, 158, 255, 0.4));
   border-radius: 50%;
   box-shadow: 0 0 8px 4px #3B9EFF, 0 0 16px 8px rgba(59, 158, 255, 0.5);
-  offset-path: inset(round 0.5rem);
-  offset-anchor: center;
   animation: comet-travel 4s linear infinite, comet-blink 1.5s ease-in-out infinite;
   z-index: 3;
   pointer-events: none;
