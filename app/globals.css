@@ -273,11 +273,11 @@
   background: repeating-linear-gradient(
     135deg,
     transparent,
-    transparent 20px,
-    rgba(59, 158, 255, 0.3) 20px,
-    rgba(254, 199, 0, 0.3) 40px,
-    transparent 40px,
-    transparent 60px
+    transparent 15px,
+    rgba(59, 158, 255, 0.6) 15px,
+    rgba(254, 199, 0, 0.6) 30px,
+    transparent 30px,
+    transparent 45px
   );
   background-size: 200% 200%;
   animation: sweep-stripes 4s linear infinite;
