@@ -210,16 +210,17 @@
 
 /* Rotating gradient border line */
 @keyframes rotate-border {
-  0% { background-position: 0deg; }
-  100% { background-position: 360deg; }
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 0%; }
 }
 
 .comet-border {
   position: relative;
   border-radius: 0.5rem;
-  background: linear-gradient(90deg, #FEC700, #FF6B35, #FEC700);
+  background: linear-gradient(90deg, #3B9EFF, #FEC700, #3B9EFF);
   background-size: 200% 100%;
   padding: 2px;
+  animation: rotate-border 4s linear infinite;
 }
 
 .comet-border::before {
