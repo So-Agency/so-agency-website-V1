@@ -214,6 +214,11 @@
   100% { background-position: 100% 0%; }
 }
 
+@keyframes comet-travel {
+  0% { offset-distance: 0%; }
+  100% { offset-distance: 100%; }
+}
+
 @keyframes comet-blink {
   0%, 100% { opacity: 1; box-shadow: 0 0 8px 4px #3B9EFF, 0 0 16px 8px rgba(59, 158, 255, 0.5); }
   50% { opacity: 0.3; box-shadow: 0 0 4px 2px #3B9EFF, 0 0 8px 4px rgba(59, 158, 255, 0.2); }
@@ -229,7 +234,7 @@
   animation: rotate-border 4s linear infinite;
 }
 
-/* Blinking comet glow at the start of the gradient */
+/* Comet glow traveling around the border */
 .comet-border::before {
   content: '';
   position: absolute;
@@ -237,10 +242,10 @@
   height: 10px;
   background: radial-gradient(circle, #3B9EFF, rgba(59, 158, 255, 0.4));
   border-radius: 50%;
-  top: -5px;
-  left: 0;
   box-shadow: 0 0 8px 4px #3B9EFF, 0 0 16px 8px rgba(59, 158, 255, 0.5);
-  animation: comet-blink 1.5s ease-in-out infinite;
+  offset-path: inset(round 0.5rem);
+  offset-anchor: center;
+  animation: comet-travel 4s linear infinite, comet-blink 1.5s ease-in-out infinite;
   z-index: 3;
   pointer-events: none;
 }
