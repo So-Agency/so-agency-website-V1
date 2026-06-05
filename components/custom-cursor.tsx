@@ -70,7 +70,7 @@ export function CustomCursor() {
             scaleY: speed > 2 ? Math.min(1 + speed * 0.04, 1.8) : 1,
             opacity: speed > 2 ? Math.min(0.75 + speed * 0.02, 1) : 0.75,
             duration: 0.15,
-            transformOrigin: "16px 26px"
+            transformOrigin: "16px 27px"
           })
         }
       }
@@ -106,7 +106,7 @@ export function CustomCursor() {
           scaleY: dir === "down" ? 0 : 2.2,
           opacity: dir === "down" ? 0 : 1,
           duration: 0.15,
-          transformOrigin: "16px 26px"
+          transformOrigin: "16px 27px"
         })
       }
 
@@ -129,7 +129,7 @@ export function CustomCursor() {
             scaleY: lastScrollDir.current === "down" ? 0 : 1,
             opacity: lastScrollDir.current === "down" ? 0 : 0.85,
             duration: 0.3,
-            transformOrigin: "16px 26px"
+            transformOrigin: "16px 27px"
           })
         }
       }, 150)
@@ -208,21 +208,25 @@ export function CustomCursor() {
             xmlns="http://www.w3.org/2000/svg"
           >
             <defs>
-              <linearGradient id="flameGrad" x1="16" y1="27" x2="16" y2="44" gradientUnits="userSpaceOnUse">
+              <linearGradient id="flameGrad" x1="16" y1="28" x2="16" y2="44" gradientUnits="userSpaceOnUse">
                 <stop offset="0%" stopColor="#FEC700" stopOpacity="1" />
                 <stop offset="40%" stopColor="#FF6B35" stopOpacity="0.9" />
                 <stop offset="100%" stopColor="#FF4433" stopOpacity="0" />
               </linearGradient>
-              <linearGradient id="flameGradCore" x1="16" y1="27" x2="16" y2="38" gradientUnits="userSpaceOnUse">
+              <linearGradient id="flameGradCore" x1="16" y1="28" x2="16" y2="38" gradientUnits="userSpaceOnUse">
                 <stop offset="0%" stopColor="#FFE066" stopOpacity="1" />
                 <stop offset="100%" stopColor="#FEC700" stopOpacity="0" />
               </linearGradient>
+              {/* Clip path to prevent flame from bleeding above nozzle */}
+              <clipPath id="flameClip">
+                <rect x="0" y="27" width="32" height="20" />
+              </clipPath>
             </defs>
 
-            {/* Flame — anchored at exhaust nozzle y=26.5, no white stops */}
-            <g ref={flameRef} style={{ transformOrigin: "16px 26px" }}>
-              <path d="M12.5 26.5 C11 31 10 35 12.5 39 C14 42 16 44 16 44 C16 44 18 42 19.5 39 C22 35 21 31 19.5 26.5 Z" fill="url(#flameGrad)" />
-              <path d="M14 26.5 C13.5 30 13 33 14.5 36 C15.2 37.5 16 39 16 39 C16 39 16.8 37.5 17.5 36 C19 33 18.5 30 18 26.5 Z" fill="url(#flameGradCore)" opacity="0.8" />
+            {/* Flame — clipped to only render below y=27 */}
+            <g ref={flameRef} clipPath="url(#flameClip)" style={{ transformOrigin: "16px 27px" }}>
+              <path d="M12 28 C10.5 32 10 36 12.5 40 C14 42.5 16 44 16 44 C16 44 18 42.5 19.5 40 C22 36 21.5 32 20 28 Z" fill="url(#flameGrad)" />
+              <path d="M13.5 28 C13 31 12.5 34 14.5 37 C15.2 38.5 16 40 16 40 C16 40 16.8 38.5 17.5 37 C19.5 34 19 31 18.5 28 Z" fill="url(#flameGradCore)" opacity="0.8" />
             </g>
 
             {/* Left fin */}
