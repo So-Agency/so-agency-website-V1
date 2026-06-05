@@ -83,10 +83,10 @@ export function Services() {
             {services.slice(0, 2).map((service, index) => (
               <ScrollReveal key={service.title} delay={index * 100}>
                 <TiltCard
-                  className={`relative group rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 transition-colors duration-300 card-shine overflow-hidden ${
+                  className={`relative group rounded-2xl border border-white/[0.08] bg-white/[0.01] backdrop-blur-[2px] p-6 transition-colors duration-300 card-shine overflow-hidden ${
                     service.disabled 
                       ? "opacity-60" 
-                      : `hover:border-[#FEC700]/50 hover:bg-white/[0.06] ${service.borderGlow}`
+                      : `hover:border-[#FEC700]/50 hover:bg-white/[0.03] ${service.borderGlow}`
                   }`}
                   max={service.disabled ? 0 : 6}
                   scale={service.disabled ? 1 : 1.02}
@@ -125,10 +125,10 @@ export function Services() {
             {services.slice(2, 5).map((service, index) => (
               <ScrollReveal key={service.title} delay={index * 100}>
                 <TiltCard
-                  className={`relative group rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 transition-colors duration-300 card-shine overflow-hidden h-full ${
+                  className={`relative group rounded-2xl border border-white/[0.08] bg-white/[0.01] backdrop-blur-[2px] p-6 transition-colors duration-300 card-shine overflow-hidden h-full ${
                     service.disabled 
                       ? "opacity-60" 
-                      : `hover:border-[#FEC700]/50 hover:bg-white/[0.06] ${service.borderGlow}`
+                      : `hover:border-[#FEC700]/50 hover:bg-white/[0.03] ${service.borderGlow}`
                   }`}
                   max={service.disabled ? 0 : 6}
                   scale={service.disabled ? 1 : 1.02}
@@ -167,10 +167,10 @@ export function Services() {
             {services.slice(5).map((service) => (
               <ScrollReveal key={service.title}>
                 <TiltCard
-                  className={`relative group rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 transition-colors duration-300 card-shine overflow-hidden ${
+                  className={`relative group rounded-2xl border border-white/[0.08] bg-white/[0.01] backdrop-blur-[2px] p-6 transition-colors duration-300 card-shine overflow-hidden ${
                     service.disabled 
                       ? "opacity-60" 
-                      : `hover:border-[#FEC700]/50 hover:bg-white/[0.06] ${service.borderGlow}`
+                      : `hover:border-[#FEC700]/50 hover:bg-white/[0.03] ${service.borderGlow}`
                   }`}
                   max={service.disabled ? 0 : 6}
                   scale={service.disabled ? 1 : 1.02}
