@@ -208,41 +208,32 @@
   box-shadow: 0 0 30px oklch(0.85 0.18 90 / 0.5);
 }
 
-/* Comet border effect - rotating gradient border */
-@keyframes spin-border {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+/* Rotating gradient border line */
+@keyframes rotate-border {
+  0% { background-position: 0deg; }
+  100% { background-position: 360deg; }
 }
 
 .comet-border {
   position: relative;
-  isolation: isolate;
   border-radius: 0.5rem;
+  background: linear-gradient(90deg, #FEC700, #FF6B35, #FEC700);
+  background-size: 200% 100%;
+  padding: 2px;
 }
 
-/* Rotating gradient layer - sits behind button */
 .comet-border::before {
   content: '';
   position: absolute;
-  z-index: -1;
-  inset: -2px;
-  border-radius: inherit;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    transparent 260deg,
-    rgba(255, 255, 255, 0.2) 280deg,
-    rgba(255, 255, 255, 0.5) 320deg,
-    rgba(255, 255, 255, 0.8) 350deg,
-    #FFFFFF 360deg
-  );
-  animation: spin-border 4s linear infinite;
-  pointer-events: none;
+  inset: 2px;
+  background: #FEC700;
+  border-radius: calc(0.5rem - 2px);
+  z-index: 1;
 }
 
 .comet-border > * {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* Blink/pulse animation for icons */
