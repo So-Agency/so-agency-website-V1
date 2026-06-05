@@ -80,11 +80,17 @@ export function Services() {
         </div>
 
         {/* Bento grid */}
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {services.map((service) => (
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {services.map((service, index) => (
             <TiltCard
               key={service.title}
-              className={`${service.size} relative group rounded-2xl border border-border bg-card/30 p-6 transition-colors duration-300 card-shine overflow-hidden ${
+              className={`${
+                index === 0 || index === 1 
+                  ? "md:col-span-1" 
+                  : index === 5 
+                  ? "md:col-span-2 lg:col-span-1"
+                  : "md:col-span-1"
+              } relative group rounded-2xl border border-border bg-card/30 p-6 transition-colors duration-300 card-shine overflow-hidden ${
                 service.disabled 
                   ? "opacity-60" 
                   : `hover:border-[#FEC700]/50 ${service.borderGlow}`
