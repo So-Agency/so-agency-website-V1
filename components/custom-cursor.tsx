@@ -101,11 +101,10 @@ export function CustomCursor() {
           ease: "power2.out"
         })
         
-        // Hide flame when scrolling down (rocket points down), show intensified when scrolling up
+        // Hide flame completely during active scrolling to prevent artifacts
         gsap.to(flame, {
-          scaleY: dir === "down" ? 0 : 2.2,
-          opacity: dir === "down" ? 0 : 1,
-          duration: 0.15,
+          opacity: 0,
+          duration: 0.1,
           transformOrigin: "16px 27px"
         })
       }
@@ -124,11 +123,11 @@ export function CustomCursor() {
             duration: 0.4,
             ease: "elastic.out(1, 0.5)"
           })
-          // Keep flame hidden if pointing down, show if pointing up
+          // Show flame only when pointing up (after scroll stops), hide when pointing down
           gsap.to(flame, {
             scaleY: lastScrollDir.current === "down" ? 0 : 1,
-            opacity: lastScrollDir.current === "down" ? 0 : 0.85,
-            duration: 0.3,
+            opacity: lastScrollDir.current === "down" ? 0 : 0.8,
+            duration: 0.4,
             transformOrigin: "16px 27px"
           })
         }
