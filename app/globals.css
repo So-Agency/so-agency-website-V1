@@ -208,7 +208,7 @@
   box-shadow: 0 0 30px oklch(0.85 0.18 90 / 0.5);
 }
 
-/* Rotating gradient border line */
+/* Rotating gradient border line - synced with comet at 4s */
 @keyframes rotate-border {
   0% { background-position: 0% 0%; }
   100% { background-position: 100% 0%; }
@@ -240,15 +240,15 @@
 @keyframes comet-blink {
   0% { 
     opacity: 1; 
-    box-shadow: 0 0 6px 3px #3B9EFF, 0 0 12px 6px rgba(59, 158, 255, 0.8); 
+    box-shadow: 0 0 4px 2px #3B9EFF, 0 0 8px 4px rgba(59, 158, 255, 0.7); 
   }
   50% { 
     opacity: 1; 
-    box-shadow: 0 0 6px 3px #FEC700, 0 0 12px 6px rgba(254, 199, 0, 0.8); 
+    box-shadow: 0 0 4px 2px #FEC700, 0 0 8px 4px rgba(254, 199, 0, 0.7); 
   }
   100% { 
     opacity: 1; 
-    box-shadow: 0 0 6px 3px #3B9EFF, 0 0 12px 6px rgba(59, 158, 255, 0.8); 
+    box-shadow: 0 0 4px 2px #3B9EFF, 0 0 8px 4px rgba(59, 158, 255, 0.7); 
   }
 }
 
@@ -270,7 +270,7 @@
   height: 6px;
   background: radial-gradient(circle, #3B9EFF, rgba(59, 158, 255, 0.6));
   border-radius: 50%;
-  box-shadow: 0 0 10px 5px #3B9EFF, 0 0 20px 10px rgba(59, 158, 255, 0.8);
+  box-shadow: 0 0 4px 2px #3B9EFF, 0 0 8px 4px rgba(59, 158, 255, 0.7);
   animation: comet-travel 4s linear infinite, comet-blink 1.5s ease-in-out infinite;
   z-index: 3;
   pointer-events: none;
