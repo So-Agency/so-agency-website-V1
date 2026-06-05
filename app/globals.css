@@ -212,7 +212,7 @@
 @property --rotation {
   syntax: '<angle>';
   initial-value: 0deg;
-  inherits: false;
+  inherits: true;
 }
 
 @keyframes rotate-gradient {
@@ -225,8 +225,6 @@
   isolation: isolate;
   border-radius: 0.5rem;
   overflow: visible;
-  --rotation: 0deg;
-  animation: rotate-gradient 6s linear infinite;
 }
 
 /* Glowing gradient border */
@@ -250,6 +248,7 @@
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
+  animation: rotate-gradient 6s linear infinite;
 }
 
 .comet-border > * {
