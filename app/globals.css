@@ -252,29 +252,39 @@
   }
 }
 
-/* Diagonal sweeping gradient stripe */
-@keyframes sweep-gradient {
-  0% { background-position: -200% 0%; }
-  100% { background-position: 200% 0%; }
+/* Rotating border gradient */
+@keyframes rotate-border {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .comet-border {
   position: relative;
   display: inline-block;
   border-radius: 0.5rem;
-  background: linear-gradient(
-    135deg,
-    transparent 0%,
-    transparent 30%,
-    #3B9EFF 45%,
-    #FEC700 50%,
-    transparent 55%,
-    transparent 100%
-  );
-  background-size: 200% 200%;
-  background-position: 0% 0%;
   padding: 2px;
-  animation: sweep-gradient 4s linear infinite;
+  background: #FEC700;
+}
+
+/* Gradient border line around button */
+.comet-border::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(
+    from 0deg,
+    #3B9EFF,
+    #FEC700,
+    #3B9EFF
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: rotate-border 4s linear infinite;
+  pointer-events: none;
 }
 
 .comet-border > * {
