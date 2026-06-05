@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 
 interface Star {
   id: number
@@ -15,6 +15,7 @@ interface Star {
 
 export function StarBackground() {
   const [stars, setStars] = useState<Star[]>([])
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     // Check if mobile for reduced star count
@@ -28,21 +29,36 @@ export function StarBackground() {
       size: Math.random() * 2 + 1,
       delay: Math.random() * 3,
       // Drift animation parameters - slow universe movement
-      driftX: (Math.random() - 0.5) * 30, // -15 to 15 pixels drift
-      driftY: (Math.random() - 0.5) * 30,
-      driftDuration: 20 + Math.random() * 20, // 20-40 seconds per cycle
+      driftX: (Math.random() - 0.5) * 40, // -20 to 20 pixels drift
+      driftY: (Math.random() - 0.5) * 40,
+      driftDuration: 15 + Math.random() * 15, // 15-30 seconds per cycle
     }))
     setStars(generatedStars)
+
+    // Inject keyframes into document head
+    const styleId = 'star-drift-styles'
+    if (!document.getElementById(styleId)) {
+      const style = document.createElement('style')
+      style.id = styleId
+      style.textContent = `
+        @keyframes star-drift-1 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(20px, 15px); } }
+        @keyframes star-drift-2 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-15px, 20px); } }
+        @keyframes star-drift-3 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(18px, -12px); } }
+        @keyframes star-drift-4 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-20px, -18px); } }
+        @keyframes star-drift-5 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(12px, 22px); } }
+      `
+      document.head.appendChild(style)
+    }
   }, [])
 
+  const getDriftAnimation = (id: number) => {
+    const variant = (id % 5) + 1
+    const duration = 15 + (id % 15) // 15-30 seconds
+    return `star-drift-${variant} ${duration}s ease-in-out infinite`
+  }
+
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-      <style jsx>{`
-        @keyframes star-drift {
-          0%, 100% { transform: translate(0, 0); }
-          50% { transform: translate(var(--dx), var(--dy)); }
-        }
-      `}</style>
+    <div ref={containerRef} className="fixed inset-0 overflow-hidden pointer-events-none z-0">
       {stars.map((star) => (
         <div
           key={star.id}
@@ -52,11 +68,8 @@ export function StarBackground() {
             top: `${star.y}%`,
             width: `${star.size}px`,
             height: `${star.size}px`,
-            opacity: 0.4,
-            animation: `twinkle 3s ease-in-out infinite ${star.delay}s, star-drift ${star.driftDuration}s ease-in-out infinite`,
-            // @ts-expect-error CSS custom properties
-            '--dx': `${star.driftX}px`,
-            '--dy': `${star.driftY}px`,
+            opacity: 0.5,
+            animation: `twinkle 3s ease-in-out infinite ${star.delay}s, ${getDriftAnimation(star.id)}`,
           }}
         />
       ))}
