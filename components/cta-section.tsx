@@ -13,7 +13,7 @@ export function CTASection() {
       <div className="max-w-4xl mx-auto">
         <div 
           ref={sectionRef}
-          className="relative rounded-2xl bg-primary/10 backdrop-blur-lg border border-white/10 p-8 sm:p-12 text-center overflow-hidden"
+          className="relative rounded-2xl bg-primary/[0.05] backdrop-blur-sm border border-white/10 p-8 sm:p-12 text-center overflow-hidden"
         >
           {/* Decorative elements */}
           <div className="absolute top-0 right-0 size-64 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
