@@ -208,10 +208,16 @@
   box-shadow: 0 0 30px oklch(0.85 0.18 90 / 0.5);
 }
 
-/* Comet border effect - subtle rotating gradient */
-@keyframes comet-travel {
-  0% { offset-distance: 0%; }
-  100% { offset-distance: 100%; }
+/* Comet border effect - rotating gradient border */
+@property --rotation {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotate-gradient {
+  0% { --rotation: 0deg; }
+  100% { --rotation: 360deg; }
 }
 
 .comet-border {
@@ -219,25 +225,31 @@
   isolation: isolate;
   border-radius: 0.5rem;
   overflow: visible;
+  --rotation: 0deg;
+  animation: rotate-gradient 6s linear infinite;
 }
 
-/* Glowing gradient point traveling around border at constant velocity */
+/* Glowing gradient border */
 .comet-border::before {
   content: '';
   position: absolute;
-  width: 12px;
-  height: 12px;
-  background: radial-gradient(circle, #FEC700, rgba(254, 199, 0, 0.3));
-  border-radius: 50%;
-  box-shadow: 0 0 8px 2px rgba(254, 199, 0, 0.5);
-  inset: -1px;
-  offset-path: inset(
-    calc(0.5rem / 2) calc(0.5rem / 2) 
-    round 0.5rem
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--rotation),
+    transparent 0deg,
+    transparent 280deg,
+    rgba(254, 199, 0, 0.2) 300deg,
+    rgba(254, 199, 0, 0.5) 330deg,
+    #FEC700 355deg,
+    #FFE066 360deg
   );
-  offset-anchor: center;
-  offset-position: normal;
-  animation: comet-travel 6s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 .comet-border > * {
