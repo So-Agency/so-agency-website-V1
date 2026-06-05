@@ -70,11 +70,11 @@ export function Services() {
     <section id="services" className="py-24 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
-        <div className="text-center mb-16">
-          <h2 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl font-bold text-foreground mb-4">
+        <div className="text-center mb-16 section-header">
+          <h2 className="scroll-reveal-title font-[family-name:var(--font-display)] text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Core Systems
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="scroll-reveal text-lg text-muted-foreground max-w-2xl mx-auto">
             Specialized services designed to ensure total business success across all digital channels.
           </p>
         </div>
@@ -82,11 +82,11 @@ export function Services() {
         {/* Bento grid - Row 1: 2 cols | Row 2: 3 cols | Row 3: 3 cols, card left-aligned */}
         <div className="space-y-4">
           {/* Row 1: First 2 cards - 2 columns */}
-          <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-4 scroll-stagger">
             {services.slice(0, 2).map((service, index) => (
               <TiltCard
                 key={service.title}
-                className={`relative group rounded-2xl border border-border bg-card/30 p-6 transition-colors duration-300 card-shine overflow-hidden ${
+                className={`scroll-reveal relative group rounded-2xl border border-border bg-card/30 p-6 transition-colors duration-300 card-shine overflow-hidden ${
                   service.disabled 
                     ? "opacity-60" 
                     : `hover:border-[#FEC700]/50 ${service.borderGlow}`
@@ -123,11 +123,11 @@ export function Services() {
           </div>
 
           {/* Row 2: Next 3 cards - 3 columns */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 scroll-stagger">
             {services.slice(2, 5).map((service) => (
               <TiltCard
                 key={service.title}
-                className={`relative group rounded-2xl border border-border bg-card/30 p-6 transition-colors duration-300 card-shine overflow-hidden ${
+                className={`scroll-reveal relative group rounded-2xl border border-border bg-card/30 p-6 transition-colors duration-300 card-shine overflow-hidden ${
                   service.disabled 
                     ? "opacity-60" 
                     : `hover:border-[#FEC700]/50 ${service.borderGlow}`
@@ -168,7 +168,7 @@ export function Services() {
             {services.slice(5).map((service) => (
               <TiltCard
                 key={service.title}
-                className={`relative group rounded-2xl border border-border bg-card/30 p-6 transition-colors duration-300 card-shine overflow-hidden ${
+                className={`scroll-reveal relative group rounded-2xl border border-border bg-card/30 p-6 transition-colors duration-300 card-shine overflow-hidden ${
                   service.disabled 
                     ? "opacity-60" 
                     : `hover:border-[#FEC700]/50 ${service.borderGlow}`

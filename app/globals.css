@@ -427,3 +427,175 @@
     transform: scale(0.98);
   }
 }
+
+/* ============================================
+   SCROLL-DRIVEN ANIMATIONS (2026 Trends)
+   ============================================ */
+
+/* Fade up reveal animation */
+@keyframes fade-up-reveal {
+  from { 
+    opacity: 0; 
+    transform: translateY(40px);
+    filter: blur(4px);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Fade in from left */
+@keyframes fade-left-reveal {
+  from { 
+    opacity: 0; 
+    transform: translateX(-30px);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateX(0);
+  }
+}
+
+/* Fade in from right */
+@keyframes fade-right-reveal {
+  from { 
+    opacity: 0; 
+    transform: translateX(30px);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateX(0);
+  }
+}
+
+/* Scale reveal */
+@keyframes scale-reveal {
+  from { 
+    opacity: 0; 
+    transform: scale(0.9);
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1);
+  }
+}
+
+/* Text blur reveal */
+@keyframes text-blur-reveal {
+  from { 
+    opacity: 0; 
+    filter: blur(10px);
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1; 
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+/* Gradient line grow */
+@keyframes line-grow {
+  from { 
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to { 
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+/* Scroll-triggered reveal classes */
+@supports (animation-timeline: view()) {
+  .scroll-reveal {
+    animation: fade-up-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 100%;
+  }
+
+  .scroll-reveal-left {
+    animation: fade-left-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 100%;
+  }
+
+  .scroll-reveal-right {
+    animation: fade-right-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 100%;
+  }
+
+  .scroll-reveal-scale {
+    animation: scale-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 100%;
+  }
+
+  .scroll-reveal-title {
+    animation: text-blur-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 80%;
+  }
+
+  .scroll-reveal-line {
+    animation: line-grow linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 100%;
+    transform-origin: left center;
+  }
+
+  /* Stagger delays for children */
+  .scroll-stagger > *:nth-child(1) { animation-delay: 0ms; }
+  .scroll-stagger > *:nth-child(2) { animation-delay: 50ms; }
+  .scroll-stagger > *:nth-child(3) { animation-delay: 100ms; }
+  .scroll-stagger > *:nth-child(4) { animation-delay: 150ms; }
+  .scroll-stagger > *:nth-child(5) { animation-delay: 200ms; }
+  .scroll-stagger > *:nth-child(6) { animation-delay: 250ms; }
+}
+
+/* Fallback for browsers without scroll-driven animation support */
+@supports not (animation-timeline: view()) {
+  .scroll-reveal,
+  .scroll-reveal-left,
+  .scroll-reveal-right,
+  .scroll-reveal-scale,
+  .scroll-reveal-title,
+  .scroll-reveal-line {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* Section header animation wrapper */
+.section-header {
+  position: relative;
+}
+
+.section-header::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #3B9EFF, #FEC700);
+  margin: 1rem auto 0;
+  border-radius: 2px;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,
+  .scroll-reveal-left,
+  .scroll-reveal-right,
+  .scroll-reveal-scale,
+  .scroll-reveal-title,
+  .scroll-reveal-line {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}

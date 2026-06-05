@@ -20,22 +20,22 @@ export function CTASection() {
           
           <div className="relative z-10">
             {/* Icon */}
-            <div className="size-16 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center mx-auto mb-6">
+            <div className="scroll-reveal-scale size-16 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center mx-auto mb-6">
               <Rocket className="size-8 text-primary" />
             </div>
 
             {/* Headline */}
-            <h2 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl font-bold text-foreground mb-4 text-balance">
+            <h2 className="scroll-reveal-title font-[family-name:var(--font-display)] text-3xl sm:text-4xl font-bold text-foreground mb-4 text-balance">
               Ready to Launch Your Digital Presence?
             </h2>
 
             {/* Subtext */}
-            <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-8">
+            <p className="scroll-reveal text-lg text-muted-foreground max-w-xl mx-auto mb-8">
               Let&apos;s talk about your project and how we can help you reach new heights. Book a free diagnostic call today.
             </p>
 
             {/* CTA buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="scroll-reveal flex flex-col sm:flex-row items-center justify-center gap-4">
               <div className="comet-border rounded-lg">
                 <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 transition-all text-base px-8">
                   <a href="mailto:hello@soagency.dev">

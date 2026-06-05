@@ -41,19 +41,19 @@ export function Process() {
     <section id="process" className="py-24 px-4 sm:px-6 bg-secondary/30">
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
-        <div className="text-center mb-16">
-          <h2 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl font-bold text-foreground mb-4">
+        <div className="text-center mb-16 section-header">
+          <h2 className="scroll-reveal-title font-[family-name:var(--font-display)] text-3xl sm:text-4xl font-bold text-foreground mb-4">
             How We Work
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="scroll-reveal text-lg text-muted-foreground max-w-2xl mx-auto">
             A proven process that takes you from idea to impact. Clear, collaborative, and built for speed.
           </p>
         </div>
 
         {/* Process steps */}
-        <div ref={stepsRef} className="grid md:grid-cols-4 gap-8">
+        <div ref={stepsRef} className="grid md:grid-cols-4 gap-8 scroll-stagger">
           {steps.map((step, index) => (
-            <div key={step.number} className="timeline-item relative group">
+            <div key={step.number} className="timeline-item relative group scroll-reveal">
               {/* Connector line */}
               {index < steps.length - 1 && (
                 <div className="timeline-line hidden md:block absolute top-8 left-1/2 w-full h-px bg-gradient-to-r from-primary/50 to-primary/10 origin-left" />

@@ -23,20 +23,20 @@ export function Team() {
     <section id="team" className="py-24 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Section header */}
-        <div className="text-center mb-16">
-          <h2 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl font-bold text-foreground mb-4">
+        <div className="text-center mb-16 section-header">
+          <h2 className="scroll-reveal-title font-[family-name:var(--font-display)] text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Our Leadership
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="scroll-reveal text-lg text-muted-foreground max-w-2xl mx-auto">
             The crew behind your mission to success.
           </p>
         </div>
 
         {/* Team grid */}
-        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
+        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto scroll-stagger">
           {/* Team members */}
           {team.map((member) => (
-            <div key={member.name} className="group">
+            <div key={member.name} className="group scroll-reveal">
               <TiltCard
                 className="relative aspect-[3/4] rounded-xl overflow-hidden border border-border/50 bg-card/30 mb-4 transition-colors duration-300 group-hover:border-[#FEC700]/50 group-hover:shadow-[0_0_40px_-10px] group-hover:shadow-[#FEC700]/30"
                 max={8}
