@@ -5,6 +5,7 @@ import './globals.css'
 import { Geist, Geist_Mono, Audiowide, Roboto } from 'next/font/google'
 import { SmoothScroll } from '@/components/smooth-scroll'
 import { CustomCursor } from '@/components/custom-cursor'
+import { StarBackground } from '@/components/star-background'
 
 // Initialize fonts
 const _geist = Geist({ subsets: ['latin'], weight: ["100","200","300","400","500","600","700","800","900"] })
@@ -43,6 +44,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark bg-background scroll-smooth">
       <body className={`font-sans antialiased ${_audiowide.variable} ${_roboto.variable}`}>
+        <StarBackground />
         <CustomCursor />
         <SmoothScroll>
           {children}

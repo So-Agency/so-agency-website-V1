@@ -1,7 +1,6 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { StarBackground } from "@/components/star-background"
 import { ArrowRight, Rocket } from "lucide-react"
 import { useHeroAnimation } from "@/hooks/use-gsap-animations"
 
@@ -12,9 +11,6 @@ export function Hero() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-background to-background" />
-      
-      {/* Stars */}
-      <StarBackground />
 
       {/* Content */}
       <div ref={heroRef} className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center pt-20">

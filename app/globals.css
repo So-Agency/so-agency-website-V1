@@ -195,6 +195,16 @@
   50% { opacity: 1; }
 }
 
+/* Slow universe drift - super slow movement like real stars */
+@keyframes star-drift {
+  0%, 100% { 
+    transform: translate(0, 0); 
+  }
+  50% { 
+    transform: translate(var(--drift-x, 10px), var(--drift-y, 10px)); 
+  }
+}
+
 .animate-twinkle {
   animation: twinkle 3s ease-in-out infinite;
 }
