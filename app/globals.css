@@ -254,8 +254,8 @@
 
 /* Diagonal gradient stripes sweeping across button */
 @keyframes sweep-stripes {
-  0% { background-position: 0% 0%; }
-  100% { background-position: 100% 100%; }
+  0% { background-position: -200% -200%; }
+  100% { background-position: 200% 200%; }
 }
 
 .comet-border {
@@ -273,16 +273,17 @@
   background: repeating-linear-gradient(
     135deg,
     transparent,
-    transparent 15px,
-    rgba(59, 158, 255, 0.6) 15px,
-    rgba(254, 199, 0, 0.6) 30px,
-    transparent 30px,
-    transparent 45px
+    transparent 20px,
+    #3B9EFF 20px,
+    #FEC700 40px,
+    transparent 40px,
+    transparent 60px
   );
-  background-size: 200% 200%;
+  background-size: 300% 300%;
   animation: sweep-stripes 4s linear infinite;
   z-index: 1;
   pointer-events: none;
+  overflow: hidden;
 }
 
 .comet-border > * {
