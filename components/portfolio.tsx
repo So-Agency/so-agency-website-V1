@@ -55,10 +55,13 @@ export function Portfolio() {
   const carouselRef = useRef<HTMLDivElement>(null)
   const touchStartX = useRef(0)
   const touchEndX = useRef(0)
+  const isAnimatingRef = useRef(false)
+  const currentIndexRef = useRef(0)
 
   // Direction: 1 = next (left to right), -1 = prev (right to left)
   const animateSlide = useCallback((newIndex: number, direction: 1 | -1 = 1) => {
-    if (isAnimating || newIndex === currentIndex) return
+    if (isAnimatingRef.current || newIndex === currentIndexRef.current) return
+    isAnimatingRef.current = true
     setIsAnimating(true)
 
     const slideOutX = direction === 1 ? -60 : 60
@@ -66,7 +69,9 @@ export function Portfolio() {
 
     const tl = gsap.timeline({
       onComplete: () => {
+        currentIndexRef.current = newIndex
         setCurrentIndex(newIndex)
+        isAnimatingRef.current = false
         setIsAnimating(false)
       }
     })
@@ -97,23 +102,23 @@ export function Portfolio() {
       { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" },
       0.5
     )
-  }, [isAnimating, currentIndex])
+  }, [])
 
   const nextSlide = useCallback(() => {
-    const newIndex = (currentIndex + 1) % projects.length
+    const newIndex = (currentIndexRef.current + 1) % projects.length
     animateSlide(newIndex, 1)
-  }, [currentIndex, animateSlide])
+  }, [animateSlide])
 
   const prevSlide = useCallback(() => {
-    const newIndex = (currentIndex - 1 + projects.length) % projects.length
+    const newIndex = (currentIndexRef.current - 1 + projects.length) % projects.length
     animateSlide(newIndex, -1)
-  }, [currentIndex, animateSlide])
+  }, [animateSlide])
 
   const goToSlide = useCallback((index: number) => {
-    if (index === currentIndex) return
-    const direction = index > currentIndex ? 1 : -1
+    if (index === currentIndexRef.current) return
+    const direction = index > currentIndexRef.current ? 1 : -1
     animateSlide(index, direction)
-  }, [currentIndex, animateSlide])
+  }, [animateSlide])
 
   // Touch swipe handlers
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
@@ -139,16 +144,24 @@ export function Portfolio() {
     }
   }, [nextSlide, prevSlide])
 
-  // Autoplay
+  // Autoplay - doesn't depend on nextSlide to prevent recreating interval
   useEffect(() => {
     if (!isAutoPlaying) return
-    const interval = setInterval(nextSlide, 5000)
+
+    const interval = setInterval(() => {
+      if (!isAnimatingRef.current) {
+        const newIndex = (currentIndexRef.current + 1) % projects.length
+        animateSlide(newIndex, 1)
+      }
+    }, 5000)
+
     return () => clearInterval(interval)
-  }, [isAutoPlaying, nextSlide])
+  }, [isAutoPlaying, animateSlide])
 
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (isAnimatingRef.current) return
       if (e.key === "ArrowLeft") prevSlide()
       if (e.key === "ArrowRight") nextSlide()
     }
