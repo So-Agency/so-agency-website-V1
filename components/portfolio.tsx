@@ -67,14 +67,7 @@ export function Portfolio() {
     const slideOutX = direction === 1 ? -60 : 60
     const slideInX = direction === 1 ? 60 : -60
 
-    const tl = gsap.timeline({
-      onComplete: () => {
-        currentIndexRef.current = newIndex
-        setCurrentIndex(newIndex)
-        isAnimatingRef.current = false
-        setIsAnimating(false)
-      }
-    })
+    const tl = gsap.timeline()
 
     // Animate out - slide in opposite direction
     tl.to(imageRef.current, {
@@ -91,17 +84,39 @@ export function Portfolio() {
       ease: "power2.in"
     }, 0.05)
 
+    // Update currentIndex RIGHT AFTER out-animation completes
+    // This ensures new content is rendered BEFORE in-animation starts
+    tl.add(() => {
+      currentIndexRef.current = newIndex
+      setCurrentIndex(newIndex)
+    }, 0.35)
+
+    // Pre-set incoming elements to animation start state (before animation starts)
+    // This ensures they're positioned correctly when they enter the DOM
+    tl.set([imageRef.current, contentRef.current], {
+      opacity: 0,
+      x: slideInX,
+      scale: 1.02
+    }, 0.35)
+    tl.set(contentRef.current, {
+      x: slideInX * 0.5
+    }, 0.35)
+
     // Animate in - slide from direction side
-    tl.fromTo(imageRef.current, 
-      { opacity: 0, x: slideInX, scale: 1.02 },
+    tl.to(imageRef.current, 
       { opacity: 1, x: 0, scale: 1, duration: 0.45, ease: "power2.out" },
-      0.4
+      0.35
     )
-    tl.fromTo(contentRef.current,
-      { opacity: 0, x: slideInX * 0.5 },
+    tl.to(contentRef.current,
       { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" },
-      0.5
+      0.35
     )
+
+    // Mark animation complete after everything finishes
+    tl.add(() => {
+      isAnimatingRef.current = false
+      setIsAnimating(false)
+    })
   }, [])
 
   const nextSlide = useCallback(() => {
