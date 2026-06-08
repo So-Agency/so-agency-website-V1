@@ -275,7 +275,7 @@ export function Portfolio() {
         >
           {/* Image */}
           <div key={`image-${currentProject.id}`} ref={imageRef} className="relative group">
-            <div className="relative aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden border border-border bg-card/30">
+            <div className="relative aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-border bg-card/30">
               {/* Slide counter */}
               <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 bg-background/80 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium text-foreground">
                 {String(currentIndex + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
