@@ -218,7 +218,7 @@ export function Portfolio() {
         {/* Section header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 sm:mb-12">
           <div>
-            <p className="text-sm font-medium text-[#FEC700] uppercase tracking-widest mb-2">Selected Work</p>
+            <p className="text-sm font-medium text-accent uppercase tracking-widest mb-2">Selected Work</p>
             <h2 className="font-[family-name:var(--font-display)] text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
               Turning Ideas Into Masterpieces
             </h2>
@@ -297,7 +297,7 @@ export function Portfolio() {
               {currentProject.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-border text-xs sm:text-sm text-muted-foreground hover:border-[#FEC700]/50 hover:text-foreground transition-colors cursor-default"
+                  className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-border text-xs sm:text-sm text-muted-foreground hover:border-accent/50 hover:text-foreground transition-colors cursor-default"
                 >
                   {tag}
                 </span>
@@ -325,7 +325,7 @@ export function Portfolio() {
                 onClick={() => goToSlide(index)}
                 className={`h-1 rounded-full transition-all duration-300 ${
                   index === currentIndex 
-                    ? "flex-1 bg-[#FEC700]" 
+                    ? "flex-1 bg-accent" 
                     : "w-6 sm:w-8 bg-border hover:bg-muted-foreground/50"
                 }`}
                 aria-label={`Go to project ${index + 1}`}
