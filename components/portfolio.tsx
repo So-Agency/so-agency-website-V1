@@ -114,6 +114,14 @@ export function Portfolio() {
     const direction = directionRef.current
     const slideInX = direction === 1 ? 60 : -60
 
+    // CRITICAL: set the hidden start state SYNCHRONOUSLY (before browser paint).
+    // useLayoutEffect runs after the DOM commit but before paint, so a direct
+    // gsap.set() hides the freshly-remounted image + text on the same frame they
+    // mount. Using tl.set() inside a timeline would defer this to the next frame,
+    // causing a one-frame flash of the new slide at full opacity.
+    gsap.set(imageRef.current, { opacity: 0, x: slideInX, scale: 1.02 })
+    gsap.set(contentRef.current, { opacity: 0, x: slideInX * 0.5 })
+
     const tl = gsap.timeline({
       onComplete: () => {
         isAnimatingRef.current = false
@@ -121,11 +129,7 @@ export function Portfolio() {
       },
     })
 
-    // Both elements start from the same hidden, offset state.
-    tl.set(imageRef.current, { opacity: 0, x: slideInX, scale: 1.02 }, 0)
-    tl.set(contentRef.current, { opacity: 0, x: slideInX * 0.5 }, 0)
-
-    // Animate in together.
+    // Animate the new image + text in together as one synchronized unit.
     tl.to(imageRef.current, {
       opacity: 1,
       x: 0,
