@@ -1,7 +1,7 @@
 "use client"
 
 import { Code, Palette, ShoppingCart, Fingerprint, Megaphone, Bot } from "lucide-react"
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useStaggerChildren } from "@/hooks/use-gsap-animations"
@@ -111,15 +111,45 @@ export function Services() {
   )
 }
 
-// Service card component with view-based animations
+// Service card component with desktop hover + mobile in-view/tap interactions
 function ServiceCard({ service, index }: { service: typeof services[0]; index: number }) {
   const cardRef = useRef<HTMLDivElement>(null)
   const iconRef = useRef<HTMLDivElement>(null)
+  const [isInView, setIsInView] = useState(false)
+  const [isTapped, setIsTapped] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
+  // Detect mobile on mount
   useEffect(() => {
-    if (!cardRef.current) return
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia("(max-width: 768px)").matches)
+    }
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
 
-    // Timeline for card animations on scroll
+  // Mobile: Use Intersection Observer to detect when card is 40% visible
+  useEffect(() => {
+    if (!cardRef.current || !isMobile) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
+          setIsInView(true)
+        }
+      },
+      { threshold: 0.4 }
+    )
+
+    observer.observe(cardRef.current)
+    return () => observer.disconnect()
+  }, [isMobile])
+
+  // Desktop: Use GSAP ScrollTrigger for staggered animations (hover-ready state)
+  useEffect(() => {
+    if (!cardRef.current || isMobile) return
+
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: cardRef.current,
@@ -128,44 +158,59 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
       },
     })
 
-    // On mobile/touch: trigger animations when card comes into view
-    // On desktop: animations are triggered by hover (via CSS group-hover)
-    tl.fromTo(
-      iconRef.current,
-      { scale: 1, rotation: 0, y: 0 },
-      { 
-        scale: 1.1, 
-        rotation: 6, 
-        y: -4,
-        duration: 0.6,
-        ease: "back.out(1.5)",
-      },
-      0
-    )
-
+    // Just fade in on scroll, actual animation happens on hover via CSS
     tl.fromTo(
       cardRef.current,
-      { borderColor: "rgba(255, 255, 255, 0.08)" },
-      {
-        borderColor: "rgba(255, 255, 255, 0.15)",
-        boxShadow: `0 0 30px -5px ${service.color === "text-accent" ? "rgba(254, 199, 0, 0.3)" : "rgba(255, 255, 255, 0.1)"}`,
-        duration: 0.6,
-        ease: "power2.out",
-      },
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
       0
     )
 
     return () => {
       tl.kill()
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
     }
-  }, [service.color])
+  }, [isMobile])
+
+  // Mobile: Animate when card comes into view or is tapped
+  useEffect(() => {
+    if (!isMobile || !iconRef.current) return
+    if (!isInView && !isTapped) return
+
+    // Only animate once when first coming into view
+    if (!isTapped && isInView) {
+      const tl = gsap.timeline()
+      tl.fromTo(
+        iconRef.current,
+        { scale: 1, rotation: 0 },
+        { scale: 1.1, rotation: 6, duration: 0.5, ease: "back.out(1.5)" }
+      )
+    }
+  }, [isInView, isTapped, isMobile])
+
+  // Handle tap on mobile to toggle active state
+  const handleTap = () => {
+    if (!isMobile) return
+    setIsTapped(!isTapped)
+  }
+
+  // Determine if card should show active/hover state
+  const isActive = isMobile ? (isInView || isTapped) : false
 
   return (
     <ScrollReveal key={service.title} delay={index * 100}>
-      <div ref={cardRef} className={`relative group rounded-2xl border border-white/[0.08] bg-white/[0.01] backdrop-blur-[2px] p-6 transition-colors duration-300 card-shine overflow-hidden ${
-        service.disabled ? "opacity-60" : "hover:border-accent/50 hover:bg-white/[0.03]"
-      }`}>
+      <div
+        ref={cardRef}
+        onClick={handleTap}
+        className={`relative group rounded-2xl border transition-all duration-300 card-shine overflow-hidden cursor-pointer ${
+          service.disabled
+            ? "opacity-60 border-white/[0.08] bg-white/[0.01] backdrop-blur-[2px]"
+            : `backdrop-blur-[2px] p-6 ${
+                isActive || isMobile
+                  ? "border-accent/50 bg-white/[0.03] shadow-[0_0_30px_-5px_rgba(254,199,0,0.3)]"
+                  : "border-white/[0.08] bg-white/[0.01] hover:border-accent/50 hover:bg-white/[0.03]"
+              } ${!isMobile ? service.borderGlow : ""}`
+        }`}
+      >
         {/* Badge */}
         {service.badge && (
           <span className="absolute top-6 right-6 text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground">
@@ -173,22 +218,47 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
           </span>
         )}
 
-        {/* Icon with hover animation */}
-        <div ref={iconRef} className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
-          <service.icon className={`size-6 ${service.color} transition-transform duration-300 group-hover:scale-110`} />
+        {/* Icon with animations */}
+        <div
+          ref={iconRef}
+          className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 ${
+            !isMobile
+              ? "group-hover:scale-110 group-hover:rotate-6"
+              : isActive
+                ? "scale-110 rotate-6"
+                : ""
+          }`}
+        >
+          <service.icon
+            className={`size-6 ${service.color} transition-transform duration-300 ${
+              !isMobile ? "group-hover:scale-110" : isActive ? "scale-110" : ""
+            }`}
+          />
         </div>
 
         {/* Content */}
-        <h3 className={`text-xl font-semibold mb-3 ${service.disabled ? "text-muted-foreground" : "text-foreground"}`}>
+        <h3
+          className={`text-xl font-semibold mb-3 ${
+            service.disabled ? "text-muted-foreground" : "text-foreground"
+          }`}
+        >
           {service.title}
         </h3>
         <p className="text-sm text-muted-foreground leading-relaxed">
           {service.description}
         </p>
-        
+
         {/* Hover accent line - gradient border bottom */}
         {!service.disabled && (
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+          <div
+            className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-accent transition-transform duration-500 origin-left ${
+              !isMobile
+                ? "transform scale-x-0 group-hover:scale-x-100"
+                : isActive
+                  ? "scale-x-100"
+                  : "scale-x-0"
+            }`}
+          />
         )}
       </div>
     </ScrollReveal>
