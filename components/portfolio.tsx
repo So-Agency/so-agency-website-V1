@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback, useRef } from "react"
+import { useState, useEffect, useLayoutEffect, useCallback, useRef } from "react"
 import { ChevronLeft, ChevronRight, ExternalLink, Pause, Play } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useScrollFadeIn } from "@/hooks/use-gsap-animations"
@@ -57,67 +57,89 @@ export function Portfolio() {
   const touchEndX = useRef(0)
   const isAnimatingRef = useRef(false)
   const currentIndexRef = useRef(0)
+  // Direction of the pending/active enter animation (1 = next, -1 = prev)
+  const directionRef = useRef<1 | -1>(1)
+  // True only on the render that follows an exit animation, so the layout
+  // effect knows it must run the enter animation.
+  const pendingEnterRef = useRef(false)
+  // Skip the very first mount (no enter animation on initial render).
+  const didMountRef = useRef(false)
 
-  // Direction: 1 = next (left to right), -1 = prev (right to left)
+  // Phase 1: animate the CURRENT slide out, then commit the new index.
+  // The enter animation is NOT run here — it runs in a layout effect after
+  // React commits the new image src + text to the DOM, keeping them in sync.
   const animateSlide = useCallback((newIndex: number, direction: 1 | -1 = 1) => {
     if (isAnimatingRef.current || newIndex === currentIndexRef.current) return
     isAnimatingRef.current = true
     setIsAnimating(true)
+    directionRef.current = direction
 
     const slideOutX = direction === 1 ? -60 : 60
-    const slideInX = direction === 1 ? 60 : -60
 
-    const tl = gsap.timeline()
+    const tl = gsap.timeline({
+      onComplete: () => {
+        // Commit the new project. The layout effect picks this up and runs
+        // the enter animation once the new DOM is in place.
+        pendingEnterRef.current = true
+        currentIndexRef.current = newIndex
+        setCurrentIndex(newIndex)
+      },
+    })
 
-    // Animate out - slide in opposite direction
     tl.to(imageRef.current, {
       opacity: 0,
       x: slideOutX,
       scale: 0.95,
       duration: 0.35,
-      ease: "power2.in"
+      ease: "power2.in",
     }, 0)
     tl.to(contentRef.current, {
       opacity: 0,
       x: slideOutX * 0.5,
       duration: 0.3,
-      ease: "power2.in"
+      ease: "power2.in",
     }, 0.05)
-
-    // Update currentIndex RIGHT AFTER out-animation completes
-    // This ensures new content is rendered BEFORE in-animation starts
-    tl.add(() => {
-      currentIndexRef.current = newIndex
-      setCurrentIndex(newIndex)
-    }, 0.35)
-
-    // Pre-set incoming elements to animation start state (before animation starts)
-    // This ensures they're positioned correctly when they enter the DOM
-    tl.set([imageRef.current, contentRef.current], {
-      opacity: 0,
-      x: slideInX,
-      scale: 1.02
-    }, 0.35)
-    tl.set(contentRef.current, {
-      x: slideInX * 0.5
-    }, 0.35)
-
-    // Animate in - slide from direction side
-    tl.to(imageRef.current, 
-      { opacity: 1, x: 0, scale: 1, duration: 0.45, ease: "power2.out" },
-      0.35
-    )
-    tl.to(contentRef.current,
-      { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" },
-      0.35
-    )
-
-    // Mark animation complete after everything finishes
-    tl.add(() => {
-      isAnimatingRef.current = false
-      setIsAnimating(false)
-    })
   }, [])
+
+  // Phase 2: after the new project is committed to the DOM, set the incoming
+  // image + text to their start state and animate them in together as a unit.
+  useLayoutEffect(() => {
+    if (!didMountRef.current) {
+      didMountRef.current = true
+      return
+    }
+    if (!pendingEnterRef.current) return
+    pendingEnterRef.current = false
+
+    const direction = directionRef.current
+    const slideInX = direction === 1 ? 60 : -60
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        isAnimatingRef.current = false
+        setIsAnimating(false)
+      },
+    })
+
+    // Both elements start from the same hidden, offset state.
+    tl.set(imageRef.current, { opacity: 0, x: slideInX, scale: 1.02 }, 0)
+    tl.set(contentRef.current, { opacity: 0, x: slideInX * 0.5 }, 0)
+
+    // Animate in together.
+    tl.to(imageRef.current, {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      duration: 0.45,
+      ease: "power2.out",
+    }, 0)
+    tl.to(contentRef.current, {
+      opacity: 1,
+      x: 0,
+      duration: 0.45,
+      ease: "power2.out",
+    }, 0)
+  }, [currentIndex])
 
   const nextSlide = useCallback(() => {
     const newIndex = (currentIndexRef.current + 1) % projects.length
@@ -233,7 +255,7 @@ export function Portfolio() {
           onTouchEnd={handleTouchEnd}
         >
           {/* Image */}
-          <div ref={imageRef} className="relative group">
+          <div key={`image-${currentProject.id}`} ref={imageRef} className="relative group">
             <div className="relative aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden border border-border bg-card/30">
               {/* Slide counter */}
               <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 bg-background/80 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium text-foreground">
@@ -255,7 +277,7 @@ export function Portfolio() {
           </div>
 
           {/* Content */}
-          <div ref={contentRef} className="flex flex-col">
+          <div key={`content-${currentProject.id}`} ref={contentRef} className="flex flex-col">
             <h3 className="font-[family-name:var(--font-display)] text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
               {currentProject.title}
             </h3>
