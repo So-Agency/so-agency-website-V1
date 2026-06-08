@@ -179,8 +179,8 @@ function ServiceCard({
         // The card activates as it enters this central band and stays active
         // while scrolling, only turning off once its top moves above
         // ~35vh from the top of the viewport (the upper third).
-        rootMargin: "-30% 0px -30% 0px",
-        threshold: 0,
+        rootMargin: "0px",
+        threshold: 0.4,
       }
     )
 
