@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback, useRef } from "react"
+import { useState, useEffect, useLayoutEffect, useCallback, useRef } from "react"
 import { ChevronLeft, ChevronRight, ExternalLink, Pause, Play } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useScrollFadeIn } from "@/hooks/use-gsap-animations"
@@ -55,65 +55,113 @@ export function Portfolio() {
   const carouselRef = useRef<HTMLDivElement>(null)
   const touchStartX = useRef(0)
   const touchEndX = useRef(0)
+  const isAnimatingRef = useRef(false)
+  const currentIndexRef = useRef(0)
+  // Direction of the pending/active enter animation (1 = next, -1 = prev)
+  const directionRef = useRef<1 | -1>(1)
+  // True only on the render that follows an exit animation, so the layout
+  // effect knows it must run the enter animation.
+  const pendingEnterRef = useRef(false)
+  // Skip the very first mount (no enter animation on initial render).
+  const didMountRef = useRef(false)
+  // True while the portfolio section is visible in the viewport.
+  const isInViewRef = useRef(false)
 
-  // Direction: 1 = next (left to right), -1 = prev (right to left)
+  // Phase 1: animate the CURRENT slide out, then commit the new index.
+  // The enter animation is NOT run here — it runs in a layout effect after
+  // React commits the new image src + text to the DOM, keeping them in sync.
   const animateSlide = useCallback((newIndex: number, direction: 1 | -1 = 1) => {
-    if (isAnimating || newIndex === currentIndex) return
+    if (isAnimatingRef.current || newIndex === currentIndexRef.current) return
+    isAnimatingRef.current = true
     setIsAnimating(true)
+    directionRef.current = direction
 
     const slideOutX = direction === 1 ? -60 : 60
-    const slideInX = direction === 1 ? 60 : -60
 
     const tl = gsap.timeline({
       onComplete: () => {
+        // Commit the new project. The layout effect picks this up and runs
+        // the enter animation once the new DOM is in place.
+        pendingEnterRef.current = true
+        currentIndexRef.current = newIndex
         setCurrentIndex(newIndex)
-        setIsAnimating(false)
-      }
+      },
     })
 
-    // Animate out - slide in opposite direction
     tl.to(imageRef.current, {
       opacity: 0,
       x: slideOutX,
       scale: 0.95,
       duration: 0.35,
-      ease: "power2.in"
+      ease: "power2.in",
     }, 0)
     tl.to(contentRef.current, {
       opacity: 0,
       x: slideOutX * 0.5,
       duration: 0.3,
-      ease: "power2.in"
+      ease: "power2.in",
     }, 0.05)
+  }, [])
 
-    // Animate in - slide from direction side
-    tl.fromTo(imageRef.current, 
-      { opacity: 0, x: slideInX, scale: 1.02 },
-      { opacity: 1, x: 0, scale: 1, duration: 0.45, ease: "power2.out" },
-      0.4
-    )
-    tl.fromTo(contentRef.current,
-      { opacity: 0, x: slideInX * 0.5 },
-      { opacity: 1, x: 0, duration: 0.4, ease: "power2.out" },
-      0.5
-    )
-  }, [isAnimating, currentIndex])
+  // Phase 2: after the new project is committed to the DOM, set the incoming
+  // image + text to their start state and animate them in together as a unit.
+  useLayoutEffect(() => {
+    if (!didMountRef.current) {
+      didMountRef.current = true
+      return
+    }
+    if (!pendingEnterRef.current) return
+    pendingEnterRef.current = false
+
+    const direction = directionRef.current
+    const slideInX = direction === 1 ? 60 : -60
+
+    // CRITICAL: set the hidden start state SYNCHRONOUSLY (before browser paint).
+    // useLayoutEffect runs after the DOM commit but before paint, so a direct
+    // gsap.set() hides the freshly-remounted image + text on the same frame they
+    // mount. Using tl.set() inside a timeline would defer this to the next frame,
+    // causing a one-frame flash of the new slide at full opacity.
+    gsap.set(imageRef.current, { opacity: 0, x: slideInX, scale: 1.02 })
+    gsap.set(contentRef.current, { opacity: 0, x: slideInX * 0.5 })
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        isAnimatingRef.current = false
+        setIsAnimating(false)
+      },
+    })
+
+    // Animate the new image + text in together as one synchronized unit.
+    tl.to(imageRef.current, {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      duration: 0.45,
+      ease: "power2.out",
+    }, 0)
+    tl.to(contentRef.current, {
+      opacity: 1,
+      x: 0,
+      duration: 0.45,
+      ease: "power2.out",
+    }, 0)
+  }, [currentIndex])
 
   const nextSlide = useCallback(() => {
-    const newIndex = (currentIndex + 1) % projects.length
+    const newIndex = (currentIndexRef.current + 1) % projects.length
     animateSlide(newIndex, 1)
-  }, [currentIndex, animateSlide])
+  }, [animateSlide])
 
   const prevSlide = useCallback(() => {
-    const newIndex = (currentIndex - 1 + projects.length) % projects.length
+    const newIndex = (currentIndexRef.current - 1 + projects.length) % projects.length
     animateSlide(newIndex, -1)
-  }, [currentIndex, animateSlide])
+  }, [animateSlide])
 
   const goToSlide = useCallback((index: number) => {
-    if (index === currentIndex) return
-    const direction = index > currentIndex ? 1 : -1
+    if (index === currentIndexRef.current) return
+    const direction = index > currentIndexRef.current ? 1 : -1
     animateSlide(index, direction)
-  }, [currentIndex, animateSlide])
+  }, [animateSlide])
 
   // Touch swipe handlers
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
@@ -139,16 +187,37 @@ export function Portfolio() {
     }
   }, [nextSlide, prevSlide])
 
-  // Autoplay
+  // Autoplay - doesn't depend on nextSlide to prevent recreating interval
   useEffect(() => {
     if (!isAutoPlaying) return
-    const interval = setInterval(nextSlide, 5000)
-    return () => clearInterval(interval)
-  }, [isAutoPlaying, nextSlide])
 
-  // Keyboard navigation
+    const interval = setInterval(() => {
+      if (!isAnimatingRef.current) {
+        const newIndex = (currentIndexRef.current + 1) % projects.length
+        animateSlide(newIndex, 1)
+      }
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [isAutoPlaying, animateSlide])
+
+  // Track whether the portfolio section is visible in the viewport.
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => { isInViewRef.current = entry.isIntersecting },
+      { threshold: 0.3 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [sectionRef])
+
+  // Keyboard navigation — only active while the section is in view.
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isInViewRef.current) return
+      if (isAnimatingRef.current) return
       if (e.key === "ArrowLeft") prevSlide()
       if (e.key === "ArrowRight") nextSlide()
     }
@@ -164,7 +233,7 @@ export function Portfolio() {
         {/* Section header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 sm:mb-12">
           <div>
-            <p className="text-sm font-medium text-[#FEC700] uppercase tracking-widest mb-2">Selected Work</p>
+            <p className="text-sm font-medium text-accent uppercase tracking-widest mb-2">Selected Work</p>
             <h2 className="font-[family-name:var(--font-display)] text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
               Turning Ideas Into Masterpieces
             </h2>
@@ -205,7 +274,7 @@ export function Portfolio() {
           onTouchEnd={handleTouchEnd}
         >
           {/* Image */}
-          <div ref={imageRef} className="relative group">
+          <div key={`image-${currentProject.id}`} ref={imageRef} className="relative group">
             <div className="relative aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden border border-border bg-card/30">
               {/* Slide counter */}
               <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 bg-background/80 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium text-foreground">
@@ -227,7 +296,7 @@ export function Portfolio() {
           </div>
 
           {/* Content */}
-          <div ref={contentRef} className="flex flex-col">
+          <div key={`content-${currentProject.id}`} ref={contentRef} className="flex flex-col">
             <h3 className="font-[family-name:var(--font-display)] text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
               {currentProject.title}
             </h3>
@@ -243,7 +312,7 @@ export function Portfolio() {
               {currentProject.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-border text-xs sm:text-sm text-muted-foreground hover:border-[#FEC700]/50 hover:text-foreground transition-colors cursor-default"
+                  className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-border text-xs sm:text-sm text-muted-foreground hover:border-accent/50 hover:text-foreground transition-colors cursor-default"
                 >
                   {tag}
                 </span>
@@ -271,7 +340,7 @@ export function Portfolio() {
                 onClick={() => goToSlide(index)}
                 className={`h-1 rounded-full transition-all duration-300 ${
                   index === currentIndex 
-                    ? "flex-1 bg-[#FEC700]" 
+                    ? "flex-1 bg-accent" 
                     : "w-6 sm:w-8 bg-border hover:bg-muted-foreground/50"
                 }`}
                 aria-label={`Go to project ${index + 1}`}
