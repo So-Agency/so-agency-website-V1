@@ -5,7 +5,6 @@ import { useRef, useEffect, useState } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useStaggerChildren } from "@/hooks/use-gsap-animations"
-import { TiltCard } from "@/components/tilt-card"
 import { SectionHeader, ScrollReveal } from "@/components/scroll-reveal"
 
 if (typeof window !== "undefined") {
@@ -73,6 +72,19 @@ const services = [
 
 export function Services() {
   const gridRef = useStaggerChildren<HTMLDivElement>(0.1)
+  // Lifted state: only ONE card can be active at a time on mobile.
+  const [activeCard, setActiveCard] = useState<string | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Detect touch/mobile once at the section level.
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia("(max-width: 768px)").matches)
+    }
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
 
   return (
     <section id="services" className="py-24 px-4 sm:px-6">
@@ -88,21 +100,42 @@ export function Services() {
           {/* Row 1: First 2 cards - 2 columns */}
           <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {services.slice(0, 2).map((service, index) => (
-              <ServiceCard key={service.title} service={service} index={index} />
+              <ServiceCard
+                key={service.title}
+                service={service}
+                index={index}
+                isMobile={isMobile}
+                isActive={activeCard === service.title}
+                onActivate={setActiveCard}
+              />
             ))}
           </div>
 
           {/* Row 2: Next 3 cards - 3 columns */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {services.slice(2, 5).map((service, index) => (
-              <ServiceCard key={service.title} service={service} index={index} />
+              <ServiceCard
+                key={service.title}
+                service={service}
+                index={index}
+                isMobile={isMobile}
+                isActive={activeCard === service.title}
+                onActivate={setActiveCard}
+              />
             ))}
           </div>
 
           {/* Row 3: Last card - 3 columns, card aligned left */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {services.slice(5).map((service) => (
-              <ServiceCard key={service.title} service={service} index={0} />
+              <ServiceCard
+                key={service.title}
+                service={service}
+                index={0}
+                isMobile={isMobile}
+                isActive={activeCard === service.title}
+                onActivate={setActiveCard}
+              />
             ))}
           </div>
         </div>
@@ -111,104 +144,68 @@ export function Services() {
   )
 }
 
-// Service card component with desktop hover + mobile in-view/tap interactions
-function ServiceCard({ service, index }: { service: typeof services[0]; index: number }) {
+// Service card: desktop uses CSS :hover (unchanged). Mobile simulates hover
+// via tap + in-view activation, driven by a single shared "active" state so
+// only one card is active at a time. Only visual properties animate.
+function ServiceCard({
+  service,
+  index,
+  isMobile,
+  isActive,
+  onActivate,
+}: {
+  service: typeof services[0]
+  index: number
+  isMobile: boolean
+  isActive: boolean
+  onActivate: (title: string | null) => void
+}) {
   const cardRef = useRef<HTMLDivElement>(null)
-  const iconRef = useRef<HTMLDivElement>(null)
-  const [isInView, setIsInView] = useState(false)
-  const [isTapped, setIsTapped] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
 
-  // Detect mobile on mount
+  // Mobile: soft-activate when the card is at least 40% in view.
+  // Because activation lives in the parent's single state, scrolling naturally
+  // hands the "active" state from one card to the next (one at a time).
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.matchMedia("(max-width: 768px)").matches)
-    }
-    checkMobile()
-    window.addEventListener("resize", checkMobile)
-    return () => window.removeEventListener("resize", checkMobile)
-  }, [])
-
-  // Mobile: Use Intersection Observer to detect when card is 40% visible
-  useEffect(() => {
-    if (!cardRef.current || !isMobile) return
+    if (!cardRef.current || !isMobile || service.disabled) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
-          setIsInView(true)
+          onActivate(service.title)
         }
       },
-      { threshold: 0.4 }
+      { threshold: [0.4] }
     )
 
     observer.observe(cardRef.current)
     return () => observer.disconnect()
-  }, [isMobile])
+  }, [isMobile, service.disabled, service.title, onActivate])
 
-  // Desktop: Use GSAP ScrollTrigger for staggered animations (hover-ready state)
-  useEffect(() => {
-    if (!cardRef.current || isMobile) return
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: cardRef.current,
-        start: "top 85%",
-        toggleActions: "play none none reverse",
-      },
-    })
-
-    // Just fade in on scroll, actual animation happens on hover via CSS
-    tl.fromTo(
-      cardRef.current,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
-      0
-    )
-
-    return () => {
-      tl.kill()
-    }
-  }, [isMobile])
-
-  // Mobile: Animate when card comes into view or is tapped
-  useEffect(() => {
-    if (!isMobile || !iconRef.current) return
-    if (!isInView && !isTapped) return
-
-    // Only animate once when first coming into view
-    if (!isTapped && isInView) {
-      const tl = gsap.timeline()
-      tl.fromTo(
-        iconRef.current,
-        { scale: 1, rotation: 0 },
-        { scale: 1.1, rotation: 6, duration: 0.5, ease: "back.out(1.5)" }
-      )
-    }
-  }, [isInView, isTapped, isMobile])
-
-  // Handle tap on mobile to toggle active state
-  const handleTap = () => {
-    if (!isMobile) return
-    setIsTapped(!isTapped)
+  // Tap toggles this card; tapping a different card is handled by the shared
+  // state in the parent (the previous card simply stops matching).
+  const handleClick = () => {
+    if (!isMobile || service.disabled) return
+    onActivate(isActive ? null : service.title)
   }
 
-  // Determine if card should show active/hover state
-  const isActive = isMobile ? (isInView || isTapped) : false
+  // Mobile shows the "hover" visual when active. Desktop relies on CSS :hover.
+  const showActive = isMobile && isActive && !service.disabled
 
   return (
-    <ScrollReveal key={service.title} delay={index * 100}>
+    <ScrollReveal delay={index * 100}>
       <div
         ref={cardRef}
-        onClick={handleTap}
-        className={`relative group rounded-2xl border transition-all duration-300 card-shine overflow-hidden cursor-pointer ${
+        onClick={handleClick}
+        className={`relative group rounded-2xl border p-6 backdrop-blur-[2px] card-shine overflow-hidden transition duration-300 ${
           service.disabled
-            ? "opacity-60 border-white/[0.08] bg-white/[0.01] backdrop-blur-[2px]"
-            : `backdrop-blur-[2px] p-6 ${
-                isActive || isMobile
-                  ? "border-accent/50 bg-white/[0.03] shadow-[0_0_30px_-5px_rgba(254,199,0,0.3)]"
-                  : "border-white/[0.08] bg-white/[0.01] hover:border-accent/50 hover:bg-white/[0.03]"
-              } ${!isMobile ? service.borderGlow : ""}`
+            ? "opacity-60 border-white/[0.08] bg-white/[0.01]"
+            : isMobile
+              ? `cursor-pointer ${
+                  showActive
+                    ? "border-accent/50 bg-white/[0.03] shadow-[0_0_30px_-5px_rgba(254,199,0,0.3)]"
+                    : "border-white/[0.08] bg-white/[0.01]"
+                }`
+              : `border-white/[0.08] bg-white/[0.01] hover:border-accent/50 hover:bg-white/[0.03] ${service.borderGlow}`
         }`}
       >
         {/* Badge */}
@@ -218,20 +215,19 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
           </span>
         )}
 
-        {/* Icon with animations */}
+        {/* Icon with scale/rotate animation (transform only - layout safe) */}
         <div
-          ref={iconRef}
-          className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 ${
-            !isMobile
-              ? "group-hover:scale-110 group-hover:rotate-6"
-              : isActive
+          className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-transform duration-300 ${
+            isMobile
+              ? showActive
                 ? "scale-110 rotate-6"
                 : ""
+              : "group-hover:scale-110 group-hover:rotate-6"
           }`}
         >
           <service.icon
             className={`size-6 ${service.color} transition-transform duration-300 ${
-              !isMobile ? "group-hover:scale-110" : isActive ? "scale-110" : ""
+              isMobile ? (showActive ? "scale-110" : "") : "group-hover:scale-110"
             }`}
           />
         </div>
@@ -248,15 +244,15 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
           {service.description}
         </p>
 
-        {/* Hover accent line - gradient border bottom */}
+        {/* Accent line - gradient border bottom (transform only - layout safe) */}
         {!service.disabled && (
           <div
             className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-accent transition-transform duration-500 origin-left ${
-              !isMobile
-                ? "transform scale-x-0 group-hover:scale-x-100"
-                : isActive
+              isMobile
+                ? showActive
                   ? "scale-x-100"
                   : "scale-x-0"
+                : "scale-x-0 group-hover:scale-x-100"
             }`}
           />
         )}
