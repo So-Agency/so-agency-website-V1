@@ -12,36 +12,36 @@ const projects = [
     title: "La Feika",
     subtitle: "Fresh From China to LatAm",
     description: "E-commerce platform connecting Chinese fresh food suppliers with Latin American markets. A complete digital solution for cross-border commerce.",
-    image: "/images/projects/lafeika.jpg",
-    tags: ["E-Commerce", "Development", "Branding"],
-    link: "#",
+    image: "/images/projects/lafeika-web.webp",
+    tags: ["E-Commerce", "Web Development", "Branding"],
+    link: "https://lafeika.com/",
   },
   {
     id: 2,
     title: "It's Fuluz Time",
     subtitle: "Cruelty-Free Leather Goods",
     description: "A great option for high-quality, completely Cruelty-Free leather goods. Their products range from handbags and wallets to more.",
-    image: "/images/projects/fuluz.jpg",
-    tags: ["Web Design", "Development", "Branding"],
-    link: "#",
+    image: "/images/projects/itsfuluztime-1.webp",
+    tags: ["Web Design", "Web Development", "Branding"],
+    link: "https://itsfuluztime.com/",
   },
   {
     id: 3,
-    title: "James Tucker",
-    subtitle: "Financial Advisory",
-    description: "Professional website for a financial advisory firm, focusing on trust, expertise, and client-centric service presentation.",
-    image: "/images/projects/jamestucker.jpg",
-    tags: ["Web Design", "UX/UI", "Development"],
-    link: "#",
-  },
-  {
-    id: 4,
     title: "Yaku Adventures",
     subtitle: "Tourism & Hiking Experiences",
     description: "Adventure tourism platform showcasing breathtaking hiking experiences and outdoor adventures across South America.",
-    image: "/images/projects/yaku.jpg",
-    tags: ["Web Design", "Branding", "Development"],
-    link: "#",
+    image: "/images/projects/yaku.webp",
+    tags: ["Web Design", "E-commerce", "Web Development"],
+    link: "https://yakuadventures.com/",
+  },
+  {
+    id: 4,
+    title: "Singing Rooster",
+    subtitle: "A premium coffee, chocolate, and artisan marketplace",
+    description: "Singing Rooster is an e-commerce website for coffee, chocolate, art, subscriptions, and wholesale/retail shopping experiences.",
+    image: "/images/projects/siningrooster.webp",
+    tags: ["Website Security", "APP Development", "Optimization"],
+    link: "https://singingrooster.org/",
   },
 ]
 
@@ -196,7 +196,7 @@ export function Portfolio() {
         const newIndex = (currentIndexRef.current + 1) % projects.length
         animateSlide(newIndex, 1)
       }
-    }, 5000)
+    }, 7000)
 
     return () => clearInterval(interval)
   }, [isAutoPlaying, animateSlide])
@@ -275,7 +275,7 @@ export function Portfolio() {
         >
           {/* Image */}
           <div key={`image-${currentProject.id}`} ref={imageRef} className="relative group">
-            <div className="relative aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden border border-border bg-card/30">
+            <div className="relative aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-border bg-card/30">
               {/* Slide counter */}
               <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 bg-background/80 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium text-foreground">
                 {String(currentIndex + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
