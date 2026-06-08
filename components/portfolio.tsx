@@ -13,8 +13,8 @@ const projects = [
     subtitle: "Fresh From China to LatAm",
     description: "E-commerce platform connecting Chinese fresh food suppliers with Latin American markets. A complete digital solution for cross-border commerce.",
     image: "/images/projects/lafeika.jpg",
-    tags: ["E-Commerce", "Development", "Branding"],
-    link: "#",
+    tags: ["E-Commerce", "Web Development", "Branding"],
+    link: "https://lafeika.com/",
   },
   {
     id: 2,
@@ -22,8 +22,8 @@ const projects = [
     subtitle: "Cruelty-Free Leather Goods",
     description: "A great option for high-quality, completely Cruelty-Free leather goods. Their products range from handbags and wallets to more.",
     image: "/images/projects/fuluz.jpg",
-    tags: ["Web Design", "Development", "Branding"],
-    link: "#",
+    tags: ["Web Design", "Web Development", "Branding"],
+    link: "https://itsfuluztime.com/",
   },
   {
     id: 3,
@@ -31,8 +31,8 @@ const projects = [
     subtitle: "Financial Advisory",
     description: "Professional website for a financial advisory firm, focusing on trust, expertise, and client-centric service presentation.",
     image: "/images/projects/jamestucker.jpg",
-    tags: ["Web Design", "UX/UI", "Development"],
-    link: "#",
+    tags: ["Web Design", "UX/UI", "Web Development"],
+    link: "https://www.james-tucker.com/",
   },
   {
     id: 4,
@@ -40,8 +40,17 @@ const projects = [
     subtitle: "Tourism & Hiking Experiences",
     description: "Adventure tourism platform showcasing breathtaking hiking experiences and outdoor adventures across South America.",
     image: "/images/projects/yaku.jpg",
-    tags: ["Web Design", "Branding", "Development"],
-    link: "#",
+    tags: ["Web Design", "E-commerce", "Web Development"],
+    link: "https://yakuadventures.com/",
+  },
+  {
+    id: 5,
+    title: "Singing Rooster",
+    subtitle: "A premium coffee, chocolate, and artisan marketplace",
+    description: "Singing Rooster is an e-commerce website for coffee, chocolate, art, subscriptions, and wholesale/retail shopping experiences.",
+    image: "/images/projects/siningrooster.jpg",
+    tags: ["Security Website", "APP Development", "Optimization"],
+    link: "https://singingrooster.org/",
   },
 ]
 
