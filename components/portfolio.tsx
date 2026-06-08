@@ -64,6 +64,8 @@ export function Portfolio() {
   const pendingEnterRef = useRef(false)
   // Skip the very first mount (no enter animation on initial render).
   const didMountRef = useRef(false)
+  // True while the portfolio section is visible in the viewport.
+  const isInViewRef = useRef(false)
 
   // Phase 1: animate the CURRENT slide out, then commit the new index.
   // The enter animation is NOT run here — it runs in a layout effect after
@@ -199,9 +201,22 @@ export function Portfolio() {
     return () => clearInterval(interval)
   }, [isAutoPlaying, animateSlide])
 
-  // Keyboard navigation
+  // Track whether the portfolio section is visible in the viewport.
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => { isInViewRef.current = entry.isIntersecting },
+      { threshold: 0.3 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [sectionRef])
+
+  // Keyboard navigation — only active while the section is in view.
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isInViewRef.current) return
       if (isAnimatingRef.current) return
       if (e.key === "ArrowLeft") prevSlide()
       if (e.key === "ArrowRight") nextSlide()
