@@ -4,6 +4,7 @@ import { Code, Palette, ShoppingCart, Fingerprint, Megaphone, Bot } from "lucide
 import { useStaggerChildren } from "@/hooks/use-gsap-animations"
 import { TiltCard } from "@/components/tilt-card"
 import { SectionHeader, ScrollReveal } from "@/components/scroll-reveal"
+import { useState, useEffect } from "react"
 
 const services = [
   {
@@ -19,9 +20,9 @@ const services = [
     icon: Palette,
     title: "UX/UI Design",
     description: "Intuitive, conversion-focused interfaces. Every pixel serves a purpose in guiding the user's journey.",
-    color: "text-[#FEC700]",
-    bgColor: "bg-[#FEC700]/10",
-    borderGlow: "hover:shadow-[0_0_30px_-5px] hover:shadow-[#FEC700]/30",
+    color: "text-accent",
+    bgColor: "bg-accent/10",
+    borderGlow: "hover:shadow-[0_0_30px_-5px] hover:shadow-accent/30",
     size: "col-span-1",
   },
   {
@@ -46,9 +47,9 @@ const services = [
     icon: Megaphone,
     title: "Social Media",
     description: "Turning engagement into leads through calculated content strategies and data-driven campaigns.",
-    color: "text-[#FEC700]",
-    bgColor: "bg-[#FEC700]/10",
-    borderGlow: "hover:shadow-[0_0_30px_-5px] hover:shadow-[#FEC700]/30",
+    color: "text-accent",
+    bgColor: "bg-accent/10",
+    borderGlow: "hover:shadow-[0_0_30px_-5px] hover:shadow-accent/30",
     size: "col-span-1",
   },
   {
@@ -65,7 +66,17 @@ const services = [
 ]
 
 export function Services() {
+  const [isMobile, setIsMobile] = useState(false)
   const gridRef = useStaggerChildren<HTMLDivElement>(0.1)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia("(max-width: 768px)").matches)
+    }
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
 
   return (
     <section id="services" className="py-24 px-4 sm:px-6">
@@ -86,10 +97,10 @@ export function Services() {
                   className={`relative group rounded-2xl border border-white/[0.08] bg-white/[0.01] backdrop-blur-[2px] p-6 transition-colors duration-300 card-shine overflow-hidden ${
                     service.disabled 
                       ? "opacity-60" 
-                      : `hover:border-[#FEC700]/50 hover:bg-white/[0.03] ${service.borderGlow}`
+                      : `${!isMobile ? `hover:border-accent/50 hover:bg-white/[0.03] ${service.borderGlow}` : ""}`
                   }`}
-                  max={service.disabled ? 0 : 6}
-                  scale={service.disabled ? 1 : 1.02}
+                  max={service.disabled || isMobile ? 0 : 6}
+                  scale={service.disabled || isMobile ? 1 : 1.02}
                 >
                 {/* Badge */}
                 {service.badge && (
@@ -99,8 +110,8 @@ export function Services() {
                 )}
 
                 {/* Icon with animation on hover */}
-                <div className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
-                  <service.icon className={`size-6 ${service.color} transition-transform duration-300 group-hover:scale-110`} />
+                <div className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 ${!isMobile ? "group-hover:scale-110 group-hover:rotate-6" : ""}`}>
+                  <service.icon className={`size-6 ${service.color} transition-transform duration-300 ${!isMobile ? "group-hover:scale-110" : ""}`} />
                 </div>
 
                 {/* Content */}
@@ -112,8 +123,8 @@ export function Services() {
                 </p>
                 
                 {/* Hover accent line - gradient border bottom */}
-                {!service.disabled && (
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-[#FEC700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                {!service.disabled && !isMobile && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
                 )}
               </TiltCard>
               </ScrollReveal>
@@ -128,10 +139,10 @@ export function Services() {
                   className={`relative group rounded-2xl border border-white/[0.08] bg-white/[0.01] backdrop-blur-[2px] p-6 transition-colors duration-300 card-shine overflow-hidden h-full ${
                     service.disabled 
                       ? "opacity-60" 
-                      : `hover:border-[#FEC700]/50 hover:bg-white/[0.03] ${service.borderGlow}`
+                      : `${!isMobile ? `hover:border-accent/50 hover:bg-white/[0.03] ${service.borderGlow}` : ""}`
                   }`}
-                  max={service.disabled ? 0 : 6}
-                  scale={service.disabled ? 1 : 1.02}
+                  max={service.disabled || isMobile ? 0 : 6}
+                  scale={service.disabled || isMobile ? 1 : 1.02}
                 >
                 {/* Badge */}
                 {service.badge && (
@@ -141,8 +152,8 @@ export function Services() {
                 )}
 
                 {/* Icon with animation on hover */}
-                <div className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
-                  <service.icon className={`size-6 ${service.color} transition-transform duration-300 group-hover:scale-110`} />
+                <div className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 ${!isMobile ? "group-hover:scale-110 group-hover:rotate-6" : ""}`}>
+                  <service.icon className={`size-6 ${service.color} transition-transform duration-300 ${!isMobile ? "group-hover:scale-110" : ""}`} />
                 </div>
 
                 {/* Content */}
@@ -154,8 +165,8 @@ export function Services() {
                 </p>
                 
                 {/* Hover accent line - gradient border bottom */}
-                {!service.disabled && (
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-[#FEC700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                {!service.disabled && !isMobile && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
                 )}
               </TiltCard>
               </ScrollReveal>
@@ -170,10 +181,10 @@ export function Services() {
                   className={`relative group rounded-2xl border border-white/[0.08] bg-white/[0.01] backdrop-blur-[2px] p-6 transition-colors duration-300 card-shine overflow-hidden ${
                     service.disabled 
                       ? "opacity-60" 
-                      : `hover:border-[#FEC700]/50 hover:bg-white/[0.03] ${service.borderGlow}`
+                      : `${!isMobile ? `hover:border-accent/50 hover:bg-white/[0.03] ${service.borderGlow}` : ""}`
                   }`}
-                  max={service.disabled ? 0 : 6}
-                  scale={service.disabled ? 1 : 1.02}
+                  max={service.disabled || isMobile ? 0 : 6}
+                  scale={service.disabled || isMobile ? 1 : 1.02}
                 >
                 {/* Badge */}
                 {service.badge && (
@@ -183,8 +194,8 @@ export function Services() {
                 )}
 
                 {/* Icon with animation on hover */}
-                <div className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
-                  <service.icon className={`size-6 ${service.color} transition-transform duration-300 group-hover:scale-110`} />
+                <div className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 ${!isMobile ? "group-hover:scale-110 group-hover:rotate-6" : ""}`}>
+                  <service.icon className={`size-6 ${service.color} transition-transform duration-300 ${!isMobile ? "group-hover:scale-110" : ""}`} />
                 </div>
 
                 {/* Content */}
@@ -196,8 +207,8 @@ export function Services() {
                 </p>
                 
                 {/* Hover accent line - gradient border bottom */}
-                {!service.disabled && (
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-[#FEC700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                {!service.disabled && !isMobile && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
                 )}
               </TiltCard>
               </ScrollReveal>
