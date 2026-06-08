@@ -1,10 +1,16 @@
 "use client"
 
 import { Code, Palette, ShoppingCart, Fingerprint, Megaphone, Bot } from "lucide-react"
+import { useRef, useEffect } from "react"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useStaggerChildren } from "@/hooks/use-gsap-animations"
 import { TiltCard } from "@/components/tilt-card"
 import { SectionHeader, ScrollReveal } from "@/components/scroll-reveal"
-import { useState, useEffect } from "react"
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger)
+}
 
 const services = [
   {
@@ -66,17 +72,7 @@ const services = [
 ]
 
 export function Services() {
-  const [isMobile, setIsMobile] = useState(false)
   const gridRef = useStaggerChildren<HTMLDivElement>(0.1)
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.matchMedia("(max-width: 768px)").matches)
-    }
-    checkMobile()
-    window.addEventListener("resize", checkMobile)
-    return () => window.removeEventListener("resize", checkMobile)
-  }, [])
 
   return (
     <section id="services" className="py-24 px-4 sm:px-6">
@@ -92,130 +88,109 @@ export function Services() {
           {/* Row 1: First 2 cards - 2 columns */}
           <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {services.slice(0, 2).map((service, index) => (
-              <ScrollReveal key={service.title} delay={index * 100}>
-                <TiltCard
-                  className={`relative group rounded-2xl border border-white/[0.08] bg-white/[0.01] backdrop-blur-[2px] p-6 transition-colors duration-300 card-shine overflow-hidden ${
-                    service.disabled 
-                      ? "opacity-60" 
-                      : `${!isMobile ? `hover:border-accent/50 hover:bg-white/[0.03] ${service.borderGlow}` : ""}`
-                  }`}
-                  max={service.disabled || isMobile ? 0 : 6}
-                  scale={service.disabled || isMobile ? 1 : 1.02}
-                >
-                {/* Badge */}
-                {service.badge && (
-                  <span className="absolute top-6 right-6 text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground">
-                    {service.badge}
-                  </span>
-                )}
-
-                {/* Icon with animation on hover */}
-                <div className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 ${!isMobile ? "group-hover:scale-110 group-hover:rotate-6" : ""}`}>
-                  <service.icon className={`size-6 ${service.color} transition-transform duration-300 ${!isMobile ? "group-hover:scale-110" : ""}`} />
-                </div>
-
-                {/* Content */}
-                <h3 className={`text-xl font-semibold mb-3 ${service.disabled ? "text-muted-foreground" : "text-foreground"}`}>
-                  {service.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {service.description}
-                </p>
-                
-                {/* Hover accent line - gradient border bottom */}
-                {!service.disabled && !isMobile && (
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                )}
-              </TiltCard>
-              </ScrollReveal>
+              <ServiceCard key={service.title} service={service} index={index} />
             ))}
           </div>
 
           {/* Row 2: Next 3 cards - 3 columns */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {services.slice(2, 5).map((service, index) => (
-              <ScrollReveal key={service.title} delay={index * 100}>
-                <TiltCard
-                  className={`relative group rounded-2xl border border-white/[0.08] bg-white/[0.01] backdrop-blur-[2px] p-6 transition-colors duration-300 card-shine overflow-hidden h-full ${
-                    service.disabled 
-                      ? "opacity-60" 
-                      : `${!isMobile ? `hover:border-accent/50 hover:bg-white/[0.03] ${service.borderGlow}` : ""}`
-                  }`}
-                  max={service.disabled || isMobile ? 0 : 6}
-                  scale={service.disabled || isMobile ? 1 : 1.02}
-                >
-                {/* Badge */}
-                {service.badge && (
-                  <span className="absolute top-6 right-6 text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground">
-                    {service.badge}
-                  </span>
-                )}
-
-                {/* Icon with animation on hover */}
-                <div className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 ${!isMobile ? "group-hover:scale-110 group-hover:rotate-6" : ""}`}>
-                  <service.icon className={`size-6 ${service.color} transition-transform duration-300 ${!isMobile ? "group-hover:scale-110" : ""}`} />
-                </div>
-
-                {/* Content */}
-                <h3 className={`text-xl font-semibold mb-3 ${service.disabled ? "text-muted-foreground" : "text-foreground"}`}>
-                  {service.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {service.description}
-                </p>
-                
-                {/* Hover accent line - gradient border bottom */}
-                {!service.disabled && !isMobile && (
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                )}
-              </TiltCard>
-              </ScrollReveal>
+              <ServiceCard key={service.title} service={service} index={index} />
             ))}
           </div>
 
           {/* Row 3: Last card - 3 columns, card aligned left */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {services.slice(5).map((service) => (
-              <ScrollReveal key={service.title}>
-                <TiltCard
-                  className={`relative group rounded-2xl border border-white/[0.08] bg-white/[0.01] backdrop-blur-[2px] p-6 transition-colors duration-300 card-shine overflow-hidden ${
-                    service.disabled 
-                      ? "opacity-60" 
-                      : `${!isMobile ? `hover:border-accent/50 hover:bg-white/[0.03] ${service.borderGlow}` : ""}`
-                  }`}
-                  max={service.disabled || isMobile ? 0 : 6}
-                  scale={service.disabled || isMobile ? 1 : 1.02}
-                >
-                {/* Badge */}
-                {service.badge && (
-                  <span className="absolute top-6 right-6 text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground">
-                    {service.badge}
-                  </span>
-                )}
-
-                {/* Icon with animation on hover */}
-                <div className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 ${!isMobile ? "group-hover:scale-110 group-hover:rotate-6" : ""}`}>
-                  <service.icon className={`size-6 ${service.color} transition-transform duration-300 ${!isMobile ? "group-hover:scale-110" : ""}`} />
-                </div>
-
-                {/* Content */}
-                <h3 className={`text-xl font-semibold mb-3 ${service.disabled ? "text-muted-foreground" : "text-foreground"}`}>
-                  {service.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {service.description}
-                </p>
-                
-                {/* Hover accent line - gradient border bottom */}
-                {!service.disabled && !isMobile && (
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                )}
-              </TiltCard>
-              </ScrollReveal>
+              <ServiceCard key={service.title} service={service} index={0} />
             ))}
           </div>
         </div>
       </div>
     </section>
+  )
+}
+
+// Service card component with view-based animations
+function ServiceCard({ service, index }: { service: typeof services[0]; index: number }) {
+  const cardRef = useRef<HTMLDivElement>(null)
+  const iconRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!cardRef.current) return
+
+    // Timeline for card animations on scroll
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: cardRef.current,
+        start: "top 85%",
+        toggleActions: "play none none reverse",
+      },
+    })
+
+    // On mobile/touch: trigger animations when card comes into view
+    // On desktop: animations are triggered by hover (via CSS group-hover)
+    tl.fromTo(
+      iconRef.current,
+      { scale: 1, rotation: 0, y: 0 },
+      { 
+        scale: 1.1, 
+        rotation: 6, 
+        y: -4,
+        duration: 0.6,
+        ease: "back.out(1.5)",
+      },
+      0
+    )
+
+    tl.fromTo(
+      cardRef.current,
+      { borderColor: "rgba(255, 255, 255, 0.08)" },
+      {
+        borderColor: "rgba(255, 255, 255, 0.15)",
+        boxShadow: `0 0 30px -5px ${service.color === "text-accent" ? "rgba(254, 199, 0, 0.3)" : "rgba(255, 255, 255, 0.1)"}`,
+        duration: 0.6,
+        ease: "power2.out",
+      },
+      0
+    )
+
+    return () => {
+      tl.kill()
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+    }
+  }, [service.color])
+
+  return (
+    <ScrollReveal key={service.title} delay={index * 100}>
+      <div ref={cardRef} className={`relative group rounded-2xl border border-white/[0.08] bg-white/[0.01] backdrop-blur-[2px] p-6 transition-colors duration-300 card-shine overflow-hidden ${
+        service.disabled ? "opacity-60" : "hover:border-accent/50 hover:bg-white/[0.03]"
+      }`}>
+        {/* Badge */}
+        {service.badge && (
+          <span className="absolute top-6 right-6 text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground">
+            {service.badge}
+          </span>
+        )}
+
+        {/* Icon with hover animation */}
+        <div ref={iconRef} className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
+          <service.icon className={`size-6 ${service.color} transition-transform duration-300 group-hover:scale-110`} />
+        </div>
+
+        {/* Content */}
+        <h3 className={`text-xl font-semibold mb-3 ${service.disabled ? "text-muted-foreground" : "text-foreground"}`}>
+          {service.title}
+        </h3>
+        <p className="text-sm text-muted-foreground leading-relaxed">
+          {service.description}
+        </p>
+        
+        {/* Hover accent line - gradient border bottom */}
+        {!service.disabled && (
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+        )}
+      </div>
+    </ScrollReveal>
   )
 }
