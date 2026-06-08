@@ -49,7 +49,7 @@ const projects = [
     subtitle: "A premium coffee, chocolate, and artisan marketplace",
     description: "Singing Rooster is an e-commerce website for coffee, chocolate, art, subscriptions, and wholesale/retail shopping experiences.",
     image: "/images/projects/siningrooster.jpg",
-    tags: ["Security Website", "APP Development", "Optimization"],
+    tags: ["Website Security", "APP Development", "Optimization"],
     link: "https://singingrooster.org/",
   },
 ]
@@ -205,7 +205,7 @@ export function Portfolio() {
         const newIndex = (currentIndexRef.current + 1) % projects.length
         animateSlide(newIndex, 1)
       }
-    }, 5000)
+    }, 7000)
 
     return () => clearInterval(interval)
   }, [isAutoPlaying, animateSlide])
