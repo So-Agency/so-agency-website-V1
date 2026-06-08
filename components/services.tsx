@@ -170,11 +170,18 @@ function ServiceCard({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
+        if (entry.isIntersecting) {
           onActivate(service.title)
         }
       },
-      { threshold: [0.4] }
+      {
+        // Interaction zone: a band between ~35vh (top) and ~75vh (bottom).
+        // The card activates as it enters this central band and stays active
+        // while scrolling, only turning off once its top moves above
+        // ~35vh from the top of the viewport (the upper third).
+        rootMargin: "-35% 0px -25% 0px",
+        threshold: 0,
+      }
     )
 
     observer.observe(cardRef.current)
