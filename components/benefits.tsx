@@ -1,6 +1,7 @@
 "use client"
 
 import { Zap, DollarSign, Users, Layers } from "lucide-react"
+import { useRef, useEffect, useState } from "react"
 import { useStaggerChildren } from "@/hooks/use-gsap-animations"
 import { SectionHeader, ScrollReveal } from "@/components/scroll-reveal"
 
@@ -33,6 +34,19 @@ const benefits = [
 
 export function Benefits() {
   const gridRef = useStaggerChildren<HTMLDivElement>(0.1)
+  // Lifted state: only ONE card can be active at a time on mobile.
+  const [activeCard, setActiveCard] = useState<string | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Detect touch/mobile once at the section level.
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia("(max-width: 768px)").matches)
+    }
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
 
   return (
     <section id="benefits" className="py-24 px-4 sm:px-6">
@@ -46,22 +60,105 @@ export function Benefits() {
         {/* Benefits grid */}
         <div ref={gridRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {benefits.map((benefit, index) => (
-            <ScrollReveal key={benefit.title} delay={index * 100}>
-              <div 
-                className="group text-center p-6 rounded-xl bg-card/30 border border-border/30 transition-all duration-500 card-hover-3d card-shine hover:border-primary/30 h-full"
-              >
-              {/* Icon with gradient background on hover */}
-              <div className={`size-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-gradient-to-br group-hover:${benefit.gradient} group-hover:shadow-lg`}>
-                <benefit.icon className="size-7 text-primary transition-colors duration-300 group-hover:text-white" />
-              </div>
-              
-              <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-[#FEC700] transition-colors">{benefit.title}</h3>
-              <p className="text-sm text-muted-foreground">{benefit.description}</p>
-            </div>
-            </ScrollReveal>
+            <BenefitCard
+              key={benefit.title}
+              benefit={benefit}
+              index={index}
+              isMobile={isMobile}
+              isActive={activeCard === benefit.title}
+              onActivate={setActiveCard}
+            />
           ))}
         </div>
       </div>
     </section>
+  )
+}
+
+// Benefit card: desktop uses CSS :hover (unchanged). Mobile simulates hover
+// via in-view activation, driven by a single shared "active" state so only one
+// card is active at a time.
+function BenefitCard({
+  benefit,
+  index,
+  isMobile,
+  isActive,
+  onActivate,
+}: {
+  benefit: typeof benefits[0]
+  index: number
+  isMobile: boolean
+  isActive: boolean
+  onActivate: (title: string | null) => void
+}) {
+  const cardRef = useRef<HTMLDivElement>(null)
+
+  // Mobile: activate when the card enters the central interaction band.
+  useEffect(() => {
+    if (!cardRef.current || !isMobile) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          onActivate(benefit.title)
+        }
+      },
+      {
+        rootMargin: "-15% 0px -45% 0px",
+        threshold: 0,
+      }
+    )
+
+    observer.observe(cardRef.current)
+    return () => observer.disconnect()
+  }, [isMobile, benefit.title, onActivate])
+
+  // Tap toggles this card on mobile.
+  const handleClick = () => {
+    if (!isMobile) return
+    onActivate(isActive ? null : benefit.title)
+  }
+
+  // Mobile shows the "hover" visual when active. Desktop relies on CSS :hover.
+  const showActive = isMobile && isActive
+
+  return (
+    <ScrollReveal delay={index * 100}>
+      <div
+        ref={cardRef}
+        onClick={handleClick}
+        className={`group text-center p-6 rounded-xl bg-card/30 border transition-all duration-500 card-hover-3d card-shine h-full ${
+          isMobile
+            ? `cursor-pointer ${showActive ? "border-primary/30" : "border-border/30"}`
+            : "border-border/30 hover:border-primary/30"
+        }`}
+      >
+        {/* Icon with gradient background on hover */}
+        <div
+          className={`size-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 transition-all duration-300 ${
+            isMobile
+              ? showActive
+                ? `bg-gradient-to-br ${benefit.gradient} shadow-lg`
+                : ""
+              : `group-hover:bg-gradient-to-br group-hover:${benefit.gradient} group-hover:shadow-lg`
+          }`}
+        >
+          <benefit.icon
+            className={`size-7 text-primary transition-colors duration-300 ${
+              isMobile ? (showActive ? "text-white" : "") : "group-hover:text-white"
+            }`}
+          />
+        </div>
+
+        <h3
+          className={`text-lg font-semibold mb-2 transition-colors ${
+            isMobile ? (showActive ? "text-[#FEC700]" : "text-foreground") : "text-foreground group-hover:text-[#FEC700]"
+          }`}
+        >
+          {benefit.title}
+        </h3>
+        <p className="text-sm text-muted-foreground">{benefit.description}</p>
+      </div>
+    </ScrollReveal>
   )
 }
