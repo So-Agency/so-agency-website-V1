@@ -1,25 +1,9 @@
 "use client"
 
-import { useStaggerChildren } from "@/hooks/use-gsap-animations"
 import { TiltCard } from "@/components/tilt-card"
 import { SectionHeader, ScrollReveal } from "@/components/scroll-reveal"
 
-const team = [
-  {
-    name: "Oscar Carabali",
-    role: "Strategy & Developer",
-    image: "/images/oscar.jpg",
-  },
-  {
-    name: "Miguel Angel",
-    role: "UX/UI Designer",
-    image: "/images/miguel.jpg",
-  },
-]
-
 export function Team() {
-  const gridRef = useStaggerChildren<HTMLDivElement>(0.15)
-
   return (
     <section id="team" className="py-24 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto">
@@ -29,33 +13,52 @@ export function Team() {
           description="The crew behind your mission to success."
         />
 
-        {/* Team grid */}
-        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
-          {/* Team members */}
-          {team.map((member, index) => (
-            <ScrollReveal key={member.name} delay={index * 150}>
-              <div className="group">
+        {/* Founding Team Card */}
+        <div className="flex justify-center mt-12">
+          <ScrollReveal delay={0}>
+            <div className="group w-full max-w-2xl">
               <TiltCard
-                className="relative aspect-[3/4] rounded-xl overflow-hidden border border-border/50 bg-card/30 mb-4 transition-colors duration-300 group-hover:border-[#FEC700]/50 group-hover:shadow-[0_0_40px_-10px] group-hover:shadow-[#FEC700]/30"
+                className="relative rounded-xl overflow-hidden border border-border/50 bg-card/30 transition-colors duration-300 group-hover:border-[#FEC700]/50 group-hover:shadow-[0_0_40px_-10px] group-hover:shadow-[#FEC700]/30"
                 max={8}
                 scale={1.02}
               >
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
-                />
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-300" />
-                
+                {/* Wide landscape image container */}
+                <div className="relative aspect-video md:aspect-[16/9] w-full overflow-hidden">
+                  <img
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/soa_founders1-87d3abxayrjC6FW7DQhYv7R6JLREOD.webp"
+                    alt="Oscar & Miguel - Founding Partners"
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+                  />
+                  {/* Gradient overlay at bottom */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
+                  
+                  {/* Subtle gradient fading to card background */}
+                  <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-card/90 to-transparent opacity-100" />
+                </div>
+
+                {/* Content section */}
+                <div className="p-6 md:p-8 relative z-10">
+                  {/* Eyebrow label */}
+                  <p className="text-xs font-semibold uppercase tracking-widest text-[#3B9EFF] mb-2">
+                    Founding Partners
+                  </p>
+                  
+                  {/* Name */}
+                  <h3 className="text-2xl md:text-3xl font-semibold text-foreground mb-3 group-hover:text-[#FEC700] transition-colors">
+                    Oscar &amp; Miguel
+                  </h3>
+                  
+                  {/* Combined description */}
+                  <p className="text-sm md:text-base text-foreground/80 leading-relaxed">
+                    The duo behind SO Agency. We design, build, and launch digital presences that actually perform — blending strategic development with sharp UX/UI design.
+                  </p>
+                </div>
+
                 {/* Hover accent line */}
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-[#FEC700] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
               </TiltCard>
-              <h3 className="text-lg font-semibold text-foreground group-hover:text-[#FEC700] transition-colors">{member.name}</h3>
-              <p className="text-sm text-[#3B9EFF]">{member.role}</p>
             </div>
-            </ScrollReveal>
-          ))}
+          </ScrollReveal>
         </div>
       </div>
     </section>
