@@ -21,6 +21,7 @@ export function TiltCard({
 }: TiltCardProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(false)
+  const [isTouching, setIsTouching] = useState(false)
 
   useEffect(() => {
     const checkMobile = () => {
@@ -55,12 +56,27 @@ export function TiltCard({
     ref.current.style.transform = `perspective(${perspective}px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`
   }, [perspective])
 
+  const handleTouchStart = useCallback(() => {
+    if (!isMobile || !ref.current) return
+    setIsTouching(true)
+    // Apply slight tilt and scale on touch
+    ref.current.style.transform = `perspective(${perspective}px) rotateX(3deg) rotateY(-3deg) scale3d(${scale}, ${scale}, ${scale})`
+  }, [isMobile, perspective, scale])
+
+  const handleTouchEnd = useCallback(() => {
+    if (!ref.current) return
+    setIsTouching(false)
+    ref.current.style.transform = `perspective(${perspective}px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`
+  }, [perspective])
+
   return (
     <div
       ref={ref}
       className={className}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       style={{
         transformStyle: "preserve-3d",
         transition: `transform ${speed}ms cubic-bezier(0.03, 0.98, 0.52, 0.99)`,

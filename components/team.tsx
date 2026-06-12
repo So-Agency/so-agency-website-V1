@@ -14,7 +14,7 @@ export function Team() {
         />
 
         {/* Founding Team Card */}
-        <div className="flex justify-center mt-12">
+        <div className="flex justify-center mt-8">
           <ScrollReveal delay={0}>
             <div className="group w-full max-w-2xl">
               <TiltCard
