@@ -5,6 +5,7 @@ import { useRef, useEffect, useState } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useStaggerChildren } from "@/hooks/use-gsap-animations"
+import { TiltCard } from "@/components/tilt-card"
 import { SectionHeader, ScrollReveal } from "@/components/scroll-reveal"
 
 if (typeof window !== "undefined") {
@@ -203,66 +204,72 @@ function ServiceCard({
       <div
         ref={cardRef}
         onClick={handleClick}
-        className={`relative group rounded-2xl border p-6 backdrop-blur-[2px] card-shine overflow-hidden transition duration-300 ${
-          service.disabled
-            ? "opacity-60 border-white/[0.08] bg-white/[0.01]"
-            : isMobile
-              ? `cursor-pointer ${
-                  showActive
-                    ? "border-accent/50 bg-white/[0.03] shadow-[0_0_30px_-5px_rgba(254,199,0,0.3)]"
-                    : "border-white/[0.08] bg-white/[0.01]"
-                }`
-              : `border-white/[0.08] bg-white/[0.01] hover:border-accent/50 hover:bg-white/[0.03] ${service.borderGlow}`
-        }`}
+        className={`group h-full ${isMobile && !service.disabled ? "cursor-pointer" : ""}`}
       >
-        {/* Badge */}
-        {service.badge && (
-          <span className="absolute top-6 right-6 text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground">
-            {service.badge}
-          </span>
-        )}
-
-        {/* Icon with scale/rotate animation (transform only - layout safe) */}
-        <div
-          className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-transform duration-300 ${
-            isMobile
-              ? showActive
-                ? "scale-110 rotate-6"
-                : ""
-              : "group-hover:scale-110 group-hover:rotate-6"
+        <TiltCard
+          className={`relative rounded-2xl border p-6 backdrop-blur-[2px] card-shine overflow-hidden transition duration-300 h-full ${
+            service.disabled
+              ? "opacity-60 border-white/[0.08] bg-white/[0.01]"
+              : isMobile
+                ? `${
+                    showActive
+                      ? "border-accent/50 bg-white/[0.03] shadow-[0_0_30px_-5px_rgba(254,199,0,0.3)]"
+                      : "border-white/[0.08] bg-white/[0.01]"
+                  }`
+                : `border-white/[0.08] bg-white/[0.01] hover:border-accent/50 hover:bg-white/[0.03] ${service.borderGlow}`
           }`}
+          max={service.disabled ? 0 : 8}
+          scale={service.disabled ? 1 : 1.02}
         >
-          <service.icon
-            className={`size-6 ${service.color} transition-transform duration-300 ${
-              isMobile ? (showActive ? "scale-110" : "") : "group-hover:scale-110"
-            }`}
-          />
-        </div>
+          {/* Badge */}
+          {service.badge && (
+            <span className="absolute top-6 right-6 text-xs px-3 py-1 rounded-full bg-muted text-muted-foreground">
+              {service.badge}
+            </span>
+          )}
 
-        {/* Content */}
-        <h3
-          className={`text-xl font-semibold mb-3 ${
-            service.disabled ? "text-muted-foreground" : "text-foreground"
-          }`}
-        >
-          {service.title}
-        </h3>
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          {service.description}
-        </p>
-
-        {/* Accent line - gradient border bottom (transform only - layout safe) */}
-        {!service.disabled && (
+          {/* Icon with scale/rotate animation (transform only - layout safe) */}
           <div
-            className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-accent transition-transform duration-500 origin-left ${
+            className={`size-12 rounded-xl ${service.bgColor} flex items-center justify-center mb-6 transition-transform duration-300 ${
               isMobile
                 ? showActive
-                  ? "scale-x-100"
-                  : "scale-x-0"
-                : "scale-x-0 group-hover:scale-x-100"
+                  ? "scale-110 rotate-6"
+                  : ""
+                : "group-hover:scale-110 group-hover:rotate-6"
             }`}
-          />
-        )}
+          >
+            <service.icon
+              className={`size-6 ${service.color} transition-transform duration-300 ${
+                isMobile ? (showActive ? "scale-110" : "") : "group-hover:scale-110"
+              }`}
+            />
+          </div>
+
+          {/* Content */}
+          <h3
+            className={`text-xl font-semibold mb-3 ${
+              service.disabled ? "text-muted-foreground" : "text-foreground"
+            }`}
+          >
+            {service.title}
+          </h3>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            {service.description}
+          </p>
+
+          {/* Accent line - gradient border bottom (transform only - layout safe) */}
+          {!service.disabled && (
+            <div
+              className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#3B9EFF] to-accent transition-transform duration-500 origin-left ${
+                isMobile
+                  ? showActive
+                    ? "scale-x-100"
+                    : "scale-x-0"
+                  : "scale-x-0 group-hover:scale-x-100"
+              }`}
+            />
+          )}
+        </TiltCard>
       </div>
     </ScrollReveal>
   )

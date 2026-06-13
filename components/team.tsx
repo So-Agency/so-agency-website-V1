@@ -39,7 +39,7 @@ export function Team() {
         />
 
         {/* Team grid */}
-        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
+        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-1 gap-6 max-w-2xl mx-auto">
           {/* Team members */}
           {team.map((member, index) => (
             <TeamMember
