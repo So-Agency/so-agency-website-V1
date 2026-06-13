@@ -46,14 +46,14 @@ export function CTASection() {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <div className="comet-border rounded-lg">
                 <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 transition-all text-base px-8">
-                  <a href="mailto:hello@soagency.dev">
+                  <a href="https://wa.me/message/5MH2JY5B4ERVJ1">
                     Let&apos;s Make It Happen
                     <ArrowRight className="size-4 ml-2" />
                   </a>
                 </Button>
               </div>
               <Button asChild variant="outline" size="lg" className="text-base px-8 border-foreground/30 hover:border-accent hover:shadow-lg hover:shadow-accent/40">
-                <a href="mailto:hello@soagency.dev">
+                <a href="https://wa.me/message/5MH2JY5B4ERVJ1">
                   Send a Message
                 </a>
               </Button>
