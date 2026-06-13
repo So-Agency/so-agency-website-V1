@@ -7,14 +7,11 @@ import { SectionHeader, ScrollReveal } from "@/components/scroll-reveal"
 
 const team = [
   {
-    name: "Oscar Carabali",
-    role: "Strategy & Developer",
-    image: "/images/oscar.jpg",
-  },
-  {
-    name: "Miguel Angel",
-    role: "UX/UI Designer",
-    image: "/images/miguel.jpg",
+    name: "Oscar & Miguel",
+    label: "Founding Partners",
+    description:
+      "The duo behind SO Agency. We design, build, and launch digital presences that actually perform — blending strategic development with sharp UX/UI design.",
+    image: "/images/soa_founders1.webp",
   },
 ]
 
@@ -44,7 +41,7 @@ export function Team() {
         />
 
         {/* Team grid */}
-        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
+        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-1 gap-6 max-w-2xl mx-auto">
           {/* Team members */}
           {team.map((member, index) => (
             <TeamMember
@@ -113,7 +110,7 @@ function TeamMember({
     <ScrollReveal delay={index * 150}>
       <div ref={wrapperRef} onClick={handleClick} className={`group ${isMobile ? "cursor-pointer" : ""}`}>
         <TiltCard
-          className={`relative aspect-[3/4] rounded-xl overflow-hidden border bg-card/30 mb-4 transition-colors duration-300 ${
+          className={`relative rounded-xl overflow-hidden border bg-card/30 transition-colors duration-300 ${
             isMobile
               ? showActive
                 ? "border-[#FEC700]/50 shadow-[0_0_40px_-10px] shadow-[#FEC700]/30"
@@ -123,27 +120,41 @@ function TeamMember({
           max={8}
           scale={1.02}
         >
-          <img
-            src={member.image}
-            alt={member.name}
-            className={`w-full h-full object-cover transition-all duration-500 ${
-              isMobile
-                ? showActive
-                  ? "grayscale-0 scale-105"
-                  : "grayscale"
-                : "grayscale group-hover:grayscale-0 group-hover:scale-105"
-            }`}
-          />
-          {/* Gradient overlay */}
-          <div
-            className={`absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent transition-opacity duration-300 ${
-              isMobile
-                ? showActive
-                  ? "opacity-60"
-                  : "opacity-80"
-                : "opacity-80 group-hover:opacity-60"
-            }`}
-          />
+          {/* Image */}
+          <div className="relative aspect-[7/5] w-full overflow-hidden">
+            <img
+              src={member.image}
+              alt={member.name}
+              className={`w-full h-full object-cover transition-all duration-500 ${
+                isMobile
+                  ? showActive
+                    ? "grayscale-0 scale-105"
+                    : "grayscale"
+                  : "grayscale group-hover:grayscale-0 group-hover:scale-105"
+              }`}
+            />
+            {/* Bottom gradient fade into card */}
+            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-card/90 to-transparent opacity-100" />
+            {/* Hover gradient overlay */}
+            <div
+              className={`absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent transition-opacity duration-300 ${
+                isMobile
+                  ? showActive
+                    ? "opacity-50"
+                    : "opacity-0"
+                  : "opacity-0 group-hover:opacity-50"
+              }`}
+            />
+          </div>
+
+          {/* Text content */}
+          <div className="p-6 md:p-8 relative z-10">
+            <span className="block text-xs font-semibold uppercase tracking-widest text-[#3B9EFF] mb-2">
+              {member.label}
+            </span>
+            <h3 className="text-2xl md:text-3xl font-semibold text-[#FEC700] mb-3">{member.name}</h3>
+            <p className="text-sm md:text-base text-foreground/80 leading-relaxed">{member.description}</p>
+          </div>
 
           {/* Hover accent line */}
           <div
@@ -156,14 +167,6 @@ function TeamMember({
             }`}
           />
         </TiltCard>
-        <h3
-          className={`text-lg font-semibold transition-colors ${
-            isMobile ? (showActive ? "text-[#FEC700]" : "text-foreground") : "text-foreground group-hover:text-[#FEC700]"
-          }`}
-        >
-          {member.name}
-        </h3>
-        <p className="text-sm text-[#3B9EFF]">{member.role}</p>
       </div>
     </ScrollReveal>
   )
