@@ -7,8 +7,10 @@ import { SectionHeader, ScrollReveal } from "@/components/scroll-reveal"
 
 const team = [
   {
-    name: "Oscar Carabali",
-    role: "Strategy & Developer",
+    name: "Oscar & Miguel",
+    label: "Founding Partners",
+    description:
+      "The duo behind SO Agency. We design, build, and launch digital presences that actually perform — blending strategic development with sharp UX/UI design.",
     image: "/images/soa_founders1.webp",
   },
 ]
@@ -151,14 +153,12 @@ function TeamMember({
             }`}
           />
         </TiltCard>
-        <h3
-          className={`text-lg font-semibold transition-colors ${
-            isMobile ? (showActive ? "text-[#FEC700]" : "text-foreground") : "text-foreground group-hover:text-[#FEC700]"
-          }`}
-        >
-          {member.name}
-        </h3>
-        <p className="text-sm text-[#3B9EFF]">{member.role}</p>
+        {/* Label */}
+        <span className="block text-xs font-semibold uppercase tracking-wider text-[#3B9EFF] mb-2">
+          {member.label}
+        </span>
+        <h3 className="text-2xl font-bold text-[#FEC700] mb-2">{member.name}</h3>
+        <p className="text-sm text-muted-foreground leading-relaxed">{member.description}</p>
       </div>
     </ScrollReveal>
   )
