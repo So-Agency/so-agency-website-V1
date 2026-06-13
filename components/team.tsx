@@ -9,12 +9,7 @@ const team = [
   {
     name: "Oscar Carabali",
     role: "Strategy & Developer",
-    image: "/images/oscar.jpg",
-  },
-  {
-    name: "Miguel Angel",
-    role: "UX/UI Designer",
-    image: "/images/miguel.jpg",
+    image: "/images/soa_founders1.webp",
   },
 ]
 
@@ -113,7 +108,7 @@ function TeamMember({
     <ScrollReveal delay={index * 150}>
       <div ref={wrapperRef} onClick={handleClick} className={`group ${isMobile ? "cursor-pointer" : ""}`}>
         <TiltCard
-          className={`relative aspect-[3/4] rounded-xl overflow-hidden border bg-card/30 mb-4 transition-colors duration-300 ${
+          className={`relative aspect-[7/5] rounded-xl overflow-hidden border bg-card/30 mb-4 transition-colors duration-300 ${
             isMobile
               ? showActive
                 ? "border-[#FEC700]/50 shadow-[0_0_40px_-10px] shadow-[#FEC700]/30"
