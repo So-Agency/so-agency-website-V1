@@ -16,24 +16,37 @@ const _roboto = Roboto({ subsets: ['latin'], weight: ["400","500","700","900"], 
 export const metadata: Metadata = {
   title: 'SO Agency | Design. Build. Launch.',
   description: 'We transform your business ideas into high-performing digital presences — from stunning websites to complete brand identities. Your digital launch partner.',
+  keywords: ['web design', 'digital agency', 'web development', 'branding', 'digital marketing'],
   generator: 'v0.app',
   icons: {
-    icon: [
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
+  },
+  openGraph: {
+    title: 'SO Agency | Design. Build. Launch.',
+    description: 'We transform your business ideas into high-performing digital presences — from stunning websites to complete brand identities.',
+    url: 'https://so-agency.com',
+    type: 'website',
+    images: [
       {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'SO Agency',
       },
     ],
-    apple: '/apple-icon.png',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'SO Agency | Design. Build. Launch.',
+    description: 'We transform your business ideas into high-performing digital presences — from stunning websites to complete brand identities.',
+    images: ['/og-image.png'],
+  },
+  robots: 'index, follow',
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
+  category: 'business',
+  authors: [{ name: 'SO Agency' }],
 }
 
 export default function RootLayout({
