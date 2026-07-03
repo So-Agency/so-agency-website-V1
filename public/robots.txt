@@ -11,7 +11,7 @@ Disallow: /.well-known/
 Crawl-delay: 1
 
 # Sitemap location
-Sitemap: https://so-agency.com/sitemap.xml
+Sitemap: https://soagency.dev/sitemap.xml
 
 # Google-specific rules
 User-agent: Googlebot
