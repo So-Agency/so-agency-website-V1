@@ -13,7 +13,7 @@ const _geistMono = Geist_Mono({ subsets: ['latin'], weight: ["100","200","300","
 const _audiowide = Audiowide({ subsets: ['latin'], weight: ["400"], variable: "--font-display" })
 const _roboto = Roboto({ subsets: ['latin'], weight: ["400","500","700","900"], variable: "--font-roboto" })
 
-const BASE_URL = 'https://so-agency.com'
+const BASE_URL = 'https://soagency.dev'
 
 export const viewport: Viewport = {
   width: 'device-width',
