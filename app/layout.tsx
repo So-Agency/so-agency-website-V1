@@ -28,13 +28,6 @@ export const metadata: Metadata = {
   description: 'We transform your business ideas into high-performing digital presences — from stunning websites to complete brand identities. Your digital launch partner.',
   keywords: ['web design', 'digital agency', 'web development', 'branding', 'digital marketing', 'SO Agency'],
   generator: 'v0.app',
-  icons: {
-    icon: [
-      { url: '/favicon.png', type: 'image/png' },
-    ],
-    shortcut: '/favicon.png',
-    apple: '/favicon.png',
-  },
   openGraph: {
     title: 'SO Agency | Design. Build. Launch.',
     description: 'We transform your business ideas into high-performing digital presences — from stunning websites to complete brand identities.',
@@ -42,20 +35,11 @@ export const metadata: Metadata = {
     siteName: 'SO Agency',
     type: 'website',
     locale: 'es_ES',
-    images: [
-      {
-        url: `${BASE_URL}/og-image.png`,
-        width: 1200,
-        height: 630,
-        alt: 'SO Agency | Design. Build. Launch.',
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'SO Agency | Design. Build. Launch.',
     description: 'We transform your business ideas into high-performing digital presences — from stunning websites to complete brand identities.',
-    images: [`${BASE_URL}/og-image.png`],
   },
   robots: {
     index: true,
@@ -78,6 +62,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark bg-background scroll-smooth">
+      <head>
+        <link rel="icon" href="/favicon.png" type="image/png" />
+        <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
+        <meta property="og:image" content={`${BASE_URL}/og-image.png`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="SO Agency | Design. Build. Launch." />
+        <meta name="twitter:image" content={`${BASE_URL}/og-image.png`} />
+      </head>
       <body className={`font-sans antialiased ${_audiowide.variable} ${_roboto.variable}`}>
         <StarBackground />
         <CustomCursor />
