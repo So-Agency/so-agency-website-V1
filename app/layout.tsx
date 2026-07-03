@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
@@ -13,27 +13,41 @@ const _geistMono = Geist_Mono({ subsets: ['latin'], weight: ["100","200","300","
 const _audiowide = Audiowide({ subsets: ['latin'], weight: ["400"], variable: "--font-display" })
 const _roboto = Roboto({ subsets: ['latin'], weight: ["400","500","700","900"], variable: "--font-roboto" })
 
+const BASE_URL = 'https://so-agency.com'
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#f5c000',
+}
+
 export const metadata: Metadata = {
+  metadataBase: new URL(BASE_URL),
   title: 'SO Agency | Design. Build. Launch.',
   description: 'We transform your business ideas into high-performing digital presences — from stunning websites to complete brand identities. Your digital launch partner.',
-  keywords: ['web design', 'digital agency', 'web development', 'branding', 'digital marketing'],
+  keywords: ['web design', 'digital agency', 'web development', 'branding', 'digital marketing', 'SO Agency'],
   generator: 'v0.app',
   icons: {
-    icon: '/favicon.png',
+    icon: [
+      { url: '/favicon.png', type: 'image/png' },
+    ],
     shortcut: '/favicon.png',
     apple: '/favicon.png',
   },
   openGraph: {
     title: 'SO Agency | Design. Build. Launch.',
     description: 'We transform your business ideas into high-performing digital presences — from stunning websites to complete brand identities.',
-    url: 'https://so-agency.com',
+    url: BASE_URL,
+    siteName: 'SO Agency',
     type: 'website',
+    locale: 'es_ES',
     images: [
       {
-        url: '/og-image.png',
+        url: `${BASE_URL}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: 'SO Agency',
+        alt: 'SO Agency | Design. Build. Launch.',
       },
     ],
   },
@@ -41,12 +55,20 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'SO Agency | Design. Build. Launch.',
     description: 'We transform your business ideas into high-performing digital presences — from stunning websites to complete brand identities.',
-    images: ['/og-image.png'],
+    images: [`${BASE_URL}/og-image.png`],
   },
-  robots: 'index, follow',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   category: 'business',
-  authors: [{ name: 'SO Agency' }],
+  authors: [{ name: 'SO Agency', url: BASE_URL }],
 }
 
 export default function RootLayout({
