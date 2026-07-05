@@ -6,8 +6,8 @@ import { getDictionary } from '@/lib/i18n'
 import { RocketCrash } from '@/components/rocket-crash'
 import { Button } from '@/components/ui/button'
 
-// Bilingual 404 page — automatically detects locale from URL
-// Displays Spanish copy when accessed from /es/, English from /en/
+// Root-level 404 page — handles all undefined routes
+// Automatically detects locale from URL and displays appropriate language
 export default function NotFound() {
   const [dict, setDict] = useState(getDictionary('en'))
   const [locale, setLocale] = useState<'en' | 'es'>('en')
