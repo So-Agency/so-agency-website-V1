@@ -43,7 +43,7 @@ export function RocketCrash() {
   }, [])
 
   return (
-    <div ref={containerRef} className="relative h-52 sm:h-60 flex items-center justify-center overflow-hidden">
+    <div ref={containerRef} className="relative h-52 sm:h-60 flex items-end justify-center pb-4">
       <style>{`
         @keyframes particleBurst {
           0%   { transform: translate(-50%, -50%) scale(1); opacity: 1; }
