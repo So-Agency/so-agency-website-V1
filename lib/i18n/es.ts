@@ -2,6 +2,13 @@ import type { Dictionary } from './types'
 
 export const es: Dictionary = {
   locale: 'es',
+  notFound: {
+    headline: 'Misión fallida. Choque de cohete detectado.',
+    subheading: '404 — Esta página ha dejado la órbita.',
+    description: 'La página que buscas no existe o se ha perdido en el espacio. Volvamos a ponerte en curso.',
+    backHome: 'Volver a la Órbita',
+    contactUs: 'Contactar Soporte',
+  },
   navbar: {
     links: [
       { label: 'Servicios', href: '#services' },

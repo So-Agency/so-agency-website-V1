@@ -2,6 +2,13 @@ export type Locale = 'en' | 'es'
 
 export interface Dictionary {
   locale: Locale
+  notFound: {
+    headline: string
+    subheading: string
+    description: string
+    backHome: string
+    contactUs: string
+  }
   navbar: {
     links: { label: string; href: string }[]
     cta: string
