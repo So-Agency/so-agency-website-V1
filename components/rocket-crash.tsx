@@ -43,7 +43,7 @@ export function RocketCrash() {
   }, [])
 
   return (
-    <div ref={containerRef} className="relative h-80 sm:h-96 flex items-center justify-center overflow-hidden">
+    <div ref={containerRef} className="relative h-52 sm:h-60 flex items-center justify-center overflow-hidden">
       <style>{`
         @keyframes particleBurst {
           0%   { transform: translate(-50%, -50%) scale(1); opacity: 1; }
@@ -104,7 +104,7 @@ export function RocketCrash() {
       {/* Rocket SVG — proper silhouette */}
       <svg
         viewBox="0 0 80 180"
-        className="w-28 sm:w-36 relative z-10"
+        className="w-20 sm:w-24 relative z-10"
         style={{
           animation: 'rocketFall 2.8s cubic-bezier(.4,0,.6,1) infinite',
           filter: 'drop-shadow(0 0 18px rgba(254,199,0,0.45))',

@@ -24,36 +24,34 @@ export default function NotFound() {
   const contactLink = locale === 'es' ? '/es/#contact' : '/en/#contact'
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4 py-16">
+    <div className="h-screen overflow-hidden bg-background flex flex-col items-center justify-center px-4">
       {/* Background gradient accent */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-2xl mx-auto text-center">
+      <div className="relative z-10 max-w-2xl mx-auto text-center flex flex-col items-center gap-4">
         {/* Animated Rocket */}
-        <div className="mb-8 sm:mb-12">
-          <RocketCrash />
-        </div>
+        <RocketCrash />
 
         {/* Headline */}
-        <h1 className="text-4xl sm:text-6xl font-bold text-foreground mb-2">
+        <h1 className="text-3xl sm:text-5xl font-bold text-foreground leading-tight text-balance">
           {dict.notFound.headline}
         </h1>
 
         {/* Subheading */}
-        <h2 className="text-xl sm:text-2xl text-accent font-semibold mb-4">
+        <h2 className="text-lg sm:text-xl text-accent font-semibold">
           {dict.notFound.subheading}
         </h2>
 
         {/* Description */}
-        <p className="text-muted-foreground text-lg mb-12 leading-relaxed max-w-lg mx-auto">
+        <p className="text-muted-foreground text-base leading-relaxed max-w-md mx-auto">
           {dict.notFound.description}
         </p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center items-center pt-2">
           <Button
             asChild
             className="bg-accent text-accent-foreground hover:bg-accent/90 px-8 py-2 text-base font-semibold"
@@ -75,8 +73,8 @@ export default function NotFound() {
         </div>
 
         {/* Easter egg text */}
-        <p className="text-xs text-muted-foreground mt-16 opacity-50">
-          Houston, we have a problem... 🚀
+        <p className="text-xs text-muted-foreground opacity-40 pt-2">
+          Houston, we have a problem...
         </p>
       </div>
     </div>
