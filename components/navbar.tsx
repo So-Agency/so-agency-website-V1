@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import Image from "next/image"
 import type { Dictionary } from "@/lib/i18n/types"
+import { LanguageSwitcher } from "@/components/language-switcher"
 
 export function Navbar({ dict }: { dict: Dictionary }) {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -72,13 +73,16 @@ export function Navbar({ dict }: { dict: Dictionary }) {
             ))}
           </nav>
 
-          {/* CTA Button */}
-          <div className={`hidden md:block comet-border rounded-md transition-all duration-500 ${
+          {/* Language switcher + CTA */}
+          <div className="hidden md:flex items-center gap-3">
+            <LanguageSwitcher />
+          <div className={`comet-border rounded-md transition-all duration-500 ${
             isScrolled ? "scale-95" : "scale-100"
           }`}>
             <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90 text-sm font-medium">
               <a href="#contact">{dict.navbar.cta}</a>
             </Button>
+          </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -110,6 +114,9 @@ export function Navbar({ dict }: { dict: Dictionary }) {
                   {dict.navbar.cta}
                 </a>
               </Button>
+              <div className="mt-4 flex justify-center">
+                <LanguageSwitcher />
+              </div>
             </nav>
           </div>
         )}

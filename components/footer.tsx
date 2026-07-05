@@ -1,5 +1,6 @@
 import Image from "next/image"
 import type { Dictionary } from "@/lib/i18n/types"
+import { LanguageSwitcher } from "@/components/language-switcher"
 
 export function Footer({ dict }: { dict: Dictionary }) {
   return (
@@ -63,6 +64,7 @@ export function Footer({ dict }: { dict: Dictionary }) {
             {dict.footer.copyright}
           </p>
           <div className="flex items-center gap-6">
+            <LanguageSwitcher />
             <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               {dict.footer.privacy}
             </a>

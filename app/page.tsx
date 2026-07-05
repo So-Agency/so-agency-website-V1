@@ -1,28 +1,28 @@
-import { Navbar } from "@/components/navbar"
-import { Hero } from "@/components/hero"
-import { Services } from "@/components/services"
-import { Process } from "@/components/process"
-import { Benefits } from "@/components/benefits"
-import { Portfolio } from "@/components/portfolio"
-import { Team } from "@/components/team"
-import { CTASection } from "@/components/cta-section"
-import { Footer } from "@/components/footer"
-import { getDictionary } from "@/lib/i18n"
+'use client'
 
-export default function Home() {
-  const dict = getDictionary("en")
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
-  return (
-    <main className="min-h-screen">
-      <Navbar dict={dict} />
-      <Hero dict={dict} />
-      <Services dict={dict} />
-      <Process dict={dict} />
-      <Benefits dict={dict} />
-      <Portfolio dict={dict} />
-      <Team dict={dict} />
-      <CTASection dict={dict} />
-      <Footer dict={dict} />
-    </main>
-  )
+export default function RootPage() {
+  const router = useRouter()
+
+  useEffect(() => {
+    // Check stored preference first
+    const stored = typeof window !== 'undefined'
+      ? localStorage.getItem('so-agency-locale')
+      : null
+
+    if (stored === 'es' || stored === 'en') {
+      router.replace(`/${stored}/`)
+      return
+    }
+
+    // Fall back to browser language
+    const lang = navigator.language?.toLowerCase() ?? 'en'
+    const locale = lang.startsWith('es') ? 'es' : 'en'
+    router.replace(`/${locale}/`)
+  }, [router])
+
+  // Render nothing while redirecting — Cloudflare _redirects handles bots
+  return null
 }
