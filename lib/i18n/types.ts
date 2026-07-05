@@ -2,6 +2,13 @@ export type Locale = 'en' | 'es'
 
 export interface Dictionary {
   locale: Locale
+  notFound: {
+    headline: string
+    subheading: string
+    description: string
+    backHome: string
+    contactUs: string
+  }
   navbar: {
     links: { label: string; href: string }[]
     cta: string
@@ -71,6 +78,14 @@ export interface Dictionary {
     ctaPrimary: string
     ctaSecondary: string
     responseTime: string
+  }
+  faq: {
+    sectionTitle: string
+    sectionDescription: string
+    items: {
+      question: string
+      answer: string
+    }[]
   }
   footer: {
     tagline: string

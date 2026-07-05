@@ -1,0 +1,24 @@
+# SO Agency - SEO Configuration
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /private/
+Disallow: /_next/
+Disallow: /.well-known/
+
+# Crawl delay (in seconds)
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://soagency.dev/sitemap.xml
+
+# Google-specific rules
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing-specific rules
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1

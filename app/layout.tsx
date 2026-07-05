@@ -6,6 +6,7 @@ import { Geist, Geist_Mono, Audiowide, Roboto } from 'next/font/google'
 import { SmoothScroll } from '@/components/smooth-scroll'
 import { CustomCursor } from '@/components/custom-cursor'
 import { StarBackground } from '@/components/star-background'
+import { RightClickCTA } from '@/components/right-click-cta'
 
 // Initialize fonts
 const _geist = Geist({ subsets: ['latin'], weight: ["100","200","300","400","500","600","700","800","900"] })
@@ -75,6 +76,7 @@ export default function RootLayout({
       <body className={`font-sans antialiased ${_audiowide.variable} ${_roboto.variable}`}>
         <StarBackground />
         <CustomCursor />
+        <RightClickCTA />
         <SmoothScroll>
           {children}
         </SmoothScroll>

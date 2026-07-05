@@ -1,28 +1,36 @@
 'use client'
 
 import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 
 export default function RootPage() {
-  const router = useRouter()
-
   useEffect(() => {
-    // Check stored preference first
-    const stored = typeof window !== 'undefined'
-      ? localStorage.getItem('so-agency-locale')
-      : null
-
+    // For static export on Vercel, we need client-side redirect
+    // Server-side _redirects will handle bots and JS-disabled browsers
+    // This is a fallback for when the browser runs JavaScript
+    
+    // Check stored locale preference first
+    const stored = localStorage.getItem('so-agency-locale')
     if (stored === 'es' || stored === 'en') {
-      router.replace(`/${stored}/`)
+      window.location.replace(`/${stored}/`)
       return
     }
 
-    // Fall back to browser language
+    // Fall back to browser language detection
     const lang = navigator.language?.toLowerCase() ?? 'en'
     const locale = lang.startsWith('es') ? 'es' : 'en'
-    router.replace(`/${locale}/`)
-  }, [router])
+    
+    // Use a small delay to prevent flash of blank page
+    const timer = setTimeout(() => {
+      window.location.replace(`/${locale}/`)
+    }, 100)
 
-  // Render nothing while redirecting — Cloudflare _redirects handles bots
-  return null
+    return () => clearTimeout(timer)
+  }, [])
+
+  // Render a minimal loading state while redirect happens
+  return (
+    <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="animate-pulse text-foreground">Redirecting...</div>
+    </div>
+  )
 }
