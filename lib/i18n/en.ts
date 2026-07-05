@@ -7,6 +7,7 @@ export const en: Dictionary = {
       { label: 'Services', href: '#services' },
       { label: 'Process', href: '#process' },
       { label: 'Team', href: '#team' },
+      { label: 'FAQ', href: '#faq' },
       { label: 'Contact', href: '#contact' },
     ],
     cta: 'Get Started',
@@ -177,6 +178,47 @@ export const en: Dictionary = {
     ctaPrimary: "Let's Make It Happen",
     ctaSecondary: 'Send a Message',
     responseTime: 'We typically respond within 24 hours',
+  },
+  faq: {
+    sectionTitle: 'Frequently Asked Questions',
+    sectionDescription: 'Everything you need to know before we launch together.',
+    items: [
+      {
+        question: 'How long does it take to build a website?',
+        answer:
+          'Most projects are completed in 3 to 6 weeks depending on scope and complexity. A landing page or portfolio site can go live in as little as 2 weeks, while a full e-commerce build or brand identity system typically takes 4 to 8 weeks. We always agree on a clear timeline before we start.',
+      },
+      {
+        question: 'How much does a project with SO Agency cost?',
+        answer:
+          'Every project is scoped individually because no two businesses are the same. As a reference, web design and development projects start from $1,500 USD, and branding packages from $800 USD. We offer flexible payment plans and can tailor a package to your budget. Book a free diagnostic call and we will give you a precise quote with no surprises.',
+      },
+      {
+        question: 'What services does SO Agency offer?',
+        answer:
+          'We cover the full digital launch stack: web design and development, UX/UI design, e-commerce, branding and visual identity, social media strategy, and AI automation. Whether you need one service or the entire suite, we operate as an extension of your team.',
+      },
+      {
+        question: 'Do I need to have a brand identity before building a website?',
+        answer:
+          'Not at all. Many of our clients come to us at the very start of their journey. We can handle branding first and then carry that identity seamlessly into your website — or we can do both in parallel to save time. We will recommend the best approach during your diagnostic call.',
+      },
+      {
+        question: 'Will my website be optimized for search engines?',
+        answer:
+          'Yes. Every site we build follows current SEO best practices: semantic HTML, performance optimization, proper metadata, Open Graph tags, structured data (JSON-LD), and a sitemap. If you need ongoing SEO strategy or content, we can include that as part of a growth plan.',
+      },
+      {
+        question: 'What happens after the project is launched?',
+        answer:
+          'Launch is not the end — it is the beginning of orbit. We offer post-launch support packages that include performance monitoring, content updates, security patches, and ongoing marketing. You will never be left alone after go-live.',
+      },
+      {
+        question: 'Can SO Agency work with clients outside Latin America?',
+        answer:
+          'Absolutely. We work with clients across Latin America, the United States, Europe, and beyond. Our team operates remotely and communicates in both English and Spanish, so distance is never a barrier to great work.',
+      },
+    ],
   },
   footer: {
     tagline: 'Design. Build. Launch.',

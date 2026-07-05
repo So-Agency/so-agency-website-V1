@@ -72,6 +72,14 @@ export interface Dictionary {
     ctaSecondary: string
     responseTime: string
   }
+  faq: {
+    sectionTitle: string
+    sectionDescription: string
+    items: {
+      question: string
+      answer: string
+    }[]
+  }
   footer: {
     tagline: string
     description: string

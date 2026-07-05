@@ -8,6 +8,7 @@ import { Process } from '@/components/process'
 import { Benefits } from '@/components/benefits'
 import { Portfolio } from '@/components/portfolio'
 import { Team } from '@/components/team'
+import { FAQ } from '@/components/faq'
 import { CTASection } from '@/components/cta-section'
 import { Footer } from '@/components/footer'
 
@@ -37,6 +38,7 @@ export default async function LocalePage({ params }: Props) {
       <Benefits dict={dict} />
       <Portfolio dict={dict} />
       <Team dict={dict} />
+      <FAQ dict={dict} />
       <CTASection dict={dict} />
       <Footer dict={dict} />
     </main>

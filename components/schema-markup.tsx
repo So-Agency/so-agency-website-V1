@@ -40,16 +40,32 @@ const content: Record<Locale, {
     ],
     faqs: [
       {
+        question: 'How long does it take to build a website?',
+        answer: 'Most projects are completed in 3 to 6 weeks depending on scope and complexity. A landing page or portfolio site can go live in as little as 2 weeks, while a full e-commerce build or brand identity system typically takes 4 to 8 weeks. We always agree on a clear timeline before we start.',
+      },
+      {
+        question: 'How much does a project with SO Agency cost?',
+        answer: 'Every project is scoped individually because no two businesses are the same. As a reference, web design and development projects start from $1,500 USD, and branding packages from $800 USD. We offer flexible payment plans and can tailor a package to your budget. Book a free diagnostic call and we will give you a precise quote with no surprises.',
+      },
+      {
         question: 'What services does SO Agency offer?',
-        answer: 'SO Agency offers web design and development, UX/UI design, e-commerce solutions, branding and visual identity, social media marketing, and AI automation. We are a full-service digital agency serving businesses worldwide.',
+        answer: 'We cover the full digital launch stack: web design and development, UX/UI design, e-commerce, branding and visual identity, social media strategy, and AI automation. Whether you need one service or the entire suite, we operate as an extension of your team.',
       },
       {
-        question: 'How long does it take to build a website with SO Agency?',
-        answer: 'Most projects are delivered within 2–6 weeks depending on scope. We work efficiently to hit your milestones without compromising quality. Book a free diagnostic call to get a precise timeline for your project.',
+        question: 'Do I need to have a brand identity before building a website?',
+        answer: 'Not at all. Many of our clients come to us at the very start of their journey. We can handle branding first and then carry that identity seamlessly into your website — or we can do both in parallel to save time. We will recommend the best approach during your diagnostic call.',
       },
       {
-        question: 'How much does SO Agency charge for web design?',
-        answer: 'SO Agency offers flexible pricing packages designed to fit businesses of all sizes, from startups to established brands. Contact us for a custom quote tailored to your specific goals and budget.',
+        question: 'Will my website be optimized for search engines?',
+        answer: 'Yes. Every site we build follows current SEO best practices: semantic HTML, performance optimization, proper metadata, Open Graph tags, structured data (JSON-LD), and a sitemap. If you need ongoing SEO strategy or content, we can include that as part of a growth plan.',
+      },
+      {
+        question: 'What happens after the project is launched?',
+        answer: 'Launch is not the end — it is the beginning of orbit. We offer post-launch support packages that include performance monitoring, content updates, security patches, and ongoing marketing. You will never be left alone after go-live.',
+      },
+      {
+        question: 'Can SO Agency work with clients outside Latin America?',
+        answer: 'Absolutely. We work with clients across Latin America, the United States, Europe, and beyond. Our team operates remotely and communicates in both English and Spanish, so distance is never a barrier to great work.',
       },
     ],
   },
@@ -83,16 +99,32 @@ const content: Record<Locale, {
     ],
     faqs: [
       {
+        question: '¿Cuánto tiempo tarda en construirse un sitio web?',
+        answer: 'La mayoría de los proyectos se completan en 3 a 6 semanas según el alcance y la complejidad. Una landing page o portafolio puede estar en vivo en tan solo 2 semanas, mientras que un e-commerce completo o un sistema de identidad de marca suele tomar de 4 a 8 semanas. Siempre acordamos un cronograma claro antes de comenzar.',
+      },
+      {
+        question: '¿Cuánto cuesta un proyecto con SO Agency?',
+        answer: 'Cada proyecto se planifica individualmente porque ningún negocio es igual. Como referencia, los proyectos de diseño y desarrollo web comienzan desde $1,500 USD, y los paquetes de branding desde $800 USD. Ofrecemos planes de pago flexibles y podemos adaptar un paquete a tu presupuesto. Agenda una llamada de diagnóstico gratuita y te daremos una cotización precisa sin sorpresas.',
+      },
+      {
         question: '¿Qué servicios ofrece SO Agency?',
-        answer: 'SO Agency ofrece diseño y desarrollo web, diseño UX/UI, soluciones de e-commerce, branding e identidad visual, marketing en redes sociales y automatización con IA. Somos una agencia digital de servicio completo que atiende empresas a nivel mundial.',
+        answer: 'Cubrimos todo el stack de lanzamiento digital: diseño y desarrollo web, diseño UX/UI, e-commerce, branding e identidad visual, estrategia de redes sociales y automatización con IA. Ya sea que necesites un solo servicio o toda la suite, operamos como una extensión de tu equipo.',
       },
       {
-        question: '¿Cuánto tiempo tarda SO Agency en construir un sitio web?',
-        answer: 'La mayoría de los proyectos se entregan en 2 a 6 semanas según el alcance. Trabajamos eficientemente para cumplir tus plazos sin comprometer la calidad. Reserva una llamada de diagnóstico gratuita para obtener un cronograma preciso para tu proyecto.',
+        question: '¿Necesito tener una identidad de marca antes de construir un sitio web?',
+        answer: 'Para nada. Muchos de nuestros clientes llegan a nosotros al inicio de su camino. Podemos encargarnos primero del branding y luego llevar esa identidad de manera fluida a tu sitio web, o hacer ambas cosas en paralelo para ahorrar tiempo. Te recomendaremos el mejor enfoque durante tu llamada de diagnóstico.',
       },
       {
-        question: '¿Cuánto cobra SO Agency por diseño web?',
-        answer: 'SO Agency ofrece paquetes de precios flexibles diseñados para empresas de todos los tamaños, desde startups hasta marcas consolidadas. Contáctanos para una cotización personalizada según tus objetivos y presupuesto.',
+        question: '¿Mi sitio web estará optimizado para los motores de búsqueda?',
+        answer: 'Sí. Cada sitio que construimos sigue las mejores prácticas SEO actuales: HTML semántico, optimización de rendimiento, metadatos correctos, etiquetas Open Graph, datos estructurados (JSON-LD) y un sitemap. Si necesitas estrategia SEO continua o contenido, podemos incluirlo como parte de un plan de crecimiento.',
+      },
+      {
+        question: '¿Qué sucede después del lanzamiento del proyecto?',
+        answer: 'El lanzamiento no es el final — es el inicio de la órbita. Ofrecemos paquetes de soporte post-lanzamiento que incluyen monitoreo de rendimiento, actualizaciones de contenido, parches de seguridad y marketing continuo. Nunca te dejaremos solo después del go-live.',
+      },
+      {
+        question: '¿SO Agency puede trabajar con clientes fuera de Latinoamérica?',
+        answer: 'Absolutamente. Trabajamos con clientes en toda América Latina, Estados Unidos, Europa y más allá. Nuestro equipo opera de forma remota y se comunica tanto en inglés como en español, por lo que la distancia nunca es una barrera para un gran trabajo.',
       },
     ],
   },
