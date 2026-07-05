@@ -6,46 +6,29 @@ import { Button } from "@/components/ui/button"
 import { useScrollFadeIn } from "@/hooks/use-gsap-animations"
 import gsap from "gsap"
 
-const projects = [
-  {
-    id: 1,
-    title: "La Feika",
-    subtitle: "Fresh From China to LatAm",
-    description: "E-commerce platform connecting Chinese fresh food suppliers with Latin American markets. A complete digital solution for cross-border commerce.",
-    image: "/images/projects/lafeika-web.webp",
-    tags: ["E-Commerce", "Web Development", "Branding"],
-    link: "https://lafeika.com/",
-  },
-  {
-    id: 2,
-    title: "It's Fuluz Time",
-    subtitle: "Cruelty-Free Leather Goods",
-    description: "A great option for high-quality, completely Cruelty-Free leather goods. Their products range from handbags and wallets to more.",
-    image: "/images/projects/itsfuluztime-1.webp",
-    tags: ["Web Design", "Web Development", "Branding"],
-    link: "https://itsfuluztime.com/",
-  },
-  {
-    id: 3,
-    title: "Yaku Adventures",
-    subtitle: "Tourism & Hiking Experiences",
-    description: "Adventure tourism platform showcasing breathtaking hiking experiences and outdoor adventures across South America.",
-    image: "/images/projects/yaku.webp",
-    tags: ["Web Design", "E-commerce", "Web Development"],
-    link: "https://yakuadventures.com/",
-  },
-  {
-    id: 4,
-    title: "Singing Rooster",
-    subtitle: "A premium coffee, chocolate, and artisan marketplace",
-    description: "Singing Rooster is an e-commerce website for coffee, chocolate, art, subscriptions, and wholesale/retail shopping experiences.",
-    image: "/images/projects/siningrooster.webp",
-    tags: ["Website Security", "APP Development", "Optimization"],
-    link: "https://singingrooster.org/",
-  },
+import type { Dictionary } from "@/lib/i18n/types"
+
+const projectLinks = [
+  "https://lafeika.com/",
+  "https://itsfuluztime.com/",
+  "https://yakuadventures.com/",
+  "https://singingrooster.org/",
 ]
 
-export function Portfolio() {
+const projectImages = [
+  "/images/projects/lafeika-web.webp",
+  "/images/projects/itsfuluztime-1.webp",
+  "/images/projects/yaku.webp",
+  "/images/projects/siningrooster.webp",
+]
+
+export function Portfolio({ dict }: { dict: Dictionary }) {
+  const projects = dict.portfolio.projects.map((p, i) => ({
+    id: i + 1,
+    ...p,
+    image: projectImages[i],
+    link: projectLinks[i],
+  }))
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
   const [isAnimating, setIsAnimating] = useState(false)
@@ -233,9 +216,9 @@ export function Portfolio() {
         {/* Section header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 sm:mb-12">
           <div>
-            <p className="text-sm font-medium text-accent uppercase tracking-widest mb-2">Selected Work</p>
+            <p className="text-sm font-medium text-accent uppercase tracking-widest mb-2">{dict.portfolio.eyebrow}</p>
             <h2 className="font-[family-name:var(--font-display)] text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
-              Turning Ideas Into Masterpieces
+              {dict.portfolio.sectionTitle}
             </h2>
           </div>
           
@@ -244,21 +227,21 @@ export function Portfolio() {
             <button
               onClick={() => setIsAutoPlaying(!isAutoPlaying)}
               className="size-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
-              aria-label={isAutoPlaying ? "Pause autoplay" : "Resume autoplay"}
+              aria-label={isAutoPlaying ? dict.portfolio.pauseAutoplay : dict.portfolio.resumeAutoplay}
             >
               {isAutoPlaying ? <Pause className="size-4" /> : <Play className="size-4" />}
             </button>
             <button
               onClick={prevSlide}
               className="size-10 sm:size-12 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
-              aria-label="Previous project"
+              aria-label={dict.portfolio.previousProject}
             >
               <ChevronLeft className="size-5" />
             </button>
             <button
               onClick={nextSlide}
               className="size-10 sm:size-12 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
-              aria-label="Next project"
+              aria-label={dict.portfolio.nextProject}
             >
               <ChevronRight className="size-5" />
             </button>
@@ -323,7 +306,7 @@ export function Portfolio() {
             <div className="comet-border rounded-lg w-fit">
               <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90 text-sm sm:text-base">
                 <a href={currentProject.link} target="_blank" rel="noopener noreferrer">
-                  Visit Website
+                  {dict.portfolio.visitWebsite}
                   <ExternalLink className="size-4 ml-2" />
                 </a>
               </Button>

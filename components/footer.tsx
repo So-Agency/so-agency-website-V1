@@ -1,31 +1,8 @@
 import Image from "next/image"
+import type { Dictionary } from "@/lib/i18n/types"
+import { LanguageSwitcher } from "@/components/language-switcher"
 
-const footerLinks = [
-  {
-    title: "Services",
-    links: [
-      { label: "Web Design & Dev", href: "#services" },
-      { label: "Branding & Identity", href: "#services" },
-      { label: "E-Commerce", href: "#services" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "Process", href: "#process" },
-      { label: "Team", href: "#team" },
-      { label: "Contact", href: "#contact" },
-    ],
-  },
-]
-
-const socialLinks = [
-  { label: "Twitter", href: "#" },
-  { label: "LinkedIn", href: "#" },
-  { label: "Instagram", href: "#" },
-]
-
-export function Footer() {
+export function Footer({ dict }: { dict: Dictionary }) {
   return (
     <footer className="border-t border-border bg-card/30">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
@@ -33,23 +10,23 @@ export function Footer() {
           {/* Logo and description */}
           <div className="md:col-span-2">
             <a href="#" className="flex items-center gap-3 text-foreground mb-4">
-              <Image 
-                src="/logo.png" 
-                alt="SO Agency" 
-                width={120} 
+              <Image
+                src="/logo.png"
+                alt="SO Agency"
+                width={120}
                 height={45}
                 className="h-10 w-auto"
               />
             </a>
             <p className="font-[family-name:var(--font-roboto)] text-xl font-bold tracking-widest uppercase text-foreground mb-2">
-              Design. Build. Launch.
+              {dict.footer.tagline}
             </p>
             <p className="text-sm text-muted-foreground max-w-sm mb-6">
-              Your digital launch partner. We help businesses launch and grow with strategic branding, web development, and marketing.
+              {dict.footer.description}
             </p>
             {/* Social links */}
             <div className="flex items-center gap-4">
-              {socialLinks.map((link) => (
+              {dict.footer.social.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
@@ -62,7 +39,7 @@ export function Footer() {
           </div>
 
           {/* Link columns */}
-          {footerLinks.map((column) => (
+          {dict.footer.columns.map((column) => (
             <div key={column.title}>
               <h4 className="font-semibold text-foreground mb-4">{column.title}</h4>
               <ul className="space-y-2">
@@ -84,14 +61,15 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-border mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            {new Date().getFullYear()} SO Agency. All rights reserved.
+            {dict.footer.copyright}
           </p>
           <div className="flex items-center gap-6">
+            <LanguageSwitcher />
             <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Privacy Policy
+              {dict.footer.privacy}
             </a>
             <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Terms of Service
+              {dict.footer.terms}
             </a>
           </div>
         </div>
