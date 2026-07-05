@@ -21,7 +21,8 @@ export function generateStaticParams() {
 }
 
 export default async function LocalePage({ params }: Props) {
-  const { locale } = await params
+  const resolvedParams = await params
+  const locale = resolvedParams?.locale || 'en'
 
   if (!locales.includes(locale as Locale)) {
     redirect('/en/')

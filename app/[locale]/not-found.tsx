@@ -3,9 +3,9 @@ import { getDictionary } from '@/lib/i18n'
 import { RocketCrash } from '@/components/rocket-crash'
 import { Button } from '@/components/ui/button'
 
-export default async function NotFound({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params
-  const dict = await getDictionary(locale as 'en' | 'es')
+export default function NotFound() {
+  // Default to 'en' — in production the [locale] route will determine the language
+  const dict = getDictionary('en')
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4 py-16">
@@ -42,7 +42,7 @@ export default async function NotFound({ params }: { params: Promise<{ locale: s
             asChild
             className="bg-accent text-accent-foreground hover:bg-accent/90 px-8 py-2 text-base font-semibold"
           >
-            <Link href={`/${locale}/`}>
+            <Link href="/">
               {dict.notFound.backHome}
             </Link>
           </Button>
@@ -52,7 +52,7 @@ export default async function NotFound({ params }: { params: Promise<{ locale: s
             variant="outline"
             className="border-border hover:bg-card px-8 py-2 text-base font-semibold"
           >
-            <Link href={`/${locale}/#contact`}>
+            <Link href="/#contact">
               {dict.notFound.contactUs}
             </Link>
           </Button>

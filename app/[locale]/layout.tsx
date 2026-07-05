@@ -15,7 +15,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params
+  const resolvedParams = await params
+  const locale = resolvedParams?.locale || 'en'
   const lang = locale as Locale
 
   const titles: Record<Locale, string> = {
@@ -42,7 +43,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function LocaleLayout({ children, params }: Props) {
-  const { locale } = await params
+  const resolvedParams = await params
+  const locale = resolvedParams?.locale || 'en'
   const lang = (locales.includes(locale as Locale) ? locale : 'en') as Locale
 
   return (
