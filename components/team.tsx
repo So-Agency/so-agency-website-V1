@@ -4,24 +4,15 @@ import { useRef, useEffect, useState } from "react"
 import { useStaggerChildren } from "@/hooks/use-gsap-animations"
 import { TiltCard } from "@/components/tilt-card"
 import { SectionHeader, ScrollReveal } from "@/components/scroll-reveal"
+import type { Dictionary } from "@/lib/i18n/types"
 
-const team = [
-  {
-    name: "Oscar & Miguel",
-    label: "Founding Partners",
-    description:
-      "The duo behind SO Agency. We design, build, and launch digital presences that actually perform — blending strategic development with sharp UX/UI design.",
-    image: "/images/soa_founders1.webp",
-  },
-]
+const memberImages = ["/images/soa_founders1.webp"]
 
-export function Team() {
+export function Team({ dict }: { dict: Dictionary }) {
   const gridRef = useStaggerChildren<HTMLDivElement>(0.15)
-  // Lifted state: only ONE member can be active at a time on mobile.
   const [activeMember, setActiveMember] = useState<string | null>(null)
   const [isMobile, setIsMobile] = useState(false)
 
-  // Detect touch/mobile once at the section level.
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.matchMedia("(max-width: 768px)").matches)
@@ -31,18 +22,17 @@ export function Team() {
     return () => window.removeEventListener("resize", checkMobile)
   }, [])
 
+  const team = dict.team.members.map((m, i) => ({ ...m, image: memberImages[i] }))
+
   return (
     <section id="team" className="py-24 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto">
-        {/* Section header */}
-        <SectionHeader 
-          title="Our Leadership"
-          description="The crew behind your mission to success."
+        <SectionHeader
+          title={dict.team.sectionTitle}
+          description={dict.team.sectionDescription}
         />
 
-        {/* Team grid */}
         <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-1 gap-6 max-w-2xl mx-auto">
-          {/* Team members */}
           {team.map((member, index) => (
             <TeamMember
               key={member.name}
@@ -59,9 +49,6 @@ export function Team() {
   )
 }
 
-// Team member: desktop uses CSS :hover + TiltCard (unchanged). Mobile simulates
-// the hover visual via in-view activation, driven by a single shared "active"
-// state so only one member is active at a time.
 function TeamMember({
   member,
   index,
@@ -69,7 +56,7 @@ function TeamMember({
   isActive,
   onActivate,
 }: {
-  member: typeof team[0]
+  member: { name: string; label: string; description: string; image: string }
   index: number
   isMobile: boolean
   isActive: boolean

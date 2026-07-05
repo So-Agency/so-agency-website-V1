@@ -7,77 +7,27 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useStaggerChildren } from "@/hooks/use-gsap-animations"
 import { TiltCard } from "@/components/tilt-card"
 import { SectionHeader, ScrollReveal } from "@/components/scroll-reveal"
+import type { Dictionary } from "@/lib/i18n/types"
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
 }
 
-const services = [
-  {
-    icon: Code,
-    title: "Web Design & Dev",
-    description: "Custom, performance-driven sites built on modern stacks. We engineer high-performance platforms that keep users engaged.",
-    color: "text-cyan-400",
-    bgColor: "bg-cyan-400/10",
-    borderGlow: "hover:shadow-[0_0_30px_-5px] hover:shadow-cyan-400/30",
-    size: "col-span-1",
-  },
-  {
-    icon: Palette,
-    title: "UX/UI Design",
-    description: "Intuitive, conversion-focused interfaces. Every pixel serves a purpose in guiding the user's journey.",
-    color: "text-accent",
-    bgColor: "bg-accent/10",
-    borderGlow: "hover:shadow-[0_0_30px_-5px] hover:shadow-accent/30",
-    size: "col-span-1",
-  },
-  {
-    icon: ShoppingCart,
-    title: "E-Commerce",
-    description: "End-to-end online store solutions designed for frictionless transactions and maximum conversion.",
-    color: "text-foreground",
-    bgColor: "bg-foreground/10",
-    borderGlow: "hover:shadow-[0_0_30px_-5px] hover:shadow-white/20",
-    size: "col-span-1",
-  },
-  {
-    icon: Fingerprint,
-    title: "Branding & Identity",
-    description: "Full visual identity systems. We forge a unique signature that resonates across your industry, establishing undeniable authority.",
-    color: "text-teal-400",
-    bgColor: "bg-teal-400/10",
-    borderGlow: "hover:shadow-[0_0_30px_-5px] hover:shadow-teal-400/30",
-    size: "col-span-1",
-  },
-  {
-    icon: Megaphone,
-    title: "Social Media",
-    description: "Turning engagement into leads through calculated content strategies and data-driven campaigns.",
-    color: "text-accent",
-    bgColor: "bg-accent/10",
-    borderGlow: "hover:shadow-[0_0_30px_-5px] hover:shadow-accent/30",
-    size: "col-span-1",
-  },
-  {
-    icon: Bot,
-    title: "AI Automation",
-    description: "Streamlining operations with intelligent tools. Next-gen tech currently in development.",
-    color: "text-muted-foreground",
-    bgColor: "bg-muted/50",
-    borderGlow: "",
-    size: "md:col-span-1",
-    badge: "Standby",
-    disabled: true,
-  },
+const serviceIcons = [Code, Palette, ShoppingCart, Fingerprint, Megaphone, Bot]
+const serviceStyles = [
+  { color: "text-cyan-400", bgColor: "bg-cyan-400/10", borderGlow: "hover:shadow-[0_0_30px_-5px] hover:shadow-cyan-400/30" },
+  { color: "text-accent", bgColor: "bg-accent/10", borderGlow: "hover:shadow-[0_0_30px_-5px] hover:shadow-accent/30" },
+  { color: "text-foreground", bgColor: "bg-foreground/10", borderGlow: "hover:shadow-[0_0_30px_-5px] hover:shadow-white/20" },
+  { color: "text-teal-400", bgColor: "bg-teal-400/10", borderGlow: "hover:shadow-[0_0_30px_-5px] hover:shadow-teal-400/30" },
+  { color: "text-accent", bgColor: "bg-accent/10", borderGlow: "hover:shadow-[0_0_30px_-5px] hover:shadow-accent/30" },
+  { color: "text-muted-foreground", bgColor: "bg-muted/50", borderGlow: "" },
 ]
 
-export function Services() {
+export function Services({ dict }: { dict: Dictionary }) {
   const gridRef = useStaggerChildren<HTMLDivElement>(0.1)
-  // Lifted state: only ONE card can be active at a time on mobile.
   const [activeCard, setActiveCard] = useState<string | null>(null)
   const [isMobile, setIsMobile] = useState(false)
 
-  // Detect touch/mobile once at the section level.
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.matchMedia("(max-width: 768px)").matches)
@@ -87,18 +37,23 @@ export function Services() {
     return () => window.removeEventListener("resize", checkMobile)
   }, [])
 
+  const services = dict.services.items.map((item, i) => ({
+    ...item,
+    icon: serviceIcons[i],
+    ...serviceStyles[i],
+    disabled: i === 5,
+  }))
+
   return (
     <section id="services" className="py-24 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
-        {/* Section header */}
-        <SectionHeader 
-          title="Core Systems"
-          description="Specialized services designed to ensure total business success across all digital channels."
+        <SectionHeader
+          title={dict.services.sectionTitle}
+          description={dict.services.sectionDescription}
         />
 
-        {/* Bento grid - Row 1: 2 cols | Row 2: 3 cols | Row 3: 3 cols, card left-aligned */}
         <div className="space-y-4">
-          {/* Row 1: First 2 cards - 2 columns */}
+          {/* Row 1: 2 columns */}
           <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {services.slice(0, 2).map((service, index) => (
               <ServiceCard
@@ -112,7 +67,7 @@ export function Services() {
             ))}
           </div>
 
-          {/* Row 2: Next 3 cards - 3 columns */}
+          {/* Row 2: 3 columns */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {services.slice(2, 5).map((service, index) => (
               <ServiceCard
@@ -126,7 +81,7 @@ export function Services() {
             ))}
           </div>
 
-          {/* Row 3: Last card - 3 columns, card aligned left */}
+          {/* Row 3: last card */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {services.slice(5).map((service) => (
               <ServiceCard
@@ -155,7 +110,16 @@ function ServiceCard({
   isActive,
   onActivate,
 }: {
-  service: typeof services[0]
+  service: {
+    icon: React.ElementType
+    title: string
+    description: string
+    color: string
+    bgColor: string
+    borderGlow: string
+    badge?: string
+    disabled: boolean
+  }
   index: number
   isMobile: boolean
   isActive: boolean

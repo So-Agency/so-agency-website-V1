@@ -4,45 +4,15 @@ import { Search, Target, Rocket, TrendingUp } from "lucide-react"
 import { useRef, useEffect, useState } from "react"
 import { useTimelineProgress } from "@/hooks/use-gsap-animations"
 import { SectionHeader, ScrollReveal } from "@/components/scroll-reveal"
+import type { Dictionary } from "@/lib/i18n/types"
 
-const steps = [
-  {
-    icon: Search,
-    number: "01",
-    title: "Discovery",
-    subtitle: "Pre-Flight Check",
-    description: "We dive deep into your business, understanding your goals, audience, and competitive landscape.",
-  },
-  {
-    icon: Target,
-    number: "02",
-    title: "Strategy",
-    subtitle: "Mission Planning",
-    description: "Together, we craft a clear roadmap with defined milestones and measurable outcomes.",
-  },
-  {
-    icon: Rocket,
-    number: "03",
-    title: "Launch",
-    subtitle: "Liftoff",
-    description: "We execute with precision, delivering high-quality work on your timelines.",
-  },
-  {
-    icon: TrendingUp,
-    number: "04",
-    title: "Growth",
-    subtitle: "Orbit",
-    description: "Ongoing support and optimization to keep your business scaling and thriving.",
-  },
-]
+const stepIcons = [Search, Target, Rocket, TrendingUp]
 
-export function Process() {
+export function Process({ dict }: { dict: Dictionary }) {
   const stepsRef = useTimelineProgress<HTMLDivElement>()
-  // Lifted state: only ONE step can be active at a time on mobile.
   const [activeStep, setActiveStep] = useState<string | null>(null)
   const [isMobile, setIsMobile] = useState(false)
 
-  // Detect touch/mobile once at the section level.
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.matchMedia("(max-width: 768px)").matches)
@@ -55,20 +25,18 @@ export function Process() {
   return (
     <section id="process" className="py-24 px-4 sm:px-6 bg-secondary/30">
       <div className="max-w-6xl mx-auto">
-        {/* Section header */}
-        <SectionHeader 
-          title="How We Work"
-          description="A proven process that takes you from idea to impact. Clear, collaborative, and built for speed."
+        <SectionHeader
+          title={dict.process.sectionTitle}
+          description={dict.process.sectionDescription}
         />
 
-        {/* Process steps */}
         <div ref={stepsRef} className="grid md:grid-cols-4 gap-8">
-          {steps.map((step, index) => (
+          {dict.process.steps.map((step, index) => (
             <ProcessStep
               key={step.number}
-              step={step}
+              step={{ ...step, icon: stepIcons[index] }}
               index={index}
-              isLast={index === steps.length - 1}
+              isLast={index === dict.process.steps.length - 1}
               isMobile={isMobile}
               isActive={activeStep === step.number}
               onActivate={setActiveStep}
@@ -80,9 +48,6 @@ export function Process() {
   )
 }
 
-// Process step: desktop uses CSS :hover (unchanged). Mobile simulates hover
-// via in-view activation, driven by a single shared "active" state so only one
-// step is active at a time. Only visual properties animate.
 function ProcessStep({
   step,
   index,
@@ -91,7 +56,7 @@ function ProcessStep({
   isActive,
   onActivate,
 }: {
-  step: typeof steps[0]
+  step: { icon: React.ElementType; number: string; title: string; subtitle: string; description: string }
   index: number
   isLast: boolean
   isMobile: boolean
