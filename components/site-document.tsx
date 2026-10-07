@@ -7,6 +7,7 @@ import { StarBackground } from '@/components/star-background'
 import { MetaPixel } from '@/components/meta-pixel'
 import { GoogleAnalytics } from '@/components/google-analytics'
 import { MicrosoftClarity } from '@/components/microsoft-clarity'
+import { GoogleTagManager } from '@/components/google-tag-manager'
 
 // Initialize fonts
 const _geist = Geist({ subsets: ['latin'], weight: ["100","200","300","400","500","600","700","800","900"] })
@@ -47,6 +48,7 @@ export function SiteDocument({
         <MetaPixel />
         <GoogleAnalytics />
         <MicrosoftClarity />
+        <GoogleTagManager />
 
         <StarBackground />
         <CustomCursor />
