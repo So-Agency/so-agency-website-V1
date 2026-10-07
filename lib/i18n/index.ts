@@ -1,6 +1,7 @@
 export type { Dictionary, Locale } from './types'
 export { en } from './en'
 export { es } from './es'
+export { defaultLocale, locales, localeMeta, isLocale, localeFromPathname } from './config'
 
 import type { Locale, Dictionary } from './types'
 import { en } from './en'
@@ -11,6 +12,3 @@ export const dictionaries: Record<Locale, Dictionary> = { en, es }
 export function getDictionary(locale: Locale): Dictionary {
   return dictionaries[locale] ?? en
 }
-
-export const defaultLocale: Locale = 'en'
-export const locales: Locale[] = ['en', 'es']

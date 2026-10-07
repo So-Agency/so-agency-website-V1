@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
-import type { Locale } from '@/lib/i18n/types'
-import { locales } from '@/lib/i18n'
+import { getDictionary, locales, localeMeta, defaultLocale, isLocale } from '@/lib/i18n'
 import { BRAND_TITLE } from '@/lib/brand'
+import { BASE_URL } from '@/lib/site'
+import { SiteDocument } from '@/components/site-document'
 import { SchemaMarkup } from '@/components/schema-markup'
-
-const BASE_URL = 'https://soagency.dev'
+import { RightClickCTA } from '@/components/right-click-cta'
 
 type Props = {
   children: React.ReactNode
@@ -16,38 +16,55 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const resolvedParams = await params
-  const locale = resolvedParams?.locale || 'en'
-  const lang = locale as Locale
+  const { locale: param } = await params
+  const locale = isLocale(param) ? param : defaultLocale
+  const { description, keywords } = getDictionary(locale).meta
+  const url = `${BASE_URL}/${locale}/`
 
-  const descriptions: Record<Locale, string> = {
-    en: 'We transform your business ideas into high-performing digital presences — from stunning websites to complete brand identities.',
-    es: 'Transformamos tus ideas de negocio en presencias digitales de alto rendimiento — desde sitios web impactantes hasta identidades de marca completas.',
-  }
-
+  // Open Graph and Twitter are restated in full rather than patched: Next replaces
+  // a nested metadata object wholesale, so anything left out here would vanish
+  // instead of falling back to the root layout's value.
   return {
     title: BRAND_TITLE,
-    description: descriptions[lang] ?? descriptions.en,
+    description,
+    keywords,
     alternates: {
-      canonical: `${BASE_URL}/${lang}/`,
+      canonical: url,
       languages: {
-        'en': `${BASE_URL}/en/`,
-        'es': `${BASE_URL}/es/`,
-        'x-default': `${BASE_URL}/en/`,
+        ...Object.fromEntries(
+          locales.map((l) => [localeMeta[l].langTag, `${BASE_URL}/${l}/`]),
+        ),
+        'x-default': `${BASE_URL}/${defaultLocale}/`,
       },
+    },
+    openGraph: {
+      title: BRAND_TITLE,
+      description,
+      url,
+      siteName: 'SO Agency',
+      type: 'website',
+      locale: localeMeta[locale].ogLocale,
+      alternateLocale: locales
+        .filter((l) => l !== locale)
+        .map((l) => localeMeta[l].ogLocale),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: BRAND_TITLE,
+      description,
     },
   }
 }
 
 export default async function LocaleLayout({ children, params }: Props) {
-  const resolvedParams = await params
-  const locale = resolvedParams?.locale || 'en'
-  const lang = (locales.includes(locale as Locale) ? locale : 'en') as Locale
+  const { locale: param } = await params
+  const locale = isLocale(param) ? param : defaultLocale
 
   return (
-    <>
-      <SchemaMarkup locale={lang} baseUrl={BASE_URL} />
+    <SiteDocument lang={localeMeta[locale].langTag}>
+      <RightClickCTA />
+      <SchemaMarkup locale={locale} baseUrl={BASE_URL} />
       {children}
-    </>
+    </SiteDocument>
   )
 }

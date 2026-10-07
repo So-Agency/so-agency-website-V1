@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import { SiteDocument } from '@/components/site-document'
 
 export default function RootPage() {
   useEffect(() => {
@@ -29,8 +30,10 @@ export default function RootPage() {
 
   // Render a minimal loading state while redirect happens
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center">
-      <div className="animate-pulse text-foreground">Redirecting...</div>
-    </div>
+    <SiteDocument lang="en">
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="animate-pulse text-foreground">Redirecting...</div>
+      </div>
+    </SiteDocument>
   )
 }

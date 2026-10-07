@@ -2,6 +2,11 @@ import type { Dictionary } from './types'
 
 export const es: Dictionary = {
   locale: 'es',
+  meta: {
+    description:
+      'Transformamos tus ideas de negocio en presencias digitales de alto rendimiento — desde sitios web impactantes hasta identidades de marca completas.',
+    keywords: ['diseño web', 'agencia digital', 'desarrollo web', 'branding', 'marketing digital', 'SO Agency'],
+  },
   notFound: {
     headline: 'Misión fallida. Choque de cohete detectado.',
     subheading: '404 — Esta página ha dejado la órbita.',

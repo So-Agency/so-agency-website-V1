@@ -2,6 +2,11 @@ export type Locale = 'en' | 'es'
 
 export interface Dictionary {
   locale: Locale
+  /** Head metadata. The page title is the brand title, which is never translated. */
+  meta: {
+    description: string
+    keywords: string[]
+  }
   notFound: {
     headline: string
     subheading: string

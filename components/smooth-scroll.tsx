@@ -22,15 +22,19 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
     lenisRef.current = lenis
 
     // Animation frame loop
+    let frame = 0
     function raf(time: number) {
       lenis.raf(time)
-      requestAnimationFrame(raf)
+      frame = requestAnimationFrame(raf)
     }
 
-    requestAnimationFrame(raf)
+    frame = requestAnimationFrame(raf)
 
-    // Cleanup
+    // Cleanup. The loop has to be cancelled as well as the instance destroyed:
+    // switching language remounts the document, and an uncancelled loop would
+    // keep driving the destroyed instance, one more per switch.
     return () => {
+      cancelAnimationFrame(frame)
       lenis.destroy()
     }
   }, [])

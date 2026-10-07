@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { getDictionary } from '@/lib/i18n'
+import { getDictionary, localeMeta } from '@/lib/i18n'
+import { SiteDocument } from '@/components/site-document'
+import { RightClickCTA } from '@/components/right-click-cta'
 import { RocketCrash } from '@/components/rocket-crash'
 import { Button } from '@/components/ui/button'
 
@@ -23,7 +25,11 @@ export default function NotFound() {
   const homeLink = locale === 'es' ? '/es/' : '/en/'
   const contactLink = locale === 'es' ? '/es/#contact' : '/en/#contact'
 
+  // One static 404.html serves every locale, so it is exported as English and
+  // corrected here once the URL has revealed which language the visitor was in.
   return (
+    <SiteDocument lang={localeMeta[locale].langTag}>
+    <RightClickCTA />
     <div className="h-screen overflow-hidden bg-background flex flex-col items-center justify-center px-4">
       {/* Background gradient accent */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
@@ -78,5 +84,6 @@ export default function NotFound() {
         </p>
       </div>
     </div>
+    </SiteDocument>
   )
 }
