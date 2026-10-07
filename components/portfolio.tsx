@@ -269,6 +269,14 @@ export function Portfolio({ dict }: { dict: Dictionary }) {
                 <img
                   src={currentProject.image}
                   alt={currentProject.title}
+                  width={1200}
+                  height={675}
+                  // The portfolio section lives below the hero + services + benefits
+                  // on first paint, so none of these is on the critical path for
+                  // LCP. Lazy + async decoding keeps them off the initial critical
+                  // request chain even on tall viewports.
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
