@@ -9,7 +9,6 @@ import type { Locale } from './types'
  * here, so they do not drag every translation into their bundle.
  */
 export const defaultLocale: Locale = 'en'
-export const locales: Locale[] = ['en', 'es']
 
 type LocaleMeta = {
   /** BCP 47 tag, used for <html lang>, hreflang and JSON-LD inLanguage. */
@@ -31,6 +30,13 @@ export const localeMeta: Record<Locale, LocaleMeta> = {
   en: { langTag: 'en', ogLocale: 'en_US', nativeName: 'English', englishName: 'English' },
   es: { langTag: 'es', ogLocale: 'es_ES', nativeName: 'Español', englishName: 'Spanish' },
 }
+
+/**
+ * Every published locale, in the order the language switcher shows them. Derived
+ * from localeMeta rather than listed again, so there is no second list to forget:
+ * a locale exists once it is described above.
+ */
+export const locales = Object.keys(localeMeta) as Locale[]
 
 export function isLocale(value: unknown): value is Locale {
   return locales.includes(value as Locale)
