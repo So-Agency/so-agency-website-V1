@@ -195,9 +195,9 @@ curl -s  https://soagency.dev/.well-known/agent-skills/engage-so-agency/SKILL.md
   does not apply to Function responses, so the Function sets `Link` itself, from the same
   constant the markdown middleware uses.
 
-  **This one has only been verified locally**, under `wrangler pages dev`, where the
-  Function answers `/` and the `_redirects` rule is not consulted. Confirm it on the first
-  deploy that includes it:
+  Checked against the live deploy on 2026-10-07, the first to include it: on Cloudflare
+  the Function answers `/` and the `_redirects` rule is not consulted, as under
+  `wrangler pages dev`. To check it again:
 
   ```bash
   curl -sI -H 'Accept-Language: fr' https://soagency.dev/ | grep -iE '^HTTP|^location|^link'
