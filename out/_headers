@@ -40,3 +40,29 @@
 /llms.txt
   Access-Control-Allow-Origin: *
   Cache-Control: public, max-age=3600
+
+# Content-hashed Next.js bundles - the filename changes on every build, so a
+# cached copy can never serve stale content and the browser can keep it as
+# long as it has disk space. "immutable" tells the browser not to even send a
+# conditional request on page refresh. Cloudflare Pages' default of max-age=
+# 14400 is correct but conservative; this unlocks the biggest repeat-visit win.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Images and fonts live at stable paths (no content hash in the filename), so
+# "immutable" would be wrong - the file at /images/soa_founders1.webp was
+# resized in-place in commit 1a14a4c. A month of caching is a safe middle
+# ground: long enough that most repeat visits hit cache, short enough that an
+# in-place swap is picked up by regular visitors within weeks without a hard
+# refresh. Combine with the normal flow of filename changes for new assets.
+/images/*
+  Cache-Control: public, max-age=2592000
+
+# Logo + favicon are small and change extremely rarely. Separate rule only so
+# the pattern reads clearly next to /images/*; same TTL would also be fine
+# merged into /*.
+/logo.svg
+  Cache-Control: public, max-age=2592000
+
+/favicon.png
+  Cache-Control: public, max-age=2592000
