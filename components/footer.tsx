@@ -27,7 +27,7 @@ export function Footer({ dict }: { dict: Dictionary }) {
           <div className="md:col-span-2">
             <a href="#" className="flex items-center gap-3 text-foreground mb-4">
               <Image
-                src="/logo.png"
+                src="/logo.svg"
                 alt="SO Agency"
                 width={120}
                 height={45}

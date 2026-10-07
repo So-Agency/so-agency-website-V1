@@ -1,5 +1,4 @@
 import Script from 'next/script'
-import { Analytics } from '@vercel/analytics/next'
 import { Geist, Geist_Mono, Audiowide, Roboto } from 'next/font/google'
 import { BRAND_TITLE } from '@/lib/brand'
 import { BASE_URL } from '@/lib/site'
@@ -66,7 +65,6 @@ export function SiteDocument({
         <SmoothScroll>
           {children}
         </SmoothScroll>
-        {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
   )

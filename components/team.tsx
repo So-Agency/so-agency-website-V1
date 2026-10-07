@@ -112,6 +112,10 @@ function TeamMember({
             <img
               src={member.image}
               alt={member.name}
+              width={1200}
+              height={857}
+              loading="lazy"
+              decoding="async"
               className={`w-full h-full object-cover transition-all duration-500 ${
                 isMobile
                   ? showActive

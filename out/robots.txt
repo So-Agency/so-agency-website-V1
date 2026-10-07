@@ -5,6 +5,11 @@ Disallow: /admin
 Disallow: /api/
 Disallow: /private/
 Disallow: /_next/
+# Content Signals (draft-romm-aipref-contentsignals): mirror the Cloudflare-level
+# stance of this site - search indexing welcome, inference-time reading welcome
+# (the agent-readiness surface in /.well-known/, llms.txt and the markdown twins
+# exists for exactly that), training on this content not permitted.
+Content-Signal: ai-train=no, search=yes, ai-input=yes
 
 # Crawl delay (in seconds)
 Crawl-delay: 1
@@ -12,12 +17,17 @@ Crawl-delay: 1
 # Sitemap location
 Sitemap: https://soagency.dev/sitemap.xml
 
+# IndexNow key file (lets Bing, Yandex, Seznam, Naver etc. verify push-based
+# indexing requests): https://soagency.dev/ef709ddbe88b54e0c9504fa1a76cc87b.txt
+
 # Google-specific rules
 User-agent: Googlebot
 Allow: /
+Content-Signal: ai-train=no, search=yes, ai-input=yes
 Crawl-delay: 0
 
 # Bing-specific rules
 User-agent: Bingbot
 Allow: /
+Content-Signal: ai-train=no, search=yes, ai-input=yes
 Crawl-delay: 1

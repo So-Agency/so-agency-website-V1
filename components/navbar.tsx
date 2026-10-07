@@ -58,11 +58,12 @@ export function Navbar({ dict }: { dict: Dictionary }) {
               isScrolled ? "scale-90" : "scale-100"
             }`}>
               <Image
-                src="/logo.png"
+                src="/logo.svg"
                 alt="SO Agency"
                 width={100}
                 height={38}
                 className="h-8 w-auto"
+                priority
               />
             </a>
 
