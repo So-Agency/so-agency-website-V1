@@ -29,6 +29,9 @@ type LocaleMeta = {
 export const localeMeta: Record<Locale, LocaleMeta> = {
   en: { langTag: 'en', ogLocale: 'en_US', nativeName: 'English', englishName: 'English' },
   es: { langTag: 'es', ogLocale: 'es_ES', nativeName: 'Español', englishName: 'Spanish' },
+  // The copy is written for France specifically - "vous", euro prices, French
+  // typography - so the tags say fr-FR rather than a bare fr.
+  fr: { langTag: 'fr-FR', ogLocale: 'fr_FR', nativeName: 'Français', englishName: 'French' },
 }
 
 /**

@@ -92,7 +92,7 @@ export function SchemaMarkup({ locale, baseUrl }: Props) {
       image: `${baseUrl}/og-image.png`,
       description,
       priceRange: '$$',
-      currenciesAccepted: 'USD',
+      currenciesAccepted: 'USD, EUR',
       paymentAccepted: 'Credit Card, Bank Transfer',
       openingHours: 'Mo-Fr 09:00-18:00',
       areaServed: { '@type': 'Place', name: 'Worldwide' },

@@ -1,4 +1,4 @@
-export type Locale = 'en' | 'es'
+export type Locale = 'en' | 'es' | 'fr'
 
 export interface Dictionary {
   locale: Locale
