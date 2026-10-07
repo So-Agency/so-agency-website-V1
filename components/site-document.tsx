@@ -1,10 +1,10 @@
-import Script from 'next/script'
 import { Geist, Geist_Mono, Audiowide, Roboto } from 'next/font/google'
 import { BRAND_TITLE } from '@/lib/brand'
 import { BASE_URL } from '@/lib/site'
 import { SmoothScroll } from '@/components/smooth-scroll'
 import { CustomCursor } from '@/components/custom-cursor'
 import { StarBackground } from '@/components/star-background'
+import { MetaPixel } from '@/components/meta-pixel'
 
 // Initialize fonts
 const _geist = Geist({ subsets: ['latin'], weight: ["100","200","300","400","500","600","700","800","900"] })
@@ -42,23 +42,7 @@ export function SiteDocument({
         <meta name="twitter:image" content={`${BASE_URL}/og-image.png`} />
       </head>
       <body className={`font-sans antialiased ${_audiowide.variable} ${_roboto.variable}`}>
-        <Script id="meta-pixel" strategy="afterInteractive">
-          {`!function(f,b,e,v,n,t,s)
-          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-          n.queue=[];t=b.createElement(e);t.async=!0;
-          t.src=v;s=b.getElementsByTagName(e)[0];
-          s.parentNode.insertBefore(t,s)}(window, document,'script',
-          'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', '1589857299225670');
-          fbq('track', 'PageView');`}
-        </Script>
-        <noscript>
-          <img height="1" width="1" style={{display:'none'}}
-            src="https://www.facebook.com/tr?id=1589857299225670&ev=PageView&noscript=1"
-          />
-        </noscript>
+        <MetaPixel />
 
         <StarBackground />
         <CustomCursor />
