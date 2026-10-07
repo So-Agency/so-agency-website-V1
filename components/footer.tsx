@@ -75,7 +75,11 @@ export function Footer({ dict }: { dict: Dictionary }) {
                       href="#services"
                       className={`flex items-center gap-2.5 text-base transition-colors ${
                         isDisabled
-                          ? "text-muted-foreground/60 hover:text-muted-foreground"
+                          // Signal "coming soon" with italic + full-color muted
+                          // rather than lowering opacity: the /60 variant failed
+                          // WCAG AA contrast and Lighthouse flagged it. The
+                          // services section itself keeps its own disabled visual.
+                          ? "italic text-muted-foreground hover:text-foreground"
                           : "text-muted-foreground hover:text-foreground"
                       }`}
                     >

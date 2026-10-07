@@ -14,14 +14,22 @@
   Link: </.well-known/ai-catalog.json>; rel="service-desc"; type="application/json", </llms.txt>; rel="service-doc"; type="text/plain", </.well-known/agent-skills/index.json>; rel="describedby"; type="application/json"
   X-Robots-Tag: index, follow
 
+# hreflang stays off the Link headers on purpose: sitemap.xml carries the
+# authoritative <xhtml:link hreflang=...> declarations for the three locales,
+# and Lighthouse's hreflang audit was flagging the ones here, in particular
+# the self-link that pointed at the markdown twin (type="text/markdown" with
+# hreflang would describe a markdown document as a locale alternate, which it
+# is not). The Link headers now only declare the markdown twin for agents
+# that content-negotiate on it; locale discovery still works via sitemap.xml
+# and via the <link> tags Next emits in <head>.
 /en/*
-  Link: </en/index.md>; rel="alternate"; type="text/markdown"; hreflang="en", </es/>; rel="alternate"; hreflang="es", </fr/>; rel="alternate"; hreflang="fr-FR"
+  Link: </en/index.md>; rel="alternate"; type="text/markdown"
 
 /es/*
-  Link: </es/index.md>; rel="alternate"; type="text/markdown"; hreflang="es", </en/>; rel="alternate"; hreflang="en", </fr/>; rel="alternate"; hreflang="fr-FR"
+  Link: </es/index.md>; rel="alternate"; type="text/markdown"
 
 /fr/*
-  Link: </fr/index.md>; rel="alternate"; type="text/markdown"; hreflang="fr-FR", </en/>; rel="alternate"; hreflang="en", </es/>; rel="alternate"; hreflang="es"
+  Link: </fr/index.md>; rel="alternate"; type="text/markdown"
 
 # ARD requires the catalog to be cross-origin readable. Content-Type is derived from
 # the file extension by Cloudflare Pages (.json -> application/json).

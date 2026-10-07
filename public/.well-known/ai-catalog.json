@@ -1,5 +1,5 @@
 {
-  "specVersion": "0.1",
+  "specVersion": "1.0",
   "host": {
     "name": "SO Agency",
     "url": "https://soagency.dev",
@@ -8,7 +8,7 @@
   },
   "entries": [
     {
-      "id": "urn:air:soagency.dev:content:llms-txt",
+      "identifier": "urn:air:soagency.dev:content:llms-txt",
       "displayName": "SO Agency summary for LLMs",
       "description": "Condensed overview of the agency: services, pricing bands, delivery timelines, process, selected work, and contact channel. Start here.",
       "type": "text/plain",
@@ -21,7 +21,7 @@
       ]
     },
     {
-      "id": "urn:air:soagency.dev:content:overview-en",
+      "identifier": "urn:air:soagency.dev:content:overview-en",
       "displayName": "SO Agency overview (English, Markdown)",
       "description": "Complete English marketing page content as plain markdown: services, process, benefits, portfolio, team, and full FAQ.",
       "type": "text/markdown",
@@ -34,7 +34,7 @@
       ]
     },
     {
-      "id": "urn:air:soagency.dev:content:overview-es",
+      "identifier": "urn:air:soagency.dev:content:overview-es",
       "displayName": "SO Agency overview (Spanish, Markdown)",
       "description": "Contenido completo de la página de marketing en español como markdown: servicios, proceso, beneficios, portafolio, equipo y preguntas frecuentes.",
       "type": "text/markdown",
@@ -47,7 +47,7 @@
       ]
     },
     {
-      "id": "urn:air:soagency.dev:content:overview-fr",
+      "identifier": "urn:air:soagency.dev:content:overview-fr",
       "displayName": "SO Agency overview (French, Markdown)",
       "description": "Contenu complet de la page marketing en français, au format markdown : services, méthode, avantages, réalisations, équipe et questions fréquentes.",
       "type": "text/markdown",
@@ -60,7 +60,7 @@
       ]
     },
     {
-      "id": "urn:air:soagency.dev:skills:index",
+      "identifier": "urn:air:soagency.dev:skills:index",
       "displayName": "SO Agency agent skills index",
       "description": "Discovery index of agent skills published by SO Agency, per the Agent Skills Discovery RFC.",
       "type": "application/json",
@@ -72,7 +72,7 @@
       ]
     },
     {
-      "id": "urn:air:soagency.dev:content:sitemap",
+      "identifier": "urn:air:soagency.dev:content:sitemap",
       "displayName": "SO Agency sitemap",
       "description": "All indexable URLs with hreflang alternates for the English, Spanish and French locales.",
       "type": "application/xml",
@@ -84,7 +84,7 @@
       ]
     },
     {
-      "id": "urn:air:soagency.dev:auth:none",
+      "identifier": "urn:air:soagency.dev:auth:none",
       "displayName": "Authentication policy",
       "description": "States that this service has no authentication, no registration, and no protected resources — everything is public. Read this instead of probing for credentials.",
       "type": "text/markdown",
@@ -96,7 +96,7 @@
       ]
     },
     {
-      "id": "urn:air:soagency.dev:contact:whatsapp",
+      "identifier": "urn:air:soagency.dev:contact:whatsapp",
       "displayName": "Contact SO Agency on WhatsApp",
       "description": "The agency's only direct contact channel, used to book a free diagnostic call and receive a project quote. Human-operated; replies typically within 24 hours during Mon-Fri 09:00-18:00.",
       "type": "text/html",

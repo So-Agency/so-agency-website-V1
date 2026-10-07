@@ -35,7 +35,10 @@ export function LanguageSwitcher({ dict }: { dict: Dictionary }) {
         <span key={locale} className="flex items-center">
           <button
             onClick={() => switchLocale(locale)}
-            aria-label={dict.languageSwitcher.switchTo.replace('{language}', localeMeta[locale].nativeName)}
+            // The accessible name starts with the visible label (EN/ES/FR) so
+            // screen readers and voice-control match it to what the user says.
+            // WCAG 2.5.3 - label in name; Lighthouse flagged this as a mismatch.
+            aria-label={`${locale.toUpperCase()} - ${dict.languageSwitcher.switchTo.replace('{language}', localeMeta[locale].nativeName)}`}
             aria-pressed={currentLocale === locale}
             className={[
               'text-sm font-medium px-1 transition-colors',
