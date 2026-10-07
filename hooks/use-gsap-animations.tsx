@@ -90,6 +90,16 @@ export function useHeroAnimation<T extends HTMLElement>() {
   useEffect(() => {
     if (!ref.current) return
 
+    // Skip the hero intro timeline on mobile. The counterpart in
+    // components/hero.tsx uses md:opacity-0 so the hero paints immediately on
+    // mobile (opacity 1 default) and is only hidden on >=768 px screens where
+    // this timeline fades it in. Running GSAP on mobile would still cost
+    // main-thread time and would briefly re-hide elements the CSS just made
+    // visible, so bail out before building the timeline.
+    if (window.matchMedia("(max-width: 767px)").matches) {
+      return
+    }
+
     const element = ref.current
     const tl = gsap.timeline()
 

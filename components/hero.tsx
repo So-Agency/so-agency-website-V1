@@ -16,31 +16,39 @@ export function Hero({ dict }: { dict: Dictionary }) {
 
       {/* Content */}
       <div ref={heroRef} className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center pt-20">
-        {/* Badge with blinking rocket */}
-        <div className="hero-badge inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm mb-8 opacity-0">
+        {/* Badge with blinking rocket.
+            opacity-0 is gated behind md: so mobile paints the hero immediately
+            (opacity 1 is the browser default). PageSpeed Insights pinned 3.65s
+            of "element render delay" on the LCP element (hero-description)
+            because every hero-* block started invisible and only became paintable
+            after React hydrated and GSAP ran its fade-in - 96% of LCP was that
+            delay. Desktop keeps the animation; its PSI score is already 99.
+            useHeroAnimation() in hooks/use-gsap-animations.tsx is the counterpart:
+            it skips the timeline entirely on mobile. */}
+        <div className="hero-badge inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm mb-8 md:opacity-0">
           <Rocket className="size-4 animate-pulse-glow text-[#FEC700]" />
           <span>{dict.hero.badge}</span>
         </div>
 
         {/* Main headline */}
-        <h1 className="hero-title font-[family-name:var(--font-display)] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight text-balance mb-4 opacity-0">
+        <h1 className="hero-title font-[family-name:var(--font-display)] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight text-balance mb-4 md:opacity-0">
           {dict.hero.headline}
         </h1>
 
         {/* Slogan */}
-        <div className="hero-subtitle mb-6 opacity-0">
+        <div className="hero-subtitle mb-6 md:opacity-0">
           <p className="font-[family-name:var(--font-roboto)] text-xl sm:text-2xl md:text-3xl font-bold tracking-widest uppercase text-foreground">
             {BRAND_TAGLINE}
           </p>
         </div>
 
         {/* Description */}
-        <p className="hero-description text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 text-pretty opacity-0">
+        <p className="hero-description text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 text-pretty md:opacity-0">
           {dict.hero.description}
         </p>
 
         {/* CTAs */}
-        <div className="hero-cta flex flex-col sm:flex-row items-center justify-center gap-4 opacity-0">
+        <div className="hero-cta flex flex-col sm:flex-row items-center justify-center gap-4 md:opacity-0">
           {/* Comet border button */}
           <div className="comet-border rounded-lg">
             <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 transition-all text-base px-8 relative z-10">
