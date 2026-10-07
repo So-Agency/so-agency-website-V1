@@ -47,6 +47,13 @@ calculadas y campañas basadas en datos.
 Optimizamos operaciones con herramientas inteligentes. Tecnología de próxima generación
 actualmente en desarrollo.
 
+**¿No Tienes Claro por Dónde Empezar?** Cuéntanos en qué punto está tu proyecto y te
+decimos por dónde despegar. En tu llamada de diagnóstico gratuita te recomendamos la ruta
+que mejor encaja con tu negocio.
+
+- Agenda tu Diagnóstico Gratis → <https://wa.me/573159970541>
+- Ver Preguntas Frecuentes → [#faq](#preguntas-frecuentes)
+
 ## Cómo Trabajamos
 
 Un proceso probado que te lleva de la idea al impacto. Claro, colaborativo y diseñado para

@@ -45,6 +45,12 @@ campaigns.
 
 Streamlining operations with intelligent tools. Next-gen tech currently in development.
 
+**Not Sure Where to Start?** Tell us where your project stands and we'll show you where to
+lift off. On your free diagnostic call, we recommend the route that best fits your business.
+
+- Book Your Free Diagnostic → <https://wa.me/573159970541>
+- Read the FAQ → [#faq](#frequently-asked-questions)
+
 ## How We Work
 
 A proven process that takes you from idea to impact. Clear, collaborative, and built for speed.

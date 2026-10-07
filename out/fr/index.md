@@ -47,6 +47,13 @@ et à des campagnes pilotées par la donnée.
 Des outils intelligents pour fluidifier vos opérations. Une technologie de nouvelle
 génération, actuellement en développement.
 
+**Vous ne savez pas par où commencer ?** Dites-nous où en est votre projet : nous vous
+indiquons par où décoller. Lors de votre appel de diagnostic gratuit, nous vous
+recommandons la trajectoire la mieux adaptée à votre activité.
+
+- Réserver mon diagnostic gratuit → <https://wa.me/573159970541>
+- Voir les questions fréquentes → [#faq](#questions-fréquentes)
+
 ## Notre méthode
 
 Une méthode éprouvée, qui vous mène de l’idée à l’impact. Claire, collaborative et pensée

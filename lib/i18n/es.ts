@@ -78,6 +78,14 @@ export const es: Dictionary = {
         badge: 'Próximamente',
       },
     ],
+    guide: {
+      title: '¿No Tienes Claro [por Dónde Empezar]?',
+      description:
+        'Cuéntanos en qué punto está tu proyecto y te decimos por dónde despegar. En tu llamada de diagnóstico gratuita te recomendamos la ruta que mejor encaja con tu negocio.',
+      faqLink: 'Ver Preguntas Frecuentes',
+      whatsappMessage:
+        'Hola SO Agency 👋\n\nNo tengo claro por dónde empezar y quiero agendar una llamada de diagnóstico gratuita.\n\nMi proyecto se trata de:',
+    },
   },
   process: {
     sectionTitle: 'Cómo Trabajamos',

@@ -47,6 +47,20 @@ export interface Dictionary {
       description: string
       badge?: string
     }[]
+    /**
+     * The card beside the last service, for a visitor who has read all of them and
+     * cannot tell which one they need. Its main button reuses `hero.ctaPrimary`, so
+     * the offer carries one name across the page.
+     */
+    guide: {
+      /** The part in [square brackets] is shown in the accent colour. */
+      title: string
+      description: string
+      /** Label of the link down to the FAQ, where prices and timelines are. */
+      faqLink: string
+      /** WhatsApp message for the card's main button. */
+      whatsappMessage: string
+    }
   }
   process: {
     sectionTitle: string

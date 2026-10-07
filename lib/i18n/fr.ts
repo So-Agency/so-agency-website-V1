@@ -96,6 +96,14 @@ export const fr: Dictionary = {
         badge: 'Bientôt',
       },
     ],
+    guide: {
+      title: 'Vous ne savez pas [par où commencer]\u00a0?',
+      description:
+        'Dites-nous où en est votre projet\u00a0: nous vous indiquons par où décoller. Lors de votre appel de diagnostic gratuit, nous vous recommandons la trajectoire la mieux adaptée à votre activité.',
+      faqLink: 'Voir les questions fréquentes',
+      whatsappMessage:
+        'Bonjour SO Agency 👋\n\nJe ne sais pas par où commencer et je souhaite réserver un appel de diagnostic gratuit.\n\nMon projet en quelques mots\u00a0:',
+    },
   },
   process: {
     sectionTitle: 'Notre méthode',

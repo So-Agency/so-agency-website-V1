@@ -1,7 +1,8 @@
 "use client"
 
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Compass } from "lucide-react"
 import { useRef, useEffect, useState } from "react"
+import { Button } from "@/components/ui/button"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useStaggerChildren } from "@/hooks/use-gsap-animations"
@@ -86,7 +87,7 @@ export function Services({ dict }: { dict: Dictionary }) {
             ))}
           </div>
 
-          {/* Row 3: last card */}
+          {/* Row 3: the last card, and the guide card in the two columns it leaves empty */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {services.slice(5).map((service) => (
               <ServiceCard
@@ -100,10 +101,66 @@ export function Services({ dict }: { dict: Dictionary }) {
                 ctaMessage={dict.services.ctaMessage}
               />
             ))}
+            <GuideCard dict={dict} />
           </div>
         </div>
       </div>
     </section>
+  )
+}
+
+// Guide card: fills the two columns beside the last service. It is not a seventh
+// service - it is for the visitor who has read all six and cannot tell which one
+// they need, and it sends them to the free diagnostic the rest of the page offers.
+//
+// It shares the service cards' shell (radius, border, padding, bottom-pinned
+// actions) so the row reads as one grid, and differs where it has to: it carries
+// full-size buttons instead of a text link, so it has no tilt to make them drift
+// under the pointer, and it takes no part in the mobile "one active card" sequence -
+// there is nothing to reveal on it, it is always lit.
+function GuideCard({ dict }: { dict: Dictionary }) {
+  const { title, description, faqLink, whatsappMessage } = dict.services.guide
+  // "Not Sure [Where to Start]?" - the bracketed part takes the accent colour.
+  const [before, highlight = "", after = ""] = title.split(/\[|\]/)
+
+  return (
+    <ScrollReveal delay={100} className="md:col-span-2">
+      <div className="relative h-full overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-[#3B9EFF]/[0.07] via-white/[0.01] to-accent/[0.06] p-6 backdrop-blur-[2px] flex flex-col">
+        {/* Soft blurred glows in the two brand colours, as in the contact section.
+            Decorative, and kept behind the content by the z-10 below. */}
+        <div aria-hidden="true" className="pointer-events-none absolute -top-24 -right-20 size-72 rounded-full bg-[#3B9EFF]/20 blur-3xl" />
+        <div aria-hidden="true" className="pointer-events-none absolute -bottom-32 right-1/3 size-72 rounded-full bg-accent/10 blur-3xl" />
+
+        <div className="relative z-10 flex flex-col h-full">
+          <div className="size-12 rounded-xl bg-accent/10 flex items-center justify-center mb-6">
+            <Compass className="size-6 text-accent" aria-hidden="true" />
+          </div>
+
+          <h3 className="text-card-title-lg font-semibold text-foreground mb-3 text-balance">
+            {before}
+            <span className="text-accent">{highlight}</span>
+            {after}
+          </h3>
+          <p className="text-card-body text-muted-foreground max-w-xl">{description}</p>
+
+          {/* Stacked and full-width on a phone, where each is a thumb target; side by
+              side from sm, wrapping if a longer language does not fit on one line. */}
+          <div className="mt-auto pt-6 flex flex-col sm:flex-row sm:flex-wrap gap-3">
+            <div className="comet-border rounded-lg w-full sm:w-auto">
+              <Button asChild size="lg" className="w-full h-11 sm:h-10 bg-accent text-accent-foreground hover:bg-accent/90 text-base">
+                <WhatsAppLink source="services-guide" message={whatsappMessage}>
+                  {dict.hero.ctaPrimary}
+                  <ArrowRight className="size-4 ml-2" />
+                </WhatsAppLink>
+              </Button>
+            </div>
+            <Button asChild variant="outline" size="lg" className="w-full sm:w-auto h-11 sm:h-10 text-base border-foreground/30 hover:border-accent hover:shadow-lg hover:shadow-accent/40">
+              <a href="#faq">{faqLink}</a>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </ScrollReveal>
   )
 }
 

@@ -78,6 +78,14 @@ export const en: Dictionary = {
         badge: 'Standby',
       },
     ],
+    guide: {
+      title: 'Not Sure [Where to Start]?',
+      description:
+        "Tell us where your project stands and we'll show you where to lift off. On your free diagnostic call, we recommend the route that best fits your business.",
+      faqLink: 'Read the FAQ',
+      whatsappMessage:
+        'Hi SO Agency 👋\n\nI am not sure where to start and would like to book a free diagnostic call.\n\nMy project is about:',
+    },
   },
   process: {
     sectionTitle: 'How We Work',

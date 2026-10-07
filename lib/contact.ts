@@ -30,6 +30,7 @@ export type ContactSource =
   | 'right-click-menu'
   | 'agent-tool'
   | 'service-card'
+  | 'services-guide'
 
 declare global {
   interface Window {
