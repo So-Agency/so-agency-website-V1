@@ -12,6 +12,9 @@ Crawl-delay: 1
 # Sitemap location
 Sitemap: https://soagency.dev/sitemap.xml
 
+# IndexNow key file (lets Bing, Yandex, Seznam, Naver etc. verify push-based
+# indexing requests): https://soagency.dev/ef709ddbe88b54e0c9504fa1a76cc87b.txt
+
 # Google-specific rules
 User-agent: Googlebot
 Allow: /
