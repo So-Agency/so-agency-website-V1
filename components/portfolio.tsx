@@ -326,7 +326,7 @@ export function Portfolio({ dict }: { dict: Dictionary }) {
                     ? "flex-1 bg-accent" 
                     : "w-6 sm:w-8 bg-border hover:bg-muted-foreground/50"
                 }`}
-                aria-label={`Go to project ${index + 1}`}
+                aria-label={dict.portfolio.goToProject.replace('{number}', String(index + 1))}
               />
             ))}
           </div>

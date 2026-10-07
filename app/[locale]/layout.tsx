@@ -62,7 +62,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <SiteDocument lang={localeMeta[locale].langTag}>
-      <RightClickCTA />
+      <RightClickCTA dict={getDictionary(locale)} />
       <SchemaMarkup locale={locale} baseUrl={BASE_URL} />
       {children}
     </SiteDocument>

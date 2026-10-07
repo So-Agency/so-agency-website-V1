@@ -13,6 +13,7 @@ export const es: Dictionary = {
     description: 'La página que buscas no existe o se ha perdido en el espacio. Volvamos a ponerte en curso.',
     backHome: 'Volver a la Órbita',
     contactUs: 'Contactar Soporte',
+    easterEgg: 'Houston, tenemos un problema...',
   },
   navbar: {
     links: [
@@ -23,6 +24,11 @@ export const es: Dictionary = {
       { label: 'Contacto', href: '#contact' },
     ],
     cta: 'Empezar',
+    toggleMenu: 'Abrir o cerrar el menú',
+  },
+  languageSwitcher: {
+    label: 'Selector de idioma',
+    switchTo: 'Cambiar a {language}',
   },
   hero: {
     badge: 'Tu Socio de Lanzamiento Digital',
@@ -143,6 +149,7 @@ export const es: Dictionary = {
     resumeAutoplay: 'Reanudar reproducción automática',
     previousProject: 'Proyecto anterior',
     nextProject: 'Proyecto siguiente',
+    goToProject: 'Ir al proyecto {number}',
     projects: [
       {
         title: 'La Feika',
@@ -199,6 +206,9 @@ export const es: Dictionary = {
   faq: {
     sectionTitle: 'Preguntas Frecuentes',
     sectionDescription: 'Todo lo que necesitas saber antes de que lancemos juntos.',
+    count: '{count} preguntas',
+    stillHaveQuestions: '¿Aún tienes preguntas?',
+    sendMessage: 'Envíanos un mensaje.',
     items: [
       {
         question: '¿Cuánto tiempo tarda en construirse un sitio web?',
@@ -236,6 +246,19 @@ export const es: Dictionary = {
           'Absolutamente. Trabajamos con clientes en toda América Latina, Estados Unidos, Europa y más allá. Nuestro equipo opera de forma remota y se comunica tanto en inglés como en español, por lo que la distancia nunca es una barrera para un gran trabajo.',
       },
     ],
+  },
+  quickContact: {
+    label: 'Menú de contacto rápido',
+    close: 'Cerrar menú',
+    heading: 'Construyamos algo grande',
+    cta: 'Contáctanos',
+    whatsappMessage:
+      'Hola SO Agency 👋\n\nMe gustaría hablar de un proyecto.\n\nMi proyecto se trata de:',
+  },
+  agentTools: {
+    pricingNote: 'Nota: estas cifras son puntos de partida, no cotizaciones finales.',
+    noFaqMatch: 'No hay una entrada de FAQ que coincida. Preguntas disponibles:',
+    contactOpened: 'Se abrió WhatsApp para contactar a SO Agency. Normalmente responden en menos de 24 horas.',
   },
   footer: {
     description:

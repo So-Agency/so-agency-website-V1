@@ -82,7 +82,7 @@ export function Navbar({ dict }: { dict: Dictionary }) {
 
             {/* Language switcher + CTA */}
             <div className="hidden md:flex items-center gap-3">
-              <LanguageSwitcher />
+              <LanguageSwitcher dict={dict} />
             <div className={`comet-border rounded-md transition-all duration-500 ${
               isScrolled ? "scale-95" : "scale-100"
             }`}>
@@ -99,7 +99,7 @@ export function Navbar({ dict }: { dict: Dictionary }) {
             <button
               className="md:hidden text-foreground p-2"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle menu"
+              aria-label={dict.navbar.toggleMenu}
             >
               {isMobileMenuOpen ? <X className="size-6" /> : <Menu className="size-6" />}
             </button>
@@ -125,7 +125,7 @@ export function Navbar({ dict }: { dict: Dictionary }) {
                   </a>
                 </Button>
                 <div className="mt-4 flex justify-center">
-                  <LanguageSwitcher />
+                  <LanguageSwitcher dict={dict} />
                 </div>
               </nav>
             </div>

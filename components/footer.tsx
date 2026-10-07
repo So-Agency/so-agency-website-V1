@@ -118,7 +118,7 @@ export function Footer({ dict }: { dict: Dictionary }) {
             {dict.footer.copyright}
           </p>
           <div className="flex items-center gap-6">
-            <LanguageSwitcher />
+            <LanguageSwitcher dict={dict} />
             <a href="#" className="text-base text-muted-foreground hover:text-foreground transition-colors">
               {dict.footer.privacy}
             </a>

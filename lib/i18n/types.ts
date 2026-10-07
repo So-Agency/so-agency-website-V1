@@ -13,10 +13,20 @@ export interface Dictionary {
     description: string
     backHome: string
     contactUs: string
+    /** The small aside under the buttons. */
+    easterEgg: string
   }
   navbar: {
     links: { label: string; href: string }[]
     cta: string
+    /** Accessible name of the mobile menu button. */
+    toggleMenu: string
+  }
+  languageSwitcher: {
+    /** Accessible name of the group of language buttons. */
+    label: string
+    /** Accessible name of one button. `{language}` is replaced with the language's own name. */
+    switchTo: string
   }
   hero: {
     badge: string
@@ -64,6 +74,8 @@ export interface Dictionary {
     resumeAutoplay: string
     previousProject: string
     nextProject: string
+    /** Accessible name of a progress-bar segment. `{number}` is replaced with its position. */
+    goToProject: string
     projects: {
       title: string
       subtitle: string
@@ -92,10 +104,31 @@ export interface Dictionary {
   faq: {
     sectionTitle: string
     sectionDescription: string
+    /** Counter beside the heading. `{count}` is replaced with the number of questions. */
+    count: string
+    /** Closing line under the list; `sendMessage` is the link that follows it. */
+    stillHaveQuestions: string
+    sendMessage: string
     items: {
       question: string
       answer: string
     }[]
+  }
+  /** The menu that replaces the browser's context menu on right-click. */
+  quickContact: {
+    /** Accessible name of the menu. */
+    label: string
+    close: string
+    heading: string
+    cta: string
+    /** WhatsApp message for the menu's button. */
+    whatsappMessage: string
+  }
+  /** Replies the WebMCP tools give an AI agent acting for a visitor in this language. */
+  agentTools: {
+    pricingNote: string
+    noFaqMatch: string
+    contactOpened: string
   }
   footer: {
     description: string

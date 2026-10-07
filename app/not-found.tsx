@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { getDictionary, localeMeta } from '@/lib/i18n'
+import { getDictionary, defaultLocale, localeMeta, localeFromPathname } from '@/lib/i18n'
+import type { Locale } from '@/lib/i18n/types'
 import { SiteDocument } from '@/components/site-document'
 import { RightClickCTA } from '@/components/right-click-cta'
 import { RocketCrash } from '@/components/rocket-crash'
@@ -11,25 +12,22 @@ import { Button } from '@/components/ui/button'
 // Root-level 404 page — handles all undefined routes
 // Automatically detects locale from URL and displays appropriate language
 export default function NotFound() {
-  const [dict, setDict] = useState(getDictionary('en'))
-  const [locale, setLocale] = useState<'en' | 'es'>('en')
+  const [locale, setLocale] = useState<Locale>(defaultLocale)
 
   useEffect(() => {
     // Detect locale from current URL pathname
-    const path = typeof window !== 'undefined' ? window.location.pathname : '/en/'
-    const detectedLocale = path.startsWith('/es') ? 'es' : 'en'
-    setLocale(detectedLocale)
-    setDict(getDictionary(detectedLocale))
+    setLocale(localeFromPathname(window.location.pathname))
   }, [])
 
-  const homeLink = locale === 'es' ? '/es/' : '/en/'
-  const contactLink = locale === 'es' ? '/es/#contact' : '/en/#contact'
+  const dict = getDictionary(locale)
+  const homeLink = `/${locale}/`
+  const contactLink = `/${locale}/#contact`
 
   // One static 404.html serves every locale, so it is exported as English and
   // corrected here once the URL has revealed which language the visitor was in.
   return (
     <SiteDocument lang={localeMeta[locale].langTag}>
-    <RightClickCTA />
+    <RightClickCTA dict={dict} />
     <div className="h-screen overflow-hidden bg-background flex flex-col items-center justify-center px-4">
       {/* Background gradient accent */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
@@ -80,7 +78,7 @@ export default function NotFound() {
 
         {/* Easter egg text */}
         <p className="text-xs text-muted-foreground opacity-40 pt-2">
-          Houston, we have a problem...
+          {dict.notFound.easterEgg}
         </p>
       </div>
     </div>

@@ -13,6 +13,7 @@ export const en: Dictionary = {
     description: 'The page you\'re looking for doesn\'t exist or has been lost in space. Let\'s get you back on course.',
     backHome: 'Back to Orbit',
     contactUs: 'Contact Support',
+    easterEgg: 'Houston, we have a problem...',
   },
   navbar: {
     links: [
@@ -23,6 +24,11 @@ export const en: Dictionary = {
       { label: 'Contact', href: '#contact' },
     ],
     cta: 'Get Started',
+    toggleMenu: 'Toggle menu',
+  },
+  languageSwitcher: {
+    label: 'Language selector',
+    switchTo: 'Switch to {language}',
   },
   hero: {
     badge: 'Your Digital Launch Partner',
@@ -142,6 +148,7 @@ export const en: Dictionary = {
     resumeAutoplay: 'Resume autoplay',
     previousProject: 'Previous project',
     nextProject: 'Next project',
+    goToProject: 'Go to project {number}',
     projects: [
       {
         title: 'La Feika',
@@ -198,6 +205,9 @@ export const en: Dictionary = {
   faq: {
     sectionTitle: 'Frequently Asked Questions',
     sectionDescription: 'Everything you need to know before we launch together.',
+    count: '{count} questions',
+    stillHaveQuestions: 'Still have questions?',
+    sendMessage: 'Send us a message.',
     items: [
       {
         question: 'How long does it take to build a website?',
@@ -235,6 +245,19 @@ export const en: Dictionary = {
           'Absolutely. We work with clients across Latin America, the United States, Europe, and beyond. Our team operates remotely and communicates in both English and Spanish, so distance is never a barrier to great work.',
       },
     ],
+  },
+  quickContact: {
+    label: 'Quick contact menu',
+    close: 'Close menu',
+    heading: "Let's build something great",
+    cta: 'Contact Us',
+    whatsappMessage:
+      'Hi SO Agency 👋\n\nI would like to talk about a project.\n\nMy project is about:',
+  },
+  agentTools: {
+    pricingNote: 'Note: these figures are starting points, not final quotes.',
+    noFaqMatch: 'No matching FAQ entry. Available questions:',
+    contactOpened: 'Opened WhatsApp to contact SO Agency. They typically respond within 24 hours.',
   },
   footer: {
     description:

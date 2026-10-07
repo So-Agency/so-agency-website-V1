@@ -2,18 +2,16 @@
 
 import { usePathname, useRouter } from 'next/navigation'
 import { Globe } from 'lucide-react'
-import type { Locale } from '@/lib/i18n/types'
+import type { Dictionary, Locale } from '@/lib/i18n/types'
+import { locales, localeMeta, localeFromPathname } from '@/lib/i18n/config'
 
-const LOCALES: Locale[] = ['en', 'es']
-
-export function LanguageSwitcher() {
+export function LanguageSwitcher({ dict }: { dict: Dictionary }) {
   const pathname = usePathname()
   const router = useRouter()
 
   // Derive the current locale from the URL path (e.g. /en/ or /es/contact)
   const segments = pathname.split('/').filter(Boolean)
-  const currentLocale: Locale =
-    LOCALES.includes(segments[0] as Locale) ? (segments[0] as Locale) : 'en'
+  const currentLocale = localeFromPathname(pathname)
 
   function switchLocale(next: Locale) {
     if (next === currentLocale) return
@@ -28,13 +26,13 @@ export function LanguageSwitcher() {
   }
 
   return (
-    <div className="flex items-center gap-1" role="group" aria-label="Language selector">
+    <div className="flex items-center gap-1" role="group" aria-label={dict.languageSwitcher.label}>
       <Globe className="size-4 text-muted-foreground" aria-hidden="true" />
-      {LOCALES.map((locale, i) => (
+      {locales.map((locale, i) => (
         <span key={locale} className="flex items-center">
           <button
             onClick={() => switchLocale(locale)}
-            aria-label={`Switch to ${locale === 'en' ? 'English' : 'Español'}`}
+            aria-label={dict.languageSwitcher.switchTo.replace('{language}', localeMeta[locale].nativeName)}
             aria-pressed={currentLocale === locale}
             className={[
               'text-sm font-medium px-1 transition-colors',
@@ -45,7 +43,7 @@ export function LanguageSwitcher() {
           >
             {locale.toUpperCase()}
           </button>
-          {i < LOCALES.length - 1 && (
+          {i < locales.length - 1 && (
             <span className="text-muted-foreground/40 text-xs select-none">|</span>
           )}
         </span>

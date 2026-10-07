@@ -58,8 +58,6 @@ export function WebMCPTools({ dict }: { dict: Dictionary }) {
   useEffect(() => {
     if (typeof navigator === "undefined" || !navigator.modelContext) return
 
-    const isSpanish = dict.locale === "es"
-
     const tools: ToolDescriptor[] = [
       {
         name: "list_services",
@@ -88,9 +86,7 @@ export function WebMCPTools({ dict }: { dict: Dictionary }) {
               "",
               `${timeline.question}\n${timeline.answer}`,
               "",
-              isSpanish
-                ? "Nota: estas cifras son puntos de partida, no cotizaciones finales."
-                : "Note: these figures are starting points, not final quotes.",
+              dict.agentTools.pricingNote,
             ].join("\n"),
           )
         },
@@ -116,9 +112,7 @@ export function WebMCPTools({ dict }: { dict: Dictionary }) {
 
           return text(
             [
-              isSpanish
-                ? "No hay una entrada de FAQ que coincida. Preguntas disponibles:"
-                : "No matching FAQ entry. Available questions:",
+              dict.agentTools.noFaqMatch,
               ...dict.faq.items.map((item) => `- ${item.question}`),
             ].join("\n"),
           )
@@ -160,13 +154,7 @@ export function WebMCPTools({ dict }: { dict: Dictionary }) {
           trackContactClick("agent-tool")
           const url = whatsappUrl(dict.cta.whatsappMessage)
           window.open(url, "_blank", "noopener,noreferrer")
-          return text(
-            `${
-              isSpanish
-                ? "Se abrió WhatsApp para contactar a SO Agency. Normalmente responden en menos de 24 horas."
-                : "Opened WhatsApp to contact SO Agency. They typically respond within 24 hours."
-            }\n${url}`,
-          )
+          return text(`${dict.agentTools.contactOpened}\n${url}`)
         },
       },
     ]

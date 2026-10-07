@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { SiteDocument } from '@/components/site-document'
+import { defaultLocale, locales, isLocale } from '@/lib/i18n/config'
 
 export default function RootPage() {
   useEffect(() => {
@@ -11,15 +12,16 @@ export default function RootPage() {
     
     // Check stored locale preference first
     const stored = localStorage.getItem('so-agency-locale')
-    if (stored === 'es' || stored === 'en') {
+    if (isLocale(stored)) {
       window.location.replace(`/${stored}/`)
       return
     }
 
-    // Fall back to browser language detection
-    const lang = navigator.language?.toLowerCase() ?? 'en'
-    const locale = lang.startsWith('es') ? 'es' : 'en'
-    
+    // Fall back to browser language detection: the first supported locale the
+    // browser's language starts with ("es-CO" is served "es"), English otherwise.
+    const lang = navigator.language?.toLowerCase() ?? defaultLocale
+    const locale = locales.find((l) => lang.startsWith(l)) ?? defaultLocale
+
     // Use a small delay to prevent flash of blank page
     const timer = setTimeout(() => {
       window.location.replace(`/${locale}/`)

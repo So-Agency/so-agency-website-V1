@@ -120,7 +120,7 @@ export function FAQ({ dict }: { dict: Dictionary }) {
                   <div className="flex items-center gap-3 pt-2">
                     <div className="h-px w-8 bg-primary" />
                     <span className="text-xs text-muted-foreground">
-                      {dict.faq.items.length} questions
+                      {dict.faq.count.replace('{count}', String(dict.faq.items.length))}
                     </span>
                   </div>
                 </div>
@@ -148,14 +148,12 @@ export function FAQ({ dict }: { dict: Dictionary }) {
             <ScrollReveal delay={dict.faq.items.length * 60 + 60}>
               <div className="pt-8 pb-2">
                 <p className="text-sm text-muted-foreground">
-                  {dict.locale === "en"
-                    ? "Still have questions? "
-                    : "¿Aún tienes preguntas? "}
+                  {dict.faq.stillHaveQuestions}{" "}
                   <a
                     href="#contact"
                     className="text-foreground underline underline-offset-4 hover:text-primary transition-colors"
                   >
-                    {dict.locale === "en" ? "Send us a message." : "Envíanos un mensaje."}
+                    {dict.faq.sendMessage}
                   </a>
                 </p>
               </div>

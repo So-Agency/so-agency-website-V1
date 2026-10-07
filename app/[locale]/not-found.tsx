@@ -2,26 +2,24 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { getDictionary } from '@/lib/i18n'
+import { getDictionary, defaultLocale, localeFromPathname } from '@/lib/i18n'
+import type { Locale } from '@/lib/i18n/types'
 import { RocketCrash } from '@/components/rocket-crash'
 import { Button } from '@/components/ui/button'
 
-// Bilingual 404 page — automatically detects locale from URL
-// Displays Spanish copy when accessed from /es/, English from /en/
+// Localized 404 page — automatically detects locale from URL
+// and displays the copy of whichever language the path belongs to
 export default function NotFound() {
-  const [dict, setDict] = useState(getDictionary('en'))
-  const [locale, setLocale] = useState<'en' | 'es'>('en')
+  const [locale, setLocale] = useState<Locale>(defaultLocale)
 
   useEffect(() => {
     // Detect locale from current URL pathname
-    const path = typeof window !== 'undefined' ? window.location.pathname : '/en/'
-    const detectedLocale = path.startsWith('/es') ? 'es' : 'en'
-    setLocale(detectedLocale)
-    setDict(getDictionary(detectedLocale))
+    setLocale(localeFromPathname(window.location.pathname))
   }, [])
 
-  const homeLink = locale === 'es' ? '/es/' : '/en/'
-  const contactLink = locale === 'es' ? '/es/#contact' : '/en/#contact'
+  const dict = getDictionary(locale)
+  const homeLink = `/${locale}/`
+  const contactLink = `/${locale}/#contact`
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4 py-16">
@@ -76,7 +74,7 @@ export default function NotFound() {
 
         {/* Easter egg text */}
         <p className="text-xs text-muted-foreground mt-16 opacity-50">
-          Houston, we have a problem... 🚀
+          {dict.notFound.easterEgg} 🚀
         </p>
       </div>
     </div>

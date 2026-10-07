@@ -3,12 +3,13 @@
 import { useEffect, useRef, useState, useCallback } from "react"
 import { ArrowRight, Rocket, X } from "lucide-react"
 import { WhatsAppLink } from "@/components/whatsapp-link"
+import type { Dictionary } from "@/lib/i18n/types"
 
 type Position = { x: number; y: number }
 
 const CLOSE_TIMEOUT_MS = 8000
 
-export function RightClickCTA() {
+export function RightClickCTA({ dict }: { dict: Dictionary }) {
   const [position, setPosition] = useState<Position | null>(null)
   const [visible, setVisible] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
@@ -80,7 +81,7 @@ export function RightClickCTA() {
     <div
       ref={menuRef}
       role="dialog"
-      aria-label="Quick contact menu"
+      aria-label={dict.quickContact.label}
       aria-modal="true"
       style={{ left: position.x, top: position.y }}
       className={[
@@ -97,7 +98,7 @@ export function RightClickCTA() {
       {/* Close button */}
       <button
         onClick={close}
-        aria-label="Close menu"
+        aria-label={dict.quickContact.close}
         className="absolute top-3 right-3 text-muted-foreground hover:text-foreground transition-colors rounded focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
       >
         <X className="size-3.5" />
@@ -111,7 +112,7 @@ export function RightClickCTA() {
         <div>
           <p className="text-xs text-muted-foreground leading-tight">SO Agency</p>
           <p className="text-sm font-semibold text-foreground leading-tight">
-            {"Let's build something great"}
+            {dict.quickContact.heading}
           </p>
         </div>
       </div>
@@ -122,9 +123,7 @@ export function RightClickCTA() {
       {/* CTA button */}
       <WhatsAppLink
         source="right-click-menu"
-        // English only: this component takes no dict and is mounted in the root layout,
-        // whose copy is hardcoded English.
-        message={"Hi SO Agency 👋\n\nI would like to talk about a project.\n\nMy project is about:"}
+        message={dict.quickContact.whatsappMessage}
         onClick={close}
         className={[
           "comet-border rounded-lg block w-full",
@@ -139,14 +138,14 @@ export function RightClickCTA() {
             "transition-colors duration-150",
           ].join(" ")}
         >
-          Contact Us
+          {dict.quickContact.cta}
           <ArrowRight className="size-3.5" />
         </span>
       </WhatsAppLink>
 
       {/* Hint */}
       <p className="text-[11px] text-muted-foreground text-center mt-2.5">
-        We typically respond within 24 hours
+        {dict.cta.responseTime}
       </p>
     </div>
   )
