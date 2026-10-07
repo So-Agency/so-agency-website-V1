@@ -157,8 +157,8 @@ parches de seguridad y marketing continuo. Nunca te dejaremos solo después del 
 ### ¿SO Agency puede trabajar con clientes fuera de Latinoamérica?
 
 Absolutamente. Trabajamos con clientes en toda América Latina, Estados Unidos, Europa y
-más allá. Nuestro equipo opera de forma remota y se comunica tanto en inglés como en
-español, por lo que la distancia nunca es una barrera para un gran trabajo.
+más allá. Nuestro equipo opera de forma remota y se comunica en español, inglés y francés,
+por lo que la distancia nunca es una barrera para un gran trabajo.
 
 ## ¿Listo para Lanzar tu Presencia Digital?
 

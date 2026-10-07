@@ -242,7 +242,7 @@ export const en: Dictionary = {
       {
         question: 'Can SO Agency work with clients outside Latin America?',
         answer:
-          'Absolutely. We work with clients across Latin America, the United States, Europe, and beyond. Our team operates remotely and communicates in both English and Spanish, so distance is never a barrier to great work.',
+          'Absolutely. We work with clients across Latin America, the United States, Europe, and beyond. Our team operates remotely and communicates in English, Spanish, and French, so distance is never a barrier to great work.',
       },
     ],
   },
