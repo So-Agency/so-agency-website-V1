@@ -3,7 +3,7 @@
   "host": {
     "name": "SO Agency",
     "url": "https://soagency.dev",
-    "description": "Bilingual (English/Spanish) digital agency building websites, e-commerce stores, and brand identity systems. Founded 2023, operating remotely for clients in Latin America, the United States, and Europe. Static marketing site: no public API, no authentication, no user accounts.",
+    "description": "Trilingual (English/Spanish/French) digital agency building websites, e-commerce stores, and brand identity systems. Founded 2023, operating remotely for clients in Latin America, the United States, and Europe. Static marketing site: no public API, no authentication, no user accounts.",
     "contact": "https://wa.me/573159970541"
   },
   "entries": [
@@ -47,6 +47,19 @@
       ]
     },
     {
+      "id": "urn:air:soagency.dev:content:overview-fr",
+      "displayName": "SO Agency overview (French, Markdown)",
+      "description": "Contenu complet de la page marketing en français, au format markdown : services, méthode, avantages, réalisations, équipe et questions fréquentes.",
+      "type": "text/markdown",
+      "url": "https://soagency.dev/fr/index.md",
+      "representativeQueries": [
+        "Quels services propose SO Agency ?",
+        "Combien coûte un site web avec SO Agency ?",
+        "Agence web qui travaille en français",
+        "En combien de temps SO Agency livre-t-elle un projet ?"
+      ]
+    },
+    {
       "id": "urn:air:soagency.dev:skills:index",
       "displayName": "SO Agency agent skills index",
       "description": "Discovery index of agent skills published by SO Agency, per the Agent Skills Discovery RFC.",
@@ -61,7 +74,7 @@
     {
       "id": "urn:air:soagency.dev:content:sitemap",
       "displayName": "SO Agency sitemap",
-      "description": "All indexable URLs with hreflang alternates for the English and Spanish locales.",
+      "description": "All indexable URLs with hreflang alternates for the English, Spanish and French locales.",
       "type": "application/xml",
       "url": "https://soagency.dev/sitemap.xml",
       "representativeQueries": [
@@ -92,7 +105,8 @@
         "How do I get in touch with SO Agency?",
         "Book a free diagnostic call with SO Agency",
         "I want a quote for a website from SO Agency",
-        "Contactar a SO Agency"
+        "Contactar a SO Agency",
+        "Contacter SO Agency"
       ]
     }
   ]

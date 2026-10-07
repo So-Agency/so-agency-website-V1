@@ -30,7 +30,7 @@ the discovery files live in `public/.well-known/`.
 | 2 | ARD capability manifest | **Done** | `public/.well-known/ai-catalog.json` |
 | 3 | Agent Skills index | **Done** | `public/.well-known/agent-skills/` |
 | 4 | WebMCP browser tools | **Done** | `components/webmcp-tools.tsx` |
-| 5 | Markdown for Agents | **Done** | `functions/en/_middleware.js`, `functions/es/_middleware.js`, `lib/markdown-negotiation.mjs` |
+| 5 | Markdown for Agents | **Done** | `functions/<locale>/_middleware.js` (one per language), `lib/markdown-negotiation.mjs` |
 | 6 | DNS-AID records | **Manual** | Cloudflare DNS — see below |
 | 7 | API Catalog (RFC 9727) | **N/A** | No API exists to catalog |
 | 8 | OAuth/OIDC discovery | **N/A** | No authorization server |
@@ -48,12 +48,12 @@ file in this list from compliant crawlers.
   target resolves. `rel="api-catalog"` is intentionally not emitted.
 
   **Cloudflare Pages merges every matching rule.** The `/*` values are already present on
-  `/en/` and `/es/`, so the locale rules add only their own `alternate` links — repeating
+  every locale page, so the locale rules add only their own `alternate` links — repeating
   the shared ones there emits each relation twice. Within a single rule, keep all values on
   one comma-separated `Link:` line.
 - **`public/llms.txt`** — condensed overview: services, pricing bands, timelines, process,
   selected work, contact.
-- **`public/en/index.md`, `public/es/index.md`** — full page content as markdown, the
+- **`public/en/index.md`, `public/es/index.md`, `public/fr/index.md`** — full page content as markdown, the
   targets of `rel="alternate"; type="text/markdown"`.
 - **`public/.well-known/ai-catalog.json`** — ARD manifest with `representativeQueries` per
   entry so registries can build embeddings.
@@ -118,7 +118,7 @@ HTML at the edge, but it needs a **Pro plan or higher**. `soagency.dev` is on Fr
 repo implements the same behaviour with **Pages Functions**, which *are* included on Free.
 
 The result is arguably better than the native feature: it serves the hand-written twins in
-`public/en|es/index.md` rather than a machine conversion, so there is no navigation chrome
+`public/<locale>/index.md` rather than a machine conversion, so there is no navigation chrome
 or layout noise in the output.
 
 | File | Role |
@@ -126,6 +126,7 @@ or layout noise in the output.
 | `lib/markdown-negotiation.mjs` | The negotiation logic, shared by both locales |
 | `functions/en/_middleware.js` | Applies it to `/en/` |
 | `functions/es/_middleware.js` | Applies it to `/es/` |
+| `functions/fr/_middleware.js` | Applies it to `/fr/` |
 
 Behaviour:
 
@@ -137,11 +138,11 @@ Behaviour:
   unaffected.
 - On any error, it falls through to the HTML. Negotiation must never take the page down.
 
-**Why the middleware is scoped to `/en/*` and `/es/*` and not `functions/_middleware.js`:**
+**Why the middleware is scoped to one locale each (`/en/*`, `/es/*`, `/fr/*`) and not `functions/_middleware.js`:**
 a root middleware intercepts *every* request, including all static assets. On the Free plan
 that burns the 100k/day Functions quota (static assets alone are free and unlimited — only
 Function invocations count) and puts the entire site behind a Function that could fail.
-Scoped, only the two real pages invoke it. **Do not move these to the root.**
+Scoped, only the real pages invoke it. **Do not move these to the root.**
 
 ### Testing it locally
 

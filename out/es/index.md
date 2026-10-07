@@ -1,6 +1,6 @@
 # SO Agency — DESIGN. BUILD. LAUNCH.
 
-> Versión en markdown de <https://soagency.dev/es/>. English: <https://soagency.dev/en/index.md>
+> Versión en markdown de <https://soagency.dev/es/>. English: <https://soagency.dev/en/index.md> · Français: <https://soagency.dev/fr/index.md>
 
 **Tu Socio de Lanzamiento Digital**
 

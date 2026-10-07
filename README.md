@@ -3,9 +3,9 @@
 The marketing site for [SO Agency](https://soagency.dev), a digital agency that designs,
 builds and launches websites, online stores and brand identities.
 
-It is a single landing page published once per language — currently English (`/en/`) and
-Spanish (`/es/`) — and exported as static HTML. There is no server, no API and no database.
-The only way a visitor makes contact is WhatsApp.
+It is a single landing page published once per language — currently English (`/en/`),
+Spanish (`/es/`) and French (`/fr/`) — and exported as static HTML. There is no server, no
+API and no database. The only way a visitor makes contact is WhatsApp.
 
 ## Stack
 
@@ -14,7 +14,7 @@ The only way a visitor makes contact is WhatsApp.
 | Framework | Next.js 16 (App Router) with `output: 'export'` |
 | UI | React 19, Tailwind CSS 4, shadcn/ui primitives, lucide icons |
 | Motion | GSAP, Lenis (smooth scroll) |
-| Hosting | Cloudflare Pages, plus two small Pages Functions |
+| Hosting | Cloudflare Pages, plus a few small Pages Functions |
 | Analytics | Meta Pixel, Vercel Analytics |
 | Package manager | pnpm |
 
@@ -22,7 +22,7 @@ The only way a visitor makes contact is WhatsApp.
 
 ```bash
 pnpm install
-pnpm dev          # http://localhost:3000, redirects to /en/ or /es/
+pnpm dev          # http://localhost:3000, redirects to /en/, /es/ or /fr/
 ```
 
 Before committing:
@@ -67,15 +67,15 @@ out/                    The built site.
 
 ## Languages
 
-All copy lives in `lib/i18n/`, one dictionary per language (`en.ts`, `es.ts`). Each is
+All copy lives in `lib/i18n/`, one dictionary per language (`en.ts`, `es.ts`, `fr.ts`). Each is
 typed as `Dictionary` (`types.ts`), so a language that is missing a string does not
 compile. Components receive the dictionary as a `dict` prop and never choose text
 themselves.
 
 `lib/i18n/config.ts` holds what is configuration rather than copy: the list of locales,
 the default, and the tags each locale publishes — its BCP 47 tag (`<html lang>`,
-`hreflang`), its Open Graph locale and its name. The URL segment stays short (`/es/`)
-while those tags can be as specific as a market needs.
+`hreflang`), its Open Graph locale and its name. The URL segment stays short (`/fr/`)
+while those tags can be as specific as a market needs (`fr-FR`).
 
 Three rules keep the languages from drifting apart:
 

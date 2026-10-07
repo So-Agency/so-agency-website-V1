@@ -1,13 +1,13 @@
 # SO Agency
 
-> SO Agency is a bilingual (English/Spanish) digital agency that transforms business ideas
-> into high-performing digital presences — from websites and e-commerce stores to complete
-> brand identity systems. Founded 2023, operating remotely and serving clients worldwide,
-> with a focus on Latin America, the United States, and Europe.
+> SO Agency is a trilingual (English/Spanish/French) digital agency that transforms
+> business ideas into high-performing digital presences — from websites and e-commerce
+> stores to complete brand identity systems. Founded 2023, operating remotely and serving
+> clients worldwide, with a focus on Latin America, the United States, and Europe.
 
 Tagline: DESIGN. BUILD. LAUNCH.
 
-The site is a single marketing page published in two locales. There is no public API, no
+The site is a single marketing page published in three locales. There is no public API, no
 authenticated area, and no user accounts. Contact happens over WhatsApp.
 
 ## Services
@@ -25,6 +25,9 @@ authenticated area, and no user accounts. Contact happens over WhatsApp.
 - Branding packages start from **$800 USD**.
 - Typical delivery is **3 to 6 weeks**. A landing page or portfolio can ship in ~2 weeks;
   a full e-commerce build or brand identity system typically takes 4 to 8 weeks.
+- The French page quotes the same starting points in euros: from **1 500 €** for web
+  design and development, and from **800 €** for branding. Quote the currency of the page
+  the user is reading; do not convert one into the other.
 - Every project is scoped individually. Flexible payment plans are available.
 - Quotes are given after a free diagnostic call.
 
@@ -46,8 +49,10 @@ authenticated area, and no user accounts. Contact happens over WhatsApp.
 
 - [Home (English)](https://soagency.dev/en/): Full marketing page in English.
 - [Home (Spanish)](https://soagency.dev/es/): Full marketing page in Spanish.
+- [Home (French)](https://soagency.dev/fr/): Full marketing page in French, written for France.
 - [Overview in Markdown (English)](https://soagency.dev/en/index.md): Complete page content as plain markdown.
 - [Overview in Markdown (Spanish)](https://soagency.dev/es/index.md): Complete page content as plain markdown.
+- [Overview in Markdown (French)](https://soagency.dev/fr/index.md): Complete page content as plain markdown.
 
 ## Machine-readable resources
 
@@ -61,7 +66,7 @@ authenticated area, and no user accounts. Contact happens over WhatsApp.
 
 - [WhatsApp](https://wa.me/573159970541): The only direct contact channel. Used for free diagnostic calls and quotes.
 - [Instagram](https://www.instagram.com/soagency.dev): Social profile.
-- Languages: English and Spanish.
+- Languages: English, Spanish and French.
 - Typical response time: within 24 hours.
 - Business hours: Monday to Friday, 09:00–18:00.
 

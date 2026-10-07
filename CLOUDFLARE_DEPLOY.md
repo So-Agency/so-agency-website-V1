@@ -23,14 +23,15 @@ In your Cloudflare Pages project settings:
 
 ## The `functions/` directory
 
-The repo root contains a `functions/` directory holding two small Pages Functions. These
+The repo root contains a `functions/` directory holding a few small Pages Functions. These
 are **not** the Next.js/OpenNext server adapter warned about above - they are plain
 Cloudflare Pages Functions, auto-detected from the repo root, and included on the Free
 plan. They serve markdown to AI agents that send `Accept: text/markdown`, and pass every
 other request straight through to the static HTML.
 
 - No dashboard configuration is needed; Pages picks them up automatically.
-- They are scoped to `/en/*` and `/es/*` only, so static assets never invoke a Function.
+- They are scoped to the language pages only (`/en/*`, `/es/*`, `/fr/*`), so static assets
+  never invoke a Function.
 - Deleting them breaks agent markdown negotiation but nothing else.
 
 See `AGENT-READINESS.md` for details and local testing instructions.

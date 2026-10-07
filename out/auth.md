@@ -1,7 +1,7 @@
 # auth.md — SO Agency
 
 Service: **SO Agency**, <https://soagency.dev>
-Last updated: 2026-08-25
+Last updated: 2026-10-07
 
 ## Summary
 
@@ -35,9 +35,10 @@ All of it. None of these require a token, header, or prior registration:
 | Agent skills index | `/.well-known/agent-skills/index.json` |
 | Full page content, English | `/en/index.md` |
 | Full page content, Spanish | `/es/index.md` |
+| Full page content, French | `/fr/index.md` |
 | Sitemap | `/sitemap.xml` |
 
-The HTML pages at `/en/` and `/es/` also serve markdown to any request carrying
+The HTML pages at `/en/`, `/es/` and `/fr/` also serve markdown to any request carrying
 `Accept: text/markdown`.
 
 Discovery relations are advertised as RFC 8288 `Link` headers on every page.

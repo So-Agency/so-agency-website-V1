@@ -6,7 +6,7 @@
 # AGENT-READINESS.md.
 #
 # Verified on deploy: Cloudflare Pages MERGES every matching rule, so the /* values below
-# are already present on /en/ and /es/. The locale rules therefore only add what is
+# are already present on every locale page. The locale rules therefore only add what is
 # specific to them — repeating the shared links there emits them twice.
 # Within a single rule, keep all values on one comma-separated Link: line.
 
@@ -15,10 +15,13 @@
   X-Robots-Tag: index, follow
 
 /en/*
-  Link: </en/index.md>; rel="alternate"; type="text/markdown"; hreflang="en", </es/>; rel="alternate"; hreflang="es"
+  Link: </en/index.md>; rel="alternate"; type="text/markdown"; hreflang="en", </es/>; rel="alternate"; hreflang="es", </fr/>; rel="alternate"; hreflang="fr-FR"
 
 /es/*
-  Link: </es/index.md>; rel="alternate"; type="text/markdown"; hreflang="es", </en/>; rel="alternate"; hreflang="en"
+  Link: </es/index.md>; rel="alternate"; type="text/markdown"; hreflang="es", </en/>; rel="alternate"; hreflang="en", </fr/>; rel="alternate"; hreflang="fr-FR"
+
+/fr/*
+  Link: </fr/index.md>; rel="alternate"; type="text/markdown"; hreflang="fr-FR", </en/>; rel="alternate"; hreflang="en", </es/>; rel="alternate"; hreflang="es"
 
 # ARD requires the catalog to be cross-origin readable. Content-Type is derived from
 # the file extension by Cloudflare Pages (.json -> application/json).

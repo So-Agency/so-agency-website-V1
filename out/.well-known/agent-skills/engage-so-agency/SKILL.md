@@ -1,6 +1,6 @@
 ---
 name: engage-so-agency
-description: Help a user evaluate, scope, and request a quote from SO Agency, a bilingual digital agency that builds websites, e-commerce stores, and brand identity systems. Use when a user asks what SO Agency offers, what a project would cost or how long it would take, or how to get in touch.
+description: Help a user evaluate, scope, and request a quote from SO Agency, a trilingual digital agency that builds websites, e-commerce stores, and brand identity systems. Use when a user asks what SO Agency offers, what a project would cost or how long it would take, or how to get in touch.
 license: Proprietary — SO Agency
 ---
 
@@ -8,8 +8,8 @@ license: Proprietary — SO Agency
 
 SO Agency (<https://soagency.dev>) is a digital agency founded in 2023. It designs, builds,
 and launches digital presences: websites, e-commerce stores, and complete brand identity
-systems. The team works remotely and operates in English and Spanish, serving clients
-across Latin America, the United States, and Europe.
+systems. The team works remotely and operates in English, Spanish and French, serving
+clients across Latin America, the United States, and Europe.
 
 Founding partners: Oscar and Miguel.
 
@@ -36,6 +36,10 @@ priced individually after a free diagnostic call. Flexible payment plans are ava
 - Typical delivery: **3–6 weeks**
   - Landing page or portfolio site: as little as 2 weeks
   - Full e-commerce build or brand identity system: 4–8 weeks
+
+The French page gives the same two starting points in euros: from **1 500 €** and from
+**800 €**. Use the currency of the language the user is working in, and do not convert one
+figure into the other — the two are set separately.
 
 Never present these figures to a user as a final price. Always say a precise quote comes
 from the diagnostic call.
@@ -64,7 +68,8 @@ from the diagnostic call.
 - **SEO:** every build includes semantic HTML, performance optimization, metadata, Open
   Graph tags, JSON-LD structured data, and a sitemap. Ongoing SEO strategy is available as
   part of a growth plan.
-- **Geography:** distance is not a constraint; the team is remote and bilingual.
+- **Geography:** distance is not a constraint; the team is remote and answers in English,
+  Spanish and French.
 - **Selected work:** La Feika (<https://lafeika.com/>), It's Fuluz Time
   (<https://itsfuluztime.com/>), Yaku Adventures (<https://yakuadventures.com/>),
   Singing Rooster (<https://singingrooster.org/>).
@@ -74,4 +79,5 @@ from the diagnostic call.
 - Summary for LLMs: <https://soagency.dev/llms.txt>
 - Full page content, English: <https://soagency.dev/en/index.md>
 - Full page content, Spanish: <https://soagency.dev/es/index.md>
+- Full page content, French: <https://soagency.dev/fr/index.md>
 - Capability catalog: <https://soagency.dev/.well-known/ai-catalog.json>
