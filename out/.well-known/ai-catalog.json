@@ -2,9 +2,7 @@
   "specVersion": "1.0",
   "host": {
     "displayName": "SO Agency",
-    "url": "https://soagency.dev",
-    "description": "Trilingual (English/Spanish/French) digital agency building websites, e-commerce stores, and brand identity systems. Founded 2023, operating remotely for clients in Latin America, the United States, and Europe. Static marketing site: no public API, no authentication, no user accounts.",
-    "contact": "https://wa.me/573159970541"
+    "documentationUrl": "https://soagency.dev"
   },
   "entries": [
     {
