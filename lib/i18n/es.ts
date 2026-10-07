@@ -186,7 +186,7 @@ export const es: Dictionary = {
     sectionDescription: 'El equipo detrás de tu misión al éxito.',
     members: [
       {
-        name: 'Miguel & Oscar',
+        name: 'Oscar & Miguel',
         label: 'Socios Fundadores',
         description:
           'Fundadores de SO Agency. Diseñamos, construimos y lanzamos presencias digitales que realmente impactan — combinando desarrollo estratégico con un diseño UX/UI impactante.',

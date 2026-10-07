@@ -103,7 +103,7 @@ Etiquetas: Seguridad Web, Desarrollo APP, Optimización — <https://singingroos
 
 El equipo detrás de tu misión al éxito.
 
-**Miguel & Oscar** — *Socios Fundadores*
+**Oscar & Miguel** — *Socios Fundadores*
 
 Fundadores de SO Agency. Diseñamos, construimos y lanzamos presencias digitales que
 realmente impactan — combinando desarrollo estratégico con un diseño UX/UI impactante.
