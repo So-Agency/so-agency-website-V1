@@ -124,6 +124,19 @@ export interface Dictionary {
     /** WhatsApp message for the menu's button. */
     whatsappMessage: string
   }
+  /**
+   * Copy for the JSON-LD graph in components/schema-markup.tsx. The service entries
+   * are worded for search engines, so they are longer than the cards in `services`.
+   * The FAQ entries are not repeated here: the graph reads them from `faq.items`.
+   */
+  structuredData: {
+    description: string
+    /** Name of the OfferCatalog that lists the services. */
+    catalogName: string
+    /** Name of the page's single breadcrumb. */
+    home: string
+    services: { name: string; description: string }[]
+  }
   /** Replies the WebMCP tools give an AI agent acting for a visitor in this language. */
   agentTools: {
     pricingNote: string

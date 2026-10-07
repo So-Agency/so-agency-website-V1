@@ -254,6 +254,44 @@ export const en: Dictionary = {
     whatsappMessage:
       'Hi SO Agency 👋\n\nI would like to talk about a project.\n\nMy project is about:',
   },
+  structuredData: {
+    description:
+      'SO Agency transforms business ideas into high-performing digital presences — from stunning websites to complete brand identities. Your digital launch partner.',
+    catalogName: 'Digital Agency Services',
+    home: 'Home',
+    services: [
+      {
+        name: 'Web Design & Development',
+        description:
+          'Custom, performance-driven websites built on modern stacks. High-performance platforms that keep users engaged and convert visitors into customers.',
+      },
+      {
+        name: 'UX/UI Design',
+        description:
+          'Intuitive, conversion-focused interfaces. Every pixel serves a purpose in guiding the user journey toward your business goals.',
+      },
+      {
+        name: 'E-Commerce Solutions',
+        description:
+          'End-to-end online store design and development for frictionless transactions, maximum conversion, and scalable growth.',
+      },
+      {
+        name: 'Branding & Identity',
+        description:
+          'Full visual identity systems — logos, brand guidelines, typography, and color systems — that establish authority in your industry.',
+      },
+      {
+        name: 'Social Media Marketing',
+        description:
+          'Calculated content strategies and data-driven campaigns that turn social engagement into qualified leads and revenue.',
+      },
+      {
+        name: 'AI Automation',
+        description:
+          'Next-generation workflow automation and intelligent tooling to streamline operations and reduce manual overhead.',
+      },
+    ],
+  },
   agentTools: {
     pricingNote: 'Note: these figures are starting points, not final quotes.',
     noFaqMatch: 'No matching FAQ entry. Available questions:',

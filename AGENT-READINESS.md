@@ -102,10 +102,14 @@ and publish the two OAuth documents for real.
 Windows checkout and the Linux Cloudflare build — otherwise `core.autocrlf` changes the
 file and the digest stops verifying.
 
-Pricing, timelines, services, and FAQ copy are stated in **four** places: `lib/i18n/en.ts`
-and `lib/i18n/es.ts` (the source of truth, read by the site and by WebMCP),
-`components/schema-markup.tsx` (JSON-LD, a pre-existing duplicate), `public/llms.txt` and
-the two markdown twins, and `SKILL.md`. Changing a price means updating all of them.
+Pricing, timelines, services, and FAQ copy are stated in **three** places: the
+dictionaries in `lib/i18n/` (the source of truth, read by the site, by WebMCP and by the
+JSON-LD in `components/schema-markup.tsx`), `public/llms.txt` and the markdown twins, and
+`SKILL.md`. Changing a price means updating all of them.
+
+The JSON-LD used to be a fourth: it carried its own copy of every FAQ entry. It now reads
+them from `faq.items`, and keeps only its search-oriented service descriptions, which live
+in each dictionary under `structuredData`.
 
 ## Markdown negotiation (Pages Functions)
 

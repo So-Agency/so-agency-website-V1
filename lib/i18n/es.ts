@@ -255,6 +255,44 @@ export const es: Dictionary = {
     whatsappMessage:
       'Hola SO Agency 👋\n\nMe gustaría hablar de un proyecto.\n\nMi proyecto se trata de:',
   },
+  structuredData: {
+    description:
+      'SO Agency transforma ideas de negocio en presencias digitales de alto rendimiento — desde sitios web impactantes hasta identidades de marca completas. Tu socio de lanzamiento digital.',
+    catalogName: 'Servicios de Agencia Digital',
+    home: 'Inicio',
+    services: [
+      {
+        name: 'Diseño y Desarrollo Web',
+        description:
+          'Sitios web personalizados y de alto rendimiento construidos sobre tecnologías modernas. Plataformas que mantienen a los usuarios comprometidos y convierten visitas en clientes.',
+      },
+      {
+        name: 'Diseño UX/UI',
+        description:
+          'Interfaces intuitivas y orientadas a la conversión. Cada píxel tiene un propósito: guiar al usuario hacia los objetivos de tu negocio.',
+      },
+      {
+        name: 'Soluciones E-Commerce',
+        description:
+          'Diseño y desarrollo integral de tiendas en línea para transacciones sin fricciones, máxima conversión y crecimiento escalable.',
+      },
+      {
+        name: 'Branding e Identidad',
+        description:
+          'Sistemas de identidad visual completos — logos, guías de marca, tipografía y sistemas de color — que establecen autoridad en tu industria.',
+      },
+      {
+        name: 'Marketing en Redes Sociales',
+        description:
+          'Estrategias de contenido calculadas y campañas basadas en datos que convierten el engagement social en leads calificados e ingresos.',
+      },
+      {
+        name: 'Automatización con IA',
+        description:
+          'Automatización de flujos de trabajo de próxima generación y herramientas inteligentes para optimizar operaciones y reducir la carga manual.',
+      },
+    ],
+  },
   agentTools: {
     pricingNote: 'Nota: estas cifras son puntos de partida, no cotizaciones finales.',
     noFaqMatch: 'No hay una entrada de FAQ que coincida. Preguntas disponibles:',
