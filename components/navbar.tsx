@@ -66,8 +66,10 @@ export function Navbar({ dict }: { dict: Dictionary }) {
               />
             </a>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-8">
+            {/* Desktop Navigation. The links sit closer together below lg: at 768px
+                the bar holds the logo, five links, three language buttons and the
+                CTA, and at the full gap-8 the links ran to within 7px of both. */}
+            <nav className="hidden md:flex items-center gap-5 lg:gap-8">
               {dict.navbar.links.map((link) => (
                 <a
                   key={link.href}
