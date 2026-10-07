@@ -123,7 +123,7 @@ or layout noise in the output.
 
 | File | Role |
 |---|---|
-| `lib/markdown-negotiation.mjs` | The negotiation logic, shared by both locales |
+| `lib/markdown-negotiation.mjs` | The negotiation logic, shared by every locale |
 | `functions/en/_middleware.js` | Applies it to `/en/` |
 | `functions/es/_middleware.js` | Applies it to `/es/` |
 | `functions/fr/_middleware.js` | Applies it to `/fr/` |
@@ -144,6 +144,11 @@ that burns the 100k/day Functions quota (static assets alone are free and unlimi
 Function invocations count) and puts the entire site behind a Function that could fail.
 Scoped, only the real pages invoke it. **Do not move these to the root.**
 
+`functions/index.js` is not an exception to that. A file named `index.js` matches `/` and
+nothing else, so it is one more narrowly scoped Function rather than a root middleware. It
+redirects a visitor at `/` to their language and has nothing to do with markdown; it is
+mentioned here because it changes what an agent sees on the homepage, below.
+
 ### Testing it locally
 
 `_headers` and Functions are both ignored by a plain static server. Use Wrangler:
@@ -156,6 +161,7 @@ npx wrangler pages dev out --port 8788 --compatibility-date=2025-01-01
 ```bash
 curl -sI -H 'Accept: text/markdown' http://127.0.0.1:8788/en/   # -> text/markdown
 curl -sI -H 'Accept: */*'           http://127.0.0.1:8788/en/   # -> text/html
+curl -sI -H 'Accept-Language: fr'   http://127.0.0.1:8788/      # -> 302, Location: /fr/
 ```
 
 ## Remaining manual step (Cloudflare dashboard)
@@ -180,11 +186,25 @@ curl -s  https://soagency.dev/llms.txt
 curl -s  https://soagency.dev/.well-known/agent-skills/engage-so-agency/SKILL.md | sha256sum
 ```
 
-**Verified behaviour** (checked against the live deploy, 2026-08-25):
+**Verified behaviour** (checked against the live deploy, 2026-08-25, except where noted):
 
-- `public/_redirects` 301s `/` to `/en/`, and Cloudflare Pages **does** attach `_headers`
-  to that 301 response. An audit that does not follow redirects still sees the `Link`
-  header on the homepage. No workaround needed.
+- `/` redirects, and the redirect itself carries the discovery `Link` header, so an audit
+  that does not follow redirects still sees it on the homepage. Until 2026-10-07 that
+  redirect was the 301 to `/en/` in `public/_redirects`, to which Cloudflare Pages attaches
+  `_headers`. It is now `functions/index.js`, a 302 to the visitor's language. `_headers`
+  does not apply to Function responses, so the Function sets `Link` itself, from the same
+  constant the markdown middleware uses.
+
+  **This one has only been verified locally**, under `wrangler pages dev`, where the
+  Function answers `/` and the `_redirects` rule is not consulted. Confirm it on the first
+  deploy that includes it:
+
+  ```bash
+  curl -sI -H 'Accept-Language: fr' https://soagency.dev/ | grep -iE '^HTTP|^location|^link'
+  ```
+
+  Expect `302`, `location: /fr/` and the `link` header. A `301` to `/en/` means the
+  Function is not running and the `_redirects` rule answered instead.
 - `.md` files are served as `text/markdown; charset=utf-8` and `.json` as
   `application/json`, both derived from the file extension.
 - `Access-Control-Allow-Origin: *` is present on `/.well-known/*`.

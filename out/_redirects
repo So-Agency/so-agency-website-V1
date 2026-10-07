@@ -1,3 +1,6 @@
 # Cloudflare Pages redirect rules
-# Bots and JS-disabled browsers hitting / always land on /en/
+#
+# functions/index.js answers / before this file is consulted, and sends each visitor to
+# their own language. The rule below is what applies wherever that Function does not run:
+# everyone hitting / then lands on /en/, with or without JavaScript.
 /   /en/   301

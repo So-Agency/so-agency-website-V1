@@ -10,6 +10,12 @@ import type { Locale } from './types'
  */
 export const defaultLocale: Locale = 'en'
 
+/**
+ * Name under which a visitor's explicit language choice is remembered, both in
+ * localStorage and as a cookie. functions/index.js reads the cookie by this name.
+ */
+export const LOCALE_PREFERENCE_KEY = 'so-agency-locale'
+
 type LocaleMeta = {
   /** BCP 47 tag, used for <html lang>, hreflang and JSON-LD inLanguage. */
   langTag: string

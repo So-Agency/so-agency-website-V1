@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from 'next/navigation'
 import { Globe } from 'lucide-react'
 import type { Dictionary, Locale } from '@/lib/i18n/types'
-import { locales, localeMeta, localeFromPathname } from '@/lib/i18n/config'
+import { locales, localeMeta, localeFromPathname, LOCALE_PREFERENCE_KEY } from '@/lib/i18n/config'
 
 export function LanguageSwitcher({ dict }: { dict: Dictionary }) {
   const pathname = usePathname()
@@ -16,8 +16,11 @@ export function LanguageSwitcher({ dict }: { dict: Dictionary }) {
   function switchLocale(next: Locale) {
     if (next === currentLocale) return
 
-    // Persist preference
-    localStorage.setItem('so-agency-locale', next)
+    // Persist preference. localStorage is what the client-side redirect in
+    // app/page.tsx reads; the cookie carries the same choice to the server, which
+    // on Cloudflare answers "/" before any page loads (functions/index.js).
+    localStorage.setItem(LOCALE_PREFERENCE_KEY, next)
+    document.cookie = `${LOCALE_PREFERENCE_KEY}=${next}; path=/; max-age=31536000; samesite=lax`
 
     // Replace the locale segment in the current path
     const rest = segments.slice(1).join('/')

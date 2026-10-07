@@ -60,7 +60,8 @@ lib/
   brand.ts              Tagline and page title. Never translated.
   contact.ts            The WhatsApp link and contact-click tracking.
   site.ts               The site's canonical URL.
-functions/              Cloudflare Pages Functions (markdown for AI agents).
+functions/              Cloudflare Pages Functions: the language redirect at "/", and
+                        markdown for AI agents on each language page.
 public/                 Static files, including the agent-discovery documents.
 out/                    The built site.
 ```
@@ -100,7 +101,9 @@ files it cannot see.
    JSON-LD says the agency can be contacted in.
 4. Run `npx tsc --noEmit` until it passes.
 5. Add `public/<code>/index.md`, the markdown twin of the page, and
-   `functions/<code>/_middleware.js` to serve it (copy an existing one).
+   `functions/<code>/_middleware.js` to serve it (copy an existing one). Add the code to
+   `LOCALES` in `functions/index.js` too, or visitors with that browser language will
+   still be sent to English from `/`.
 6. Add the page and its alternates to `public/sitemap.xml`, and a rule for it to
    `public/_headers`.
 7. List it in `public/llms.txt`, `public/.well-known/ai-catalog.json`, `public/auth.md`
@@ -126,9 +129,12 @@ production branch.
 `out/` is also committed, rebuilt with each change, so a commit shows what it did to the
 published HTML.
 
-On Cloudflare, `/` is redirected to `/en/` by `public/_redirects` before any page loads.
-The language detection in `app/page.tsx` only runs where that rule does not apply, such
-as local development.
+On Cloudflare, `/` is answered by `functions/index.js`, which redirects each visitor to
+their language: the one they picked with the language switcher if they picked one,
+otherwise the first published language their browser asks for, otherwise English.
+`app/page.tsx` makes the same choice in the browser, and only runs where no Function does,
+such as local development. The rule in `public/_redirects` is what applies if that
+Function is ever not deployed.
 
 ## AI agents
 

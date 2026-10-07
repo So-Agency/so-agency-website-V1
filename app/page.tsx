@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { SiteDocument } from '@/components/site-document'
-import { defaultLocale, locales, isLocale } from '@/lib/i18n/config'
+import { defaultLocale, locales, isLocale, LOCALE_PREFERENCE_KEY } from '@/lib/i18n/config'
 
 export default function RootPage() {
   useEffect(() => {
@@ -11,7 +11,7 @@ export default function RootPage() {
     // This is a fallback for when the browser runs JavaScript
     
     // Check stored locale preference first
-    const stored = localStorage.getItem('so-agency-locale')
+    const stored = localStorage.getItem(LOCALE_PREFERENCE_KEY)
     if (isLocale(stored)) {
       window.location.replace(`/${stored}/`)
       return

@@ -26,13 +26,21 @@ In your Cloudflare Pages project settings:
 The repo root contains a `functions/` directory holding a few small Pages Functions. These
 are **not** the Next.js/OpenNext server adapter warned about above - they are plain
 Cloudflare Pages Functions, auto-detected from the repo root, and included on the Free
-plan. They serve markdown to AI agents that send `Accept: text/markdown`, and pass every
-other request straight through to the static HTML.
+plan. They do two jobs:
+
+- `functions/<locale>/_middleware.js`, one per language, serve markdown to AI agents that
+  send `Accept: text/markdown`, and pass every other request straight through to the
+  static HTML.
+- `functions/index.js` answers `/` and redirects each visitor to their language.
+
+About all of them:
 
 - No dashboard configuration is needed; Pages picks them up automatically.
-- They are scoped to the language pages only (`/en/*`, `/es/*`, `/fr/*`), so static assets
-  never invoke a Function.
-- Deleting them breaks agent markdown negotiation but nothing else.
+- They are scoped to `/` and to the language pages (`/en/*`, `/es/*`, `/fr/*`), so static
+  assets never invoke a Function.
+- Deleting the middleware breaks agent markdown negotiation but nothing else. Deleting
+  `functions/index.js` sends every visitor to `/en/` from `/` again, through the rule in
+  `public/_redirects`.
 
 See `AGENT-READINESS.md` for details and local testing instructions.
 
