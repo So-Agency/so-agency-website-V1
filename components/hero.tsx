@@ -25,16 +25,20 @@ export function Hero({ dict }: { dict: Dictionary }) {
             after React hydrated and GSAP ran its fade-in - 96% of LCP was that
             delay. Desktop keeps the animation; its PSI score is already 99.
             useHeroAnimation() in hooks/use-gsap-animations.tsx is the counterpart:
-            it skips the timeline entirely on mobile. */}
-        <WhatsAppLink
-          source="hero-pill"
-          message={dict.services.guide.whatsappMessage}
-          className="hero-badge inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm mb-8 md:opacity-0 transition-colors hover:bg-primary/10 hover:border-primary/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-        >
-          <Rocket className="size-4 animate-pulse-glow text-[#FEC700]" aria-hidden="true" />
-          <span>{dict.hero.badge}</span>
-          <ArrowRight className="size-3.5" aria-hidden="true" />
-        </WhatsAppLink>
+            it skips the timeline entirely on mobile.
+            The wrapper carries the endless float (.pill-float in globals.css); it
+            cannot go on .hero-badge, whose transform GSAP owns during the intro. */}
+        <div className="pill-float inline-block mb-8">
+          <WhatsAppLink
+            source="hero-pill"
+            message={dict.services.guide.whatsappMessage}
+            className="hero-badge inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm md:opacity-0 transition-colors hover:bg-primary/10 hover:border-primary/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          >
+            <Rocket className="size-4 animate-pulse-glow text-[#FEC700]" aria-hidden="true" />
+            <span>{dict.hero.badge}</span>
+            <ArrowRight className="size-3.5" aria-hidden="true" />
+          </WhatsAppLink>
+        </div>
 
         {/* Main headline */}
         <h1 className="hero-title font-[family-name:var(--font-display)] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight text-balance mb-4 md:opacity-0">
