@@ -15,7 +15,7 @@ API and no database. The only way a visitor makes contact is WhatsApp.
 | UI | React 19, Tailwind CSS 4, shadcn/ui primitives, lucide icons |
 | Motion | GSAP, Lenis (smooth scroll) |
 | Hosting | Cloudflare Pages, plus a few small Pages Functions |
-| Analytics | Meta Pixel, Vercel Analytics |
+| Analytics | Direct GA4, Meta Pixel, Microsoft Clarity, plus Google Tag Manager |
 | Package manager | pnpm |
 
 ## Getting started
@@ -121,6 +121,47 @@ reports a `Contact` event to the Meta Pixel. Link to WhatsApp any other way and 
 goes untracked.
 
 ## Deployment
+
+### Cookie banner and consent
+
+Change `CONSENT_BANNER_ENABLED` in `lib/consent.ts` to `true` (show) or
+`false` (hide), then rebuild/deploy. Hiding the banner never grants permission:
+existing valid choices are respected and new visitors remain denied. The footer
+preferences button remains available.
+
+The bottom banner and preferences panel support English, Spanish and French.
+Choices are versioned in localStorage for 180 days. GA4 and Clarity require
+analytics permission; Meta requires marketing permission. GTM requires both
+until its remote tags are audited. Default Consent Mode v2 signals are denied,
+and choices update all four Google signals before any vendor mounts. Withdrawing
+permission clears known first-party tracker cookies and reloads the document to
+stop running vendor code. Third-party cookies cannot be cleared by this site.
+The Meta noscript pixel is deliberately absent so it cannot bypass consent.
+
+Run `node --test tests/consent.test.cjs` to check persistence, defaults, category
+gating and withdrawal. In Tag Assistant also verify fresh visits, accept, reject,
+analytics-only and withdrawal; no vendor scripts should load before a choice.
+The current privacy/terms footer links are placeholders and still need real
+policy content before public launch of this consent interface.
+
+### Checking Google Analytics
+
+GA4 stream `G-FQ89VPJT4H` is configured directly in
+`components/google-analytics.tsx`. It loads asynchronously after analytics consent and queues
+commands using Google's `Arguments` format. GTM container `GTM-MNTQG72X` shares
+the data layer and only loads after both analytics and marketing consent; it must not also configure this same GA4 stream or duplicate the
+direct Meta/Clarity tags.
+
+After deployment, use Tag Assistant with `/es/` and verify that the stream ID
+matches the web data stream selected in Analytics. In browser Network tools,
+check that `gtag/js` loads and `g/collect` requests include
+`tid=G-FQ89VPJT4H` and `en=page_view`. Then check Analytics Realtime. Test in a
+browser without tracking blockers. A successful local queue check alone does
+not confirm delivery to Google or the property's filters and configuration.
+
+Enable enhanced measurement for browser-history page changes to measure language
+switches. WhatsApp clicks currently send a Meta `Contact` event; this code does
+not send a dedicated GA4 conversion event.
 
 Cloudflare Pages builds the site with `pnpm run build` and serves `out/`. Setup and
 troubleshooting are in [CLOUDFLARE_DEPLOY.md](CLOUDFLARE_DEPLOY.md). `main` is the
