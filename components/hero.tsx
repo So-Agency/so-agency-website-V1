@@ -2,21 +2,37 @@
 
 import { Button } from "@/components/ui/button"
 import { WhatsAppLink } from "@/components/whatsapp-link"
-import { ArrowRight, Rocket } from "lucide-react"
+import { ArrowRight, ChevronDown, Rocket } from "lucide-react"
+import { useEffect, useState } from "react"
 import { useHeroAnimation } from "@/hooks/use-gsap-animations"
 import { BRAND_TAGLINE } from "@/lib/brand"
 import type { Dictionary } from "@/lib/i18n/types"
 
 export function Hero({ dict }: { dict: Dictionary }) {
   const heroRef = useHeroAnimation<HTMLDivElement>()
+  // The scroll cue only makes sense while the visitor is still at the top.
+  const [scrolled, setScrolled] = useState(false)
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40)
+    onScroll() // the page can load already scrolled (reload, #hash, restored position)
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
+  // The hero stops short of the first screen on purpose: the strip taken off is where
+  // the top of the guide card right below peeks in, hinting that there is more to
+  // scroll to. Desktop keeps it subtle (4.5rem) to leave the hero room to breathe;
+  // mobile gives it 5.5rem. svh, not vh: on iOS vh includes the browser toolbar, and
+  // the peek would end up hidden behind it.
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[calc(100svh-5.5rem)] md:min-h-[calc(100svh-4.5rem)] flex items-center justify-center overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-background to-background" />
 
-      {/* Content */}
-      <div ref={heroRef} className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center pt-20">
+      {/* Content. md:pt-28 keeps the floating pill clear of the fixed navbar; pb-16 leaves
+          room under the CTAs for the scroll cue below. */}
+      <div ref={heroRef} className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center pt-20 md:pt-28 pb-16">
         {/* Badge with blinking rocket; the pill opens WhatsApp with the guide card's message.
             opacity-0 is gated behind md: so mobile paints the hero immediately
             (opacity 1 is the browser default). PageSpeed Insights pinned 3.65s
@@ -72,6 +88,25 @@ export function Hero({ dict }: { dict: Dictionary }) {
             <a href="#services">{dict.hero.ctaSecondary}</a>
           </Button>
         </div>
+      </div>
+
+      {/* Scroll cue: a floating arrow just above the guide card's peek. Not a hero-*
+          block, so it takes no part in the GSAP intro and paints immediately. The
+          wrapper centres it with flex because .scroll-cue-float writes transform and
+          would overwrite a -translate-x-1/2. It fades out (and leaves the tab order
+          and the accessibility tree) as soon as the visitor scrolls. */}
+      <div className="absolute inset-x-0 bottom-3 z-10 flex justify-center">
+        <a
+          href="#start"
+          aria-label={dict.hero.scrollHint}
+          tabIndex={scrolled ? -1 : undefined}
+          aria-hidden={scrolled ? true : undefined}
+          className={`scroll-cue-float flex size-10 items-center justify-center rounded-full border border-foreground/20 bg-background/40 backdrop-blur-sm text-muted-foreground transition-[opacity,color,border-color] duration-500 hover:text-accent hover:border-accent/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent${
+            scrolled ? " opacity-0 pointer-events-none" : ""
+          }`}
+        >
+          <ChevronDown className="size-5" aria-hidden="true" />
+        </a>
       </div>
     </section>
   )

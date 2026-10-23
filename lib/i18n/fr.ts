@@ -55,6 +55,7 @@ export const fr: Dictionary = {
       'Nous transformons vos idées en une présence en ligne performante\u00a0: du site web percutant à l’identité de marque complète.',
     ctaPrimary: 'Réserver mon diagnostic gratuit',
     ctaSecondary: 'Découvrir nos services',
+    scrollHint: 'Faites défiler pour en savoir plus',
   },
   services: {
     sectionTitle: 'Nos expertises',

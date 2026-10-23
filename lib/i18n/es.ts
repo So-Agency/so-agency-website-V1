@@ -37,6 +37,7 @@ export const es: Dictionary = {
       'Transformamos tus ideas de negocio en presencias digitales de alto rendimiento — desde sitios web impactantes hasta identidades de marca completas.',
     ctaPrimary: 'Agenda tu Diagnóstico Gratis',
     ctaSecondary: 'Ver Nuestros Servicios',
+    scrollHint: 'Desliza para ver más',
   },
   services: {
     sectionTitle: 'Soluciones Estratégicas',

@@ -37,6 +37,7 @@ export const en: Dictionary = {
       'We transform your business ideas into high-performing digital presences — from stunning websites to complete brand identities.',
     ctaPrimary: 'Book Your Free Diagnostic',
     ctaSecondary: 'See Our Services',
+    scrollHint: 'Scroll to learn more',
   },
   services: {
     sectionTitle: 'Core Systems',

@@ -34,6 +34,8 @@ export interface Dictionary {
     description: string
     ctaPrimary: string
     ctaSecondary: string
+    /** Accessible name of the scroll arrow under the hero. */
+    scrollHint: string
   }
   services: {
     sectionTitle: string
