@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { WhatsAppLink } from "@/components/whatsapp-link"
 import { ArrowRight, Rocket } from "lucide-react"
 import { useHeroAnimation } from "@/hooks/use-gsap-animations"
 import { BRAND_TAGLINE } from "@/lib/brand"
@@ -16,7 +17,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
 
       {/* Content */}
       <div ref={heroRef} className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center pt-20">
-        {/* Badge with blinking rocket.
+        {/* Badge with blinking rocket; the pill opens WhatsApp with the guide card's message.
             opacity-0 is gated behind md: so mobile paints the hero immediately
             (opacity 1 is the browser default). PageSpeed Insights pinned 3.65s
             of "element render delay" on the LCP element (hero-description)
@@ -25,10 +26,15 @@ export function Hero({ dict }: { dict: Dictionary }) {
             delay. Desktop keeps the animation; its PSI score is already 99.
             useHeroAnimation() in hooks/use-gsap-animations.tsx is the counterpart:
             it skips the timeline entirely on mobile. */}
-        <div className="hero-badge inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm mb-8 md:opacity-0">
-          <Rocket className="size-4 animate-pulse-glow text-[#FEC700]" />
+        <WhatsAppLink
+          source="hero-pill"
+          message={dict.services.guide.whatsappMessage}
+          className="hero-badge inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm mb-8 md:opacity-0 transition-colors hover:bg-primary/10 hover:border-primary/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        >
+          <Rocket className="size-4 animate-pulse-glow text-[#FEC700]" aria-hidden="true" />
           <span>{dict.hero.badge}</span>
-        </div>
+          <ArrowRight className="size-3.5" aria-hidden="true" />
+        </WhatsAppLink>
 
         {/* Main headline */}
         <h1 className="hero-title font-[family-name:var(--font-display)] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight text-balance mb-4 md:opacity-0">
