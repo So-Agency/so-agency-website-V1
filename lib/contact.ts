@@ -32,6 +32,7 @@ export type ContactSource =
   | 'service-card'
   | 'services-guide'
   | 'hero-pill'
+  | 'start-guide'
 
 declare global {
   interface Window {

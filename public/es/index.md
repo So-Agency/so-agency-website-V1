@@ -12,6 +12,13 @@ sitios web impactantes hasta identidades de marca completas.
 - Agenda tu Diagnóstico Gratis → <https://wa.me/573159970541>
 - Ver Nuestros Servicios → [#services](#soluciones-estratégicas)
 
+**¿No Tienes Claro por Dónde Empezar?** Cuéntanos en qué punto está tu proyecto y te
+decimos por dónde despegar. En tu llamada de diagnóstico gratuita te recomendamos la ruta
+que mejor encaja con tu negocio.
+
+- Agenda tu Diagnóstico Gratis → <https://wa.me/573159970541>
+- Ver Preguntas Frecuentes → [#faq](#preguntas-frecuentes)
+
 ## Soluciones Estratégicas
 
 Servicios especializados diseñados para garantizar el éxito total de tu negocio en todos

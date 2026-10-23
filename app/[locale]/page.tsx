@@ -3,6 +3,7 @@ import type { Locale } from '@/lib/i18n/types'
 import { getDictionary, locales } from '@/lib/i18n'
 import { Navbar } from '@/components/navbar'
 import { Hero } from '@/components/hero'
+import { GuideSection } from '@/components/guide-section'
 import { Services } from '@/components/services'
 import { Process } from '@/components/process'
 import { Benefits } from '@/components/benefits'
@@ -36,6 +37,7 @@ export default async function LocalePage({ params }: Props) {
       <WebMCPTools dict={dict} />
       <Navbar dict={dict} />
       <Hero dict={dict} />
+      <GuideSection dict={dict} />
       <Services dict={dict} />
       <Process dict={dict} />
       <Benefits dict={dict} />

@@ -12,6 +12,12 @@ websites to complete brand identities.
 - Book Your Free Diagnostic → <https://wa.me/573159970541>
 - See Our Services → [#services](#core-systems)
 
+**Not Sure Where to Start?** Tell us where your project stands and we'll show you where to
+lift off. On your free diagnostic call, we recommend the route that best fits your business.
+
+- Book Your Free Diagnostic → <https://wa.me/573159970541>
+- Read the FAQ → [#faq](#frequently-asked-questions)
+
 ## Core Systems
 
 Specialized services designed to ensure total business success across all digital channels.

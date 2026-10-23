@@ -12,6 +12,13 @@ l’identité de marque complète.
 - Réserver mon diagnostic gratuit → <https://wa.me/573159970541>
 - Découvrir nos services → [#services](#nos-expertises)
 
+**Vous ne savez pas par où commencer ?** Dites-nous où en est votre projet : nous vous
+indiquons par où décoller. Lors de votre appel de diagnostic gratuit, nous vous
+recommandons la trajectoire la mieux adaptée à votre activité.
+
+- Réserver mon diagnostic gratuit → <https://wa.me/573159970541>
+- Voir les questions fréquentes → [#faq](#questions-fréquentes)
+
 ## Nos expertises
 
 Des services spécialisés, pensés pour faire réussir votre entreprise sur tous les canaux
