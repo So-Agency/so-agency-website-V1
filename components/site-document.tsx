@@ -56,7 +56,13 @@ export function SiteDocument({
         <meta property="og:image:alt" content={BRAND_TITLE} />
         <meta name="twitter:image" content={`${BASE_URL}/og-image.png`} />
       </head>
-      <body className={`font-sans antialiased ${_audiowide.variable} ${_roboto.variable}`}>
+      {/* suppressHydrationWarning: browser extensions (ColorZilla's cz-shortcut-listen,
+          Grammarly, password managers) write attributes onto <body> before React
+          hydrates. It covers this element's own attributes only, not its children. */}
+      <body
+        className={`font-sans antialiased ${_audiowide.variable} ${_roboto.variable}`}
+        suppressHydrationWarning
+      >
         <MetaPixel />
         <GoogleAnalytics />
         <MicrosoftClarity />
