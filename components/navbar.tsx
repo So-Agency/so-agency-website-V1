@@ -98,14 +98,22 @@ export function Navbar({ dict }: { dict: Dictionary }) {
             </div>
             </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden text-foreground p-2"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label={dict.navbar.toggleMenu}
-            >
-              {isMobileMenuOpen ? <X className="size-6" /> : <Menu className="size-6" />}
-            </button>
+            {/* Mobile CTA + Menu Button. The CTA stays in the bar so mobile visitors
+                have a call to action without opening the menu first. */}
+            <div className="md:hidden flex items-center gap-2">
+              <Button asChild size="sm" className="bg-accent text-accent-foreground hover:bg-accent/90 text-sm font-medium">
+                <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
+                  {dict.navbar.cta}
+                </a>
+              </Button>
+              <button
+                className="text-foreground p-2"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label={dict.navbar.toggleMenu}
+              >
+                {isMobileMenuOpen ? <X className="size-6" /> : <Menu className="size-6" />}
+              </button>
+            </div>
           </div>
 
           {/* Mobile Menu */}
@@ -122,11 +130,6 @@ export function Navbar({ dict }: { dict: Dictionary }) {
                     {link.label}
                   </a>
                 ))}
-                <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90 w-full mt-2 text-base">
-                  <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
-                    {dict.navbar.cta}
-                  </a>
-                </Button>
                 <div className="mt-4 flex justify-center">
                   <LanguageSwitcher dict={dict} />
                 </div>
