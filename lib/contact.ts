@@ -1,3 +1,4 @@
+import { readConsent } from './consent'
 /**
  * The agency's only direct contact channel. Single source of truth — this URL was
  * previously copy-pasted across six call sites, so changing the number meant six edits.
@@ -34,11 +35,6 @@ export type ContactSource =
   | 'hero-pill'
   | 'start-guide'
 
-declare global {
-  interface Window {
-    fbq?: (...args: unknown[]) => void
-  }
-}
 
 /**
  * Reports a contact click to the Meta Pixel initialised in app/layout.tsx.
@@ -53,7 +49,7 @@ declare global {
  * @param detail Optional extra dimension, e.g. which service card was clicked.
  */
 export function trackContactClick(source: ContactSource, detail?: string) {
-  if (typeof window === 'undefined') return
+  if (typeof window === 'undefined' || !readConsent()?.marketing) return
 
   try {
     window.fbq?.('track', 'Contact', {

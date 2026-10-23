@@ -3,20 +3,9 @@
 import { useEffect } from 'react'
 
 /**
- * Meta (Facebook) Pixel, loaded late so it does not steal main-thread time
- * during the critical path. PageSpeed Insights was pinning most of the 450 ms
- * TBT to connect.facebook.net/en_US/fbevents.js parsing on initial load.
- *
- * The pixel initialises on the first user interaction (pointerdown / keydown /
- * scroll / touchstart) OR 3000 ms after mount, whichever comes first. Both the
- * noscript <img> fallback and the queue trampoline are kept so events logged
- * before the real script finishes still make it through.
- *
- * Why a 3 s floor at all: visitors who read the hero and leave without ever
- * scrolling still need to be counted on landing-page Meta ad campaigns, which
- * this site runs (see utm_* / fbclid handling in functions/index.js). 3 s is
- * long enough that the pixel sits outside the TBT window, short enough that
- * the fast-bounce rate it misses is dominated by bots.
+ * Mounted only after marketing consent by ConsentManager. Loading is deferred
+ * until interaction or three seconds after consent. No noscript fallback:
+ * it would bypass the visitor's choice. Vendor script IDs prevent remount duplicates.
  */
 
 const PIXEL_ID = '1589857299225670'
@@ -37,6 +26,7 @@ declare global {
 
 export function MetaPixel() {
   useEffect(() => {
+    if (document.getElementById("so-agency-meta-pixel")) return
     let loaded = false
     const timers: number[] = []
     const listeners: Array<[keyof WindowEventMap, EventListener]> = []
@@ -64,6 +54,7 @@ export function MetaPixel() {
       n!.queue = []
 
       const script = document.createElement('script')
+      script.id = "so-agency-meta-pixel"
       script.async = true
       script.src = 'https://connect.facebook.net/en_US/fbevents.js'
       document.head.appendChild(script)
@@ -97,15 +88,5 @@ export function MetaPixel() {
     }
   }, [])
 
-  return (
-    <noscript>
-      <img
-        height="1"
-        width="1"
-        style={{ display: 'none' }}
-        src={`https://www.facebook.com/tr?id=${PIXEL_ID}&ev=PageView&noscript=1`}
-        alt=""
-      />
-    </noscript>
-  )
+  return null
 }

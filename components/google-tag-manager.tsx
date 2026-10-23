@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 
 /**
  * Google Tag Manager, loaded with the same first-interaction-or-3s deferral
- * as the other three trackers (Meta Pixel, GA4, Microsoft Clarity). GTM's own
+ * as Meta Pixel and Microsoft Clarity. GA4 loads asynchronously on mount. GTM's own
  * recommended placement is in <head>, which would add another ~50-100 KB of
  * blocking fetch + eval during the critical path and undo the TBT recovery.
  *
@@ -47,6 +47,7 @@ declare global {
 
 export function GoogleTagManager() {
   useEffect(() => {
+    if (document.getElementById("so-agency-google-tag-manager")) return
     window.dataLayer = window.dataLayer || []
     window.dataLayer.push({
       'gtm.start': new Date().getTime(),
@@ -67,6 +68,7 @@ export function GoogleTagManager() {
       }
 
       const script = document.createElement('script')
+      script.id = "so-agency-google-tag-manager"
       script.async = true
       script.src = `https://www.googletagmanager.com/gtm.js?id=${CONTAINER_ID}`
       const first = document.getElementsByTagName('script')[0]

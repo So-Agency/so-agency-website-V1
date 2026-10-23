@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 
 /**
  * Microsoft Clarity (session recording + heatmaps), loaded with the same
- * first-interaction-or-3s deferral as the Meta Pixel and GA4. Clarity's own
+ * first-interaction-or-3s deferral as the Meta Pixel. Clarity's own
  * snippet injects the ~70 KB tag script into <head> immediately; left as-is
  * on top of the other two trackers that would push TBT right back where it
  * started.
@@ -33,7 +33,9 @@ declare global {
 }
 
 export function MicrosoftClarity() {
+  // ConsentManager mounts this component only after analytics permission.
   useEffect(() => {
+    if (document.getElementById("so-agency-microsoft-clarity")) return
     // Shim: queue calls until the real tag script arrives.
     if (!window.clarity) {
       const shim = function clarity(...args: unknown[]) {
@@ -57,6 +59,7 @@ export function MicrosoftClarity() {
       }
 
       const script = document.createElement('script')
+      script.id = "so-agency-microsoft-clarity"
       script.async = true
       script.src = `https://www.clarity.ms/tag/${PROJECT_ID}`
       const first = document.getElementsByTagName('script')[0]

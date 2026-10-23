@@ -1,13 +1,10 @@
+import { ConsentManager } from '@/components/consent-manager'
 import { Geist, Geist_Mono, Audiowide, Roboto } from 'next/font/google'
 import { BRAND_TITLE } from '@/lib/brand'
 import { BASE_URL } from '@/lib/site'
 import { SmoothScroll } from '@/components/smooth-scroll'
 import { CustomCursor } from '@/components/custom-cursor'
 import { StarBackground } from '@/components/star-background'
-import { MetaPixel } from '@/components/meta-pixel'
-import { GoogleAnalytics } from '@/components/google-analytics'
-import { MicrosoftClarity } from '@/components/microsoft-clarity'
-import { GoogleTagManager } from '@/components/google-tag-manager'
 
 // Initialize fonts. Weight lists are the ones we actually use (grep-verified):
 //   Tailwind classes in components/*: font-normal (400), font-medium (500),
@@ -63,10 +60,7 @@ export function SiteDocument({
         className={`font-sans antialiased ${_audiowide.variable} ${_roboto.variable}`}
         suppressHydrationWarning
       >
-        <MetaPixel />
-        <GoogleAnalytics />
-        <MicrosoftClarity />
-        <GoogleTagManager />
+        <ConsentManager lang={lang} />
 
         <StarBackground />
         <CustomCursor />
