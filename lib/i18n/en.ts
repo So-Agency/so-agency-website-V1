@@ -31,7 +31,7 @@ export const en: Dictionary = {
     switchTo: 'Switch to {language}',
   },
   hero: {
-    badge: 'Your Digital Launch Partner',
+    badge: 'Not Sure Where to Start?',
     headline: 'Your vision, our stellar design',
     description:
       'We transform your business ideas into high-performing digital presences — from stunning websites to complete brand identities.',

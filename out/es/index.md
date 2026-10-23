@@ -2,7 +2,7 @@
 
 > Versión en markdown de <https://soagency.dev/es/>. English: <https://soagency.dev/en/index.md> · Français: <https://soagency.dev/fr/index.md>
 
-**Tu Socio de Lanzamiento Digital**
+**¿No Tienes Claro por Dónde Empezar?**
 
 ## Tu visión, nuestro diseño estelar
 

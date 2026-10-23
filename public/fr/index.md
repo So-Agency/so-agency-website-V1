@@ -2,7 +2,7 @@
 
 > Version markdown de <https://soagency.dev/fr/>. English : <https://soagency.dev/en/index.md> · Español : <https://soagency.dev/es/index.md>
 
-**Votre partenaire de lancement digital**
+**Vous ne savez pas par où commencer ?**
 
 ## Votre vision, notre design de haut vol
 

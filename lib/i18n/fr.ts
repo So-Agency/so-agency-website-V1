@@ -49,7 +49,7 @@ export const fr: Dictionary = {
     switchTo: 'Changer de langue\u00a0: {language}',
   },
   hero: {
-    badge: 'Votre partenaire de lancement digital',
+    badge: 'Vous ne savez pas par où commencer\u00a0?',
     headline: 'Votre vision, notre design de haut vol',
     description:
       'Nous transformons vos idées en une présence en ligne performante\u00a0: du site web percutant à l’identité de marque complète.',
